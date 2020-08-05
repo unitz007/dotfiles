@@ -8,7 +8,7 @@ alias mcp='mvn clean package'
 alias bootRun='mvn spring-boot:run'
 alias gpom='git push origin master'
 
-# set git add, commit and push
+# set git add, commit and push to origin
 function commit
         if test (count $argv) -lt 1
                 echo "Error: 'missing commit message'"
