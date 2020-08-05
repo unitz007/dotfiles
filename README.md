@@ -1,2 +1,2 @@
 # dotfiles
-My Ubuntu dotfile configurations
+Contains global system (Ubuntu) configurations <br/>
