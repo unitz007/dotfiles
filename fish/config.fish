@@ -1,5 +1,5 @@
 # fish shell configuration
-# place file in ~/.config/fish
+# place file in ~/.config/fish/
 
 # aliases
 alias g='git'
