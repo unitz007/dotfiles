@@ -5,13 +5,15 @@ alias g='git'
 alias mci='mvn clean install'
 alias mcp='mvn clean package'
 alias bootRun='mvn spring-boot:run'
+alias gpom='git push origin master'
 
 # functions
 function commit
         if test (count $argv) -lt 1
-                printf "Error: missing commit message"
+                echo "Error: missing commit message"
         else
                 g add .
-                g commit -m $argv[1]
-                g push origin master
+                git commit -m $argv[1]
+                gpom
+        end
 end
