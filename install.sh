@@ -26,6 +26,8 @@ snap install docker                                                      #
 apt-get install fish --y                                                 #
 # tmux (terminal multiplexer)                                            #
 apt-get install tmux --y                                                 #
+# ssh                                                                    #
+apt install openssh-server
 ##########################################################################
 #                         PROGRAMMING LANGUAGE(S)                        #
 ##########################################################################
