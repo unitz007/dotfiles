@@ -63,5 +63,3 @@ snap install code --classic                                              #
 apt-get install mariadb-server --y                                       #
 mysql_secure_installation                                                #
 ##########################################################################
-
-
