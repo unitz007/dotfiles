@@ -41,3 +41,11 @@ function commit
 	end
 end
 
+# apt alias
+alias install='sudo apt install'
+alias update='sudo apt update'
+alias upgrade='sudo apt upgrade'
+alias remove='sudo apt remove'
+alias autoremove='sudo apt autoremove'
+alias autoclean='sudo apt autoclean'
+alias purge='sudo apt purge --autoremove'
