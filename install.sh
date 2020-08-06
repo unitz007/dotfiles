@@ -6,13 +6,13 @@
 #                               TOOLS                                    #
 ##########################################################################
 # install curl                                                           #
-apt-get install curl -y                                                 #
+apt-get install curl -y                                                  #
 # install snap                                                           #
-apt-get install snapd -y                                                #
+apt-get install snapd -y                                                 #
 # install sdkman                                                         #
 curl -s "https://get.sdkman.io" | bash                                   #
 # shellcheck disable=SC1090                                              #
-# load sdkman                                                            $
+# load sdkman                                                            #
 source "$HOME/.sdkman/bin/sdkman-init.sh"                                #
 # install git                                                            #
 apt-get install git -y                                                   #

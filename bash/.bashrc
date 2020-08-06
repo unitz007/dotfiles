@@ -119,7 +119,7 @@ if ! shopt -oq posix; then
 fi
 
 if [ "$TMUX" == "" ]; then
-    tmux new-session # loads tmux
+    tmux # loads tmux
 fi
 fish # loads fish shell
 
