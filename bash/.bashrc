@@ -119,13 +119,12 @@ if ! shopt -oq posix; then
 fi
 
 if [ "$TMUX" == "" ]; then
-    tmux new-session
+    tmux new-session # loads tmux
 fi
 fish # loads fish shell
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/charles/.sdkman"
-[[ -s "/home/charles/.sdkman/bin/sdkman-init.sh" ]] && source "/home/charles/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="~/.sdkman"
+[[ -s "/home/charles/.sdkman/bin/sdkman-init.sh" ]] && source "~/.sdkman/bin/sdkman-init.sh"
 
 export JAVA_OPTS="-Xms512M -Xmx2024M"
-export CATALINA_OPTS="-Xms512M -Xmx2024M"
