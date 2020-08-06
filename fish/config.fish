@@ -1,7 +1,20 @@
-# fish config
+# fish shell  configurations
 
-# set fish shell look
-set fish_greeting \x1d
+# set fish greeting message
+
+function _greetings_
+	set hour (eval 'date +"%H"') # gets time hour
+	if test $hour -eq 0 -a $hour -lt 12
+		set fish_greeting "Welcome $USER, Good Morning."
+	else if test $hour -eq 12 -a $hour -lt 16
+		set fish_greeting "Welcome $USER, Good Afternoon."
+	else
+		set fish_greeting "Welcome $USER, Good Evening."
+	end
+end
+
+# call function
+_greetings_
 
 # aliases
 
@@ -27,3 +40,4 @@ function commit
 		gpom
 	end
 end
+
