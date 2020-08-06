@@ -9,6 +9,8 @@ apt-get update --y && apt-get upgrade --y
 ##########################################################################
 # install curl                                                           #
 apt-get install curl --y                                                 #
+# install snap                                                           #
+apt-get install snapd --y                                                #
 # install sdkman                                                         #
 curl -s "https://get.sdkman.io" | bash                                   #
 # shellcheck disable=SC1090                                              #
@@ -18,8 +20,6 @@ source "$HOME/.sdkman/bin/sdkman-init.sh"                                #
 apt-get install git --y                                                  #
 # heroku                                                                 #
 snap install --classic heroku                                            #
-# install snap                                                           #
-apt-get install snapd --y                                                #
 # docker                                                                 #
 snap install docker                                                      #
 # fish shell                                                             #
