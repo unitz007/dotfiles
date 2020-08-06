@@ -1,3 +1,4 @@
+# shellcheck disable=SC2148
 # mvn aliases
 alias bootRun="mvn spring-boot:run"
 
