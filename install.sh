@@ -2,44 +2,42 @@
 
 # Note: Run script with sudo
 
-# update & upgrade
-apt-get update --y && apt-get upgrade --y
 ##########################################################################
 #                               TOOLS                                    #
 ##########################################################################
 # install curl                                                           #
-apt-get install curl --y                                                 #
+apt-get install curl -y                                                 #
 # install snap                                                           #
-apt-get install snapd --y                                                #
+apt-get install snapd -y                                                #
 # install sdkman                                                         #
 curl -s "https://get.sdkman.io" | bash                                   #
 # shellcheck disable=SC1090                                              #
 # load sdkman                                                            $
 source "$HOME/.sdkman/bin/sdkman-init.sh"                                #
 # install git                                                            #
-apt-get install git --y                                                  #
+apt-get install git -y                                                   #
 # heroku                                                                 #
 snap install --classic heroku                                            #
 # docker                                                                 #
 snap install docker                                                      #
 # fish shell                                                             #
-apt-get install fish --y                                                 #
+apt-get install fish -y                                                  #
 # tmux (terminal multiplexer)                                            #
-apt-get install tmux --y                                                 #
+apt-get install tmux -y                                                  #
 # ssh                                                                    #
-apt install openssh-server
+apt install openssh-server -y                                            #
 ##########################################################################
 #                         PROGRAMMING LANGUAGE(S)                        #
 ##########################################################################
 # install Java                                                           #
-apt-get install openjdk-11-jdk --y                                       #
+apt-get install openjdk-11-jdk -y                                        #
 # install Rust                                                           #
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh           #
 ##########################################################################
 #                         BUILD TOOLS & PACKAGE MANAGERS                 #
 ##########################################################################
 # Install build tools                                                    #
-apt-get install maven --y                                                #
+apt-get install maven -y                                                 #
 # install gradle                                                         #
 sdk install gradle 6.5.1                                                 #
 ##########################################################################
@@ -50,7 +48,7 @@ sdk install springboot                                                   #
 # install angular                                                        #
 npm install -g @angular/cli                                              #
 # install Node                                                           #
-apt-get install nodejs                                                   #
+apt-get install nodejs -y                                                #
 ##########################################################################
 #                                 IDE(S)                                 #
 ##########################################################################
