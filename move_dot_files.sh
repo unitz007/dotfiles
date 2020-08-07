@@ -1,16 +1,17 @@
 #!/bin/bash
 
-file=$1
-# file check function
-function _file_check_ {
-    if [ -f "$file" ]; then
-      echo "$file exists."
-    else
-      echo "$file does not exist"
-fi
-}
+# run test
+cd test || exit
+source test_move_dot_files.sh
 
-# TESTS
 
-# file exist test functionality
+# copies dot files
+#function copy_dot_files {
+#   # copy config.fish file
+#  _file_check_ ./fish/config.fish
+##  if [ $ret_val -eq ]
+#
+#}
+#
+#copy_dot_files
 

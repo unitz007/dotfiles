@@ -1,11 +1,14 @@
 #!/bin/bash
 
+# import scripts
+. ./move_dot_files.sh
+
 # update & upgrade
 apt-get update -y
 apt-get upgrade -y
 
 # run installation script
-source install.sh
+sh install.sh
 
 # move dotfiles
-source move_dot_files.sh
+sh move_dot_files.sh
