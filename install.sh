@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Note: Run script with sudo
-
+# installations
+# Note: Run script with sudo, when run independently
 ##########################################################################
 #                               TOOLS                                    #
 ##########################################################################
