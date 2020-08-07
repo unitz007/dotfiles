@@ -49,5 +49,3 @@ alias remove='sudo apt remove'
 alias autoremove='sudo apt autoremove'
 alias autoclean='sudo apt autoclean'
 alias purge='sudo apt purge --autoremove'
-
-# other alias
