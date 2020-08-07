@@ -4,16 +4,16 @@
 
 function _greetings_
 	set hour (eval 'date +"%H"') # gets time hour
-	if test $hour -eq 0 -a $hour -lt 12
+	if test $hour -lt 12
 		set fish_greeting "Welcome $USER, Good Morning."
-	else if test $hour -eq 12 -a $hour -lt 16
+	else if test $hour -lt 16 -a $hour -ge 12
 		set fish_greeting "Welcome $USER, Good Afternoon."
-	else
+	else if test $hour -lt 23 -a $hour -ge 16
 		set fish_greeting "Welcome $USER, Good Evening."
 	end
 end
 
-# call function
+# greeting message
 _greetings_
 
 # aliases
