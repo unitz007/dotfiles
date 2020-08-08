@@ -1,1 +1,1 @@
-# fish shell configurations
+# Fish Shell Csonfigurations
