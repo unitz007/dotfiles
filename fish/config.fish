@@ -49,3 +49,8 @@ alias remove='sudo apt remove'
 alias autoremove='sudo apt autoremove'
 alias autoclean='sudo apt autoclean'
 alias purge='sudo apt purge --autoremove'
+
+# source config.fish.local
+if test -f $HOME/.config/fish/config.local.fish
+	. $HOME/.config/fish/config.local.fish
+end
