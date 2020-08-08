@@ -31,7 +31,7 @@ _file_check_() {
 function test_file_check {
   _file_check_ ./fish/config.fish # test files in fish directory
   _file_check_  ./bash/.bashrc ./bash/.bash_aliases # check files in bash directory
-  _file_check_ ./git/.gitconfig
+#  _file_check_ ./git/.gitconfig
 }
 
 # invoke test_file_check
