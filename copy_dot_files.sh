@@ -16,7 +16,7 @@ function file_exist {
 # first arg ($1) -> file to be checked
 # second arg ($2) -> file to be copied
 # third arg ($3) -> directory to copy file to
-function copy_dot_files {
+function copy_dot_file {
   file_exist "$1"
   if [ $ret_val -eq 1 ]; then
     mv "$1" "$1-backup"
@@ -26,5 +26,7 @@ function copy_dot_files {
   fi
 }
 
-# config.fish file
-copy_dot_files "$HOME"/.config/fish/config.fish ./fish/config.fish "$HOME"/.config/fish/
+# copy dotfiles
+copy_dot_file "$HOME"/.config/fish/config.fish ./fish/config.fish "$HOME"/.config/fish/ # copy config.fish
+copy_dot_file "$HOME"/.bashrc ./bash/.bashrc "$HOME"/ # copy .bashrc
+copy_dot_file "$HOME"/.bash_aliases ./bash/.bash_aliases "$HOME"/
