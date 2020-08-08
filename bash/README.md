@@ -3,7 +3,7 @@ Contains bash shell configurations
 
 ## Usage
 ```
-git clone https://github.com/unitz007/dotfiles.git <br>
-cd dotfiles/bash <br/>
+git clone https://github.com/unitz007/dotfiles.git
+cd dotfiles/bash
 sudo cp * $HOME
 ```
