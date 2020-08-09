@@ -30,6 +30,8 @@ alias bootRun='mvn spring-boot:run'
 # git aliases
 alias g='git'
 alias gpom='git push origin master'
+alias gi='git init'
+alias gra='git remote add'
 function commit
 	if test (count $argv) -lt 1
 		echo "Error: missing 'commit message'"
