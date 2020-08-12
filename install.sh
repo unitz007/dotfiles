@@ -45,10 +45,14 @@ sdk install gradle 6.5.1                                                 #
 ##########################################################################
 # install spring boot                                                    #
 sdk install springboot                                                   #
-# install angular                                                        #
-npm install -g @angular/cli                                              #
 # install Node                                                           #
 apt-get install nodejs -y                                                #
+# install flutter                                                        #
+snap install flutter --classic                                           #
+# install androidsdk                                                     #
+snap install androidsdk                                                  #
+androidsdk "build-tools;28.0.3" "platform-tools;28.0.3"                  #
+androidsdk "system-images;android-27;google_apis_playstore;x86"          #
 ##########################################################################
 #                                 IDE(S)                                 #
 ##########################################################################
