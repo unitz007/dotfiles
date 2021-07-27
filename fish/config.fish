@@ -17,21 +17,28 @@ end
 _greetings_
 
 # aliases
-
 # navigation aliases
 alias ..='cd ..'
 alias home='cd --'
 
 # maven aliases
-alias mci='mvn clean install'
-alias mcp='mvn clean package'
-alias bootRun='mvn spring-boot:run'
+# alias install='mvn clean install -DskipTests'
+alias build='mvn clean package -DskipTests'
+alias assert='mvn test'
+alias run='mvn spring-boot:run'
+alias clean='mvn clean'
+
+# docker/docker-compose alias
+alias db='docker build'
+alias dc='docker-compose'
 
 # git aliases
 alias g='git'
-alias gpom='git push origin master'
+# alias gp='git push'
 alias gi='git init'
-alias gra='git remote add'
+alias gr='git remote'
+alias pull='git pull'
+
 function commit
 	if test (count $argv) -lt 1
 		echo "Error: missing 'commit message'"
@@ -39,7 +46,18 @@ function commit
 	else
 		g add .
 		git commit -m $argv[1]
-		gpom
+		# gpom
+	end
+end
+
+function push
+	if test (count $argv) -lt 1
+		echo "Error: missing 'commit message'"
+		echo "Usage: push <commit message>"
+	else
+		g add .
+		git commit -m $argv[1]
+		git push
 	end
 end
 
