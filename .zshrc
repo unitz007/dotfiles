@@ -90,9 +90,6 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# GitLab API
-export GITLAB_ACCESS_TOKEN=glpat-k9k_PFsgyEwdVafjGLLB
-
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
