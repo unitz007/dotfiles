@@ -121,7 +121,7 @@ alias vim=nvim
 # }
 
 function commit() {
-	if [ "$1" -lt 1 ]
+	if [ "$1" == "" ]
   then
 		echo "Error: missing 'commit message'"
 		echo "Usage: commit <commit message>"
