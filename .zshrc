@@ -130,6 +130,11 @@ function commit() {
 		git commit -m $argv[1]
 		# gpom
 	fi
+
+  for var in "$@
+  do
+    echo $var
+  done
 }
 
 # function push
