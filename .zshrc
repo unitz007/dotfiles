@@ -127,14 +127,14 @@ function commit() {
 		echo "Usage: commit <commit message>"
 	else
 		g add .
-		git commit -m $argv[1]
-		# gpom
+		git commit -m "$1"
+		if [ "$2" == "-p" ]
+    then
+      git push
+    fi
 	fi
 
-  for var in "$@
-  do
-    echo "$var"
-  done
+ 
 }
 
 # function push
