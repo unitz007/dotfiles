@@ -133,7 +133,7 @@ function commit() {
 
   for var in "$@
   do
-    echo $var
+    echo "$var"
   done
 }
 
