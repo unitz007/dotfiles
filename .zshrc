@@ -126,7 +126,7 @@ function commit() {
 		echo "Error: missing 'commit message'"
 		echo "Usage: commit <commit message>"
 	else
-		g add .
+		git add .
 		git commit -m "$1"
 		if [ "$2" == "-p" ]
     then
