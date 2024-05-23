@@ -115,6 +115,7 @@ alias run="sdlc run"
 alias tst="sdlc test"
 alias build="sdlc build"
 alias vim=nvim
+alias cls=clear
 
 # function commit() {
 #   echo "$1" # arguments are accessible through $1, $2,...
