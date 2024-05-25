@@ -138,6 +138,7 @@ function commit() {
       else
         git push origin "$3"    
       fi
+    fi
 	fi
 }
 
