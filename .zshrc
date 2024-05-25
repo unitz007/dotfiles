@@ -118,10 +118,6 @@ alias vim=nvim
 alias update="brew update"
 alias upgrade="brew upgrade"
 
-# function commit() {
-#   echo "$1" # arguments are accessible through $1, $2,...
-# }
-
 function commit() {
 	if [[ "$1" == "" ]]
   then
@@ -141,18 +137,6 @@ function commit() {
     fi
 	fi
 }
-
-# function push
-# 	if test (count $argv) -lt 1
-# 		echo "Error: missing 'commit message'"
-# 		echo "Usage: push <commit message>"
-# 	else
-# 		g add .
-# 		git commit -m $argv[1]
-# 		git push
-# 	end
-# end
-
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
