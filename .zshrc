@@ -115,27 +115,22 @@ alias run="sdlc run"
 alias tst="sdlc test"
 alias build="sdlc build"
 alias vim=nvim
-alias cls=clear
+alias update="brew update"
+alias upgrade="brew upgrade"
 
 # function commit() {
 #   echo "$1" # arguments are accessible through $1, $2,...
 # }
 
 function commit() {
-	if [ "$1" == "" ]
+	if [[ "$1" == "" ]]
   then
 		echo "Error: missing 'commit message'"
 		echo "Usage: commit <commit message>"
 	else
 		git add .
 		git commit -m "$1"
-		if [ "$2" == "-p" ]
-    then
-      git push
-    fi
 	fi
-
- 
 }
 
 # function push
