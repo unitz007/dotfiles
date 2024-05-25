@@ -132,8 +132,12 @@ function commit() {
 		git commit -m "$1"
     if [[ "$2" == "-p" ]]
     then
-      git push
-    fi
+      if [[ "$3" == "" ]]
+      then
+        git push origin main
+      else
+        git push origin "$3"    
+      fi
 	fi
 }
 
