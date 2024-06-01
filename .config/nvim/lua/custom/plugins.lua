@@ -3,7 +3,8 @@ local plugins = {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
-        "gopls"
+        "gopls",
+        "java-language-server"
       },
     },
   },
