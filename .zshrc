@@ -117,6 +117,7 @@ alias build="sdlc build"
 alias vim=nvim
 alias update="brew update"
 alias upgrade="brew upgrade"
+alias k=kubectl
 
 function commit() {
 	if [[ "$1" == "" ]]
