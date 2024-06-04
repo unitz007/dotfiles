@@ -118,9 +118,9 @@ alias vim=nvim
 alias update="brew update"
 alias upgrade="brew upgrade"
 alias k=kubectl
-alias ks="kubectl get services"
-alias kp="kubectl get pods"
-alias kd="kubectl get deployments"
+alias kgs="kubectl get services"
+alias kgp="kubectl get pods"
+alias kgd="kubectl get deployments"
 alias ka="kubectl apply -f"
 alias kd="kubectl delete"
 
