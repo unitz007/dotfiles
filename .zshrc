@@ -122,6 +122,7 @@ alias ks="kubectl get services"
 alias kp="kubectl get pods"
 alias kd="kubectl get deployments"
 alias ka="kubectl apply -f"
+alias kd="kubectl delete"
 
 function commit() {
 	if [[ "$1" == "" ]]
