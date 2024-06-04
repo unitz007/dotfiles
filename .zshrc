@@ -123,6 +123,7 @@ alias kgp="kubectl get pods"
 alias kgd="kubectl get deployments"
 alias ka="kubectl apply -f"
 alias kd="kubectl delete"
+alias pull="git pull"
 
 function commit() {
 	if [[ "$1" == "" ]]
