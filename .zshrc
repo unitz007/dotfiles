@@ -125,6 +125,7 @@ alias ka="kubectl apply -f"
 alias kd="kubectl delete"
 alias pull="git pull"
 alias git="g"
+alias s="stow ."
 
 function commit() {
 	if [[ "$1" == "" ]]
