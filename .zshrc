@@ -33,7 +33,7 @@ alias ka="kubectl apply -f"
 alias kd="kubectl delete"
 alias pull="git pull"
 alias g="git"
-alias ..="cd .."
+# alias ..="cd .."
 
 function commit() {
 	if [[ "$1" == "" ]]
