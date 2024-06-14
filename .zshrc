@@ -33,6 +33,7 @@ alias ka="kubectl apply -f"
 alias kd="kubectl delete"
 alias pull="git pull"
 alias g="git"
+alias gc="git checkout"
 # alias ..="cd .."
 
 function commit() {
