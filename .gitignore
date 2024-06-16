@@ -1,0 +1,5 @@
+# ignore oh-my-zsh custom directory
+ .oh-my-zsh/custom
+
+#IDE directories
+.idea
