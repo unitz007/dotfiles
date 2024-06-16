@@ -9,12 +9,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Variables & Assignments
-export ZSH="$HOME/.oh-my-zsh"
+#export ZSH="$HOME/.oh-my-zsh"
+
+# theme
 #ZSH_THEME="powerlevel10k/powerlevel10k"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/powerlevel10k_modern.omp.json)"
+
 export KUBE_EDITOR="nvim"
-plugins=(zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
+#plugins=(zsh-autosuggestions zsh-syntax-highlighting)
+#source $ZSH/oh-my-zsh.sh
 
 # Aliases
 alias ls="nu -c ls"
