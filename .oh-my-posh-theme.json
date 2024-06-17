@@ -90,17 +90,6 @@
                     "style": "diamond",
                     "foreground": "#d60dd3",
                     "template": "  {{ .Full }} "
-                },
-                {
-                    "type": "kubectl",
-                    "style": "powerline",
-                    "foreground": "#0ed9b4",
-                    "template": "{{if .Context}}   ﴱ {{ .Context}} {{end}}",
-                    "properties": {
-                        "context_aliases": {
-                            "arn:aws:eks:eu-west-1:1234567890:cluster/posh": "posh"
-                        }
-                    }
                 }
             ]
         },
@@ -121,5 +110,20 @@
             }],
             "newline": true
         }
-    ]
+    ],
+    "tooltips": [{
+        "type": "kubectl",
+        "style": "powerline",
+        "tips": [
+            "kubectl",
+            "k"
+        ],
+        "foreground": "#0ed9b4",
+        "template": "{{if .Context}}   ﴱ {{ .Context }} :: {{ .Namespace }} {{end}}",
+        "properties": {
+            "context_aliases": {
+                "arn:aws:eks:eu-west-1:1234567890:cluster/posh": "posh"
+            }
+        }
+    }]
 }
