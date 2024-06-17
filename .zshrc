@@ -9,12 +9,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Variables & Assignments
-export ZSH="$HOME/.oh-my-zsh"
+#export ZSH="$HOME/.oh-my-zsh"
+
+# theme
 #ZSH_THEME="powerlevel10k/powerlevel10k"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
+
 export KUBE_EDITOR="nvim"
-plugins=(zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
+#plugins=(zsh-autosuggestions zsh-syntax-highlighting)
+#source $ZSH/oh-my-zsh.sh
 
 # Aliases
 alias ls="nu -c ls"
@@ -26,7 +29,7 @@ alias build="sdlc build"
 alias vim=nvim
 alias update="brew update"
 alias upgrade="brew upgrade"
-alias k8s=kubectl
+alias k=kubectl
 alias kgs="kubectl get services"
 alias kgp="kubectl get pods"
 alias kgd="kubectl get deployments"
@@ -35,7 +38,7 @@ alias kd="kubectl delete"
 alias pull="git pull"
 alias g="git"
 alias gc="git checkout"
-# alias ..="cd .."
+alias ..="cd .."
 
 function commit() {
 	if [[ "$1" == "" ]]
