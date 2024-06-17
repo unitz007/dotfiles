@@ -13,7 +13,7 @@ fi
 
 # theme
 #ZSH_THEME="powerlevel10k/powerlevel10k"
-eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/powerlevel10k_modern.omp.json)"
+eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
 
 export KUBE_EDITOR="nvim"
 #plugins=(zsh-autosuggestions zsh-syntax-highlighting)
@@ -38,7 +38,7 @@ alias kd="kubectl delete"
 alias pull="git pull"
 alias g="git"
 alias gc="git checkout"
-# alias ..="cd .."
+alias ..="cd .."
 
 function commit() {
 	if [[ "$1" == "" ]]

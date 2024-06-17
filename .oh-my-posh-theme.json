@@ -1,0 +1,125 @@
+{
+    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+    "version": 2,
+    "var": {
+        "background": "#ffffff",
+        "foreground": "#d60dd3"
+    },
+    "blocks": [{
+            "type": "prompt",
+            "alignment": "left",
+            "segments": [{
+                    "type": "os",
+                    "style": "accordion",
+                    "foreground": "#000000",
+                    "background": "#ffffff",
+                    "leading_diamond": "\ue0b6",
+                    "trailing_diamond": "\ue0b4",
+                    "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}} "
+                },
+                {
+                    "type": "shell",
+                    "style": "powerline",
+                    "powerline_symbol": "",
+                    "foreground": "#ffffff",
+                    "background": "#07aa46",
+                    "properties": {
+                        "mapped_shell_names": {
+                            "pwsh": "PS"
+                        }
+                    }
+                }, {
+                    "type": "root",
+                    "style": "powerline",
+                    "powerline_symbol": "\ue0b4",
+                    "foreground": "#000000",
+                    "background": "#0000ff",
+                    "template": " \uf0e7 ",
+                    "properties": {
+                        "style": "full"
+                    }
+                },
+                {
+                    "type": "path",
+                    "style": "accordion",
+                    "powerline_symbol": "\ue0b4",
+                    "foreground": "#ffffff",
+                    "background": "#0000ff",
+                    "template": " {{ .Path }} ",
+                    "properties": {
+                        "style": "full"
+                    }
+                },
+                {
+                    "type": "git",
+                    "style": "accordion",
+                    "powerline_symbol": "",
+                    "foreground": "#193549",
+                    "background": "#0fe6c9",
+                    "background_templates": [
+                        "{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB3B{{ end }}",
+                        "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}",
+                        "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
+                        "{{ if gt .Behind 0 }}#B388FB{{ end }}"
+                    ],
+                    "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}",
+                    "properties": {
+                        "fetch_status": true,
+                        "fetch_upstream_icon": true
+                    }
+                }
+            ]
+        },
+        {
+            "type": "prompt",
+            "alignment": "right",
+            "segments": [{
+                    "type": "java",
+                    "style": "powerline",
+                    "foreground": "#d60dd3",
+                    "template": "  {{ .Full }}"
+                },
+                {
+                    "type": "go",
+                    "style": "plain",
+                    "foreground": "#d60dd3",
+                    "template": " ‭ﳑ {{ .Full }} "
+                },
+                {
+                    "type": "rust",
+                    "style": "diamond",
+                    "foreground": "#d60dd3",
+                    "template": "  {{ .Full }} "
+                },
+                {
+                    "type": "kubectl",
+                    "style": "powerline",
+                    "foreground": "#0ed9b4",
+                    "template": "{{if .Context}}   ﴱ {{ .Context}} {{end}}",
+                    "properties": {
+                        "context_aliases": {
+                            "arn:aws:eks:eu-west-1:1234567890:cluster/posh": "posh"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "prompt",
+            "alignment": "left",
+            "segments": [{
+                "type": "status",
+                "style": "plain",
+                "foreground": "#D4E157",
+                "foreground_templates": [
+                    "{{ if gt .Code 0 }}#FF5252{{ end }}"
+                ],
+                "template": "❯ ",
+                "properties": {
+                    "always_enabled": true
+                }
+            }],
+            "newline": true
+        }
+    ]
+}
