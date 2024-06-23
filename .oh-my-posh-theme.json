@@ -17,6 +17,18 @@
                         "trailing_diamond": "\ue0b4",
                         "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}} "
                     },
+                     {
+                        "type": "shell",
+                        "style": "powerline",
+                        "powerline_symbol": "",
+                        "foreground": "#ffffff",
+                        "background": "#07aa46",
+                        "properties": {
+                            "mapped_shell_names": {
+                                "pwsh": "PS"
+                            }
+                        }
+                    },
                     {
                         "type": "root",
                         "style": "powerline",
