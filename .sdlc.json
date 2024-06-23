@@ -7,7 +7,7 @@
   "go.mod": {
     "run": "go run ./...",
     "test": "go test ./...",
-    "build": "go build"
+    "build": "go build ."
   },
   "Package.swift": {
     "run": "swift run",
