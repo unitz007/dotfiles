@@ -32,6 +32,7 @@ alias pull="git pull"
 alias g="git"
 alias gc="git checkout"
 alias ..="cd .."
+alias cls='clear'
 
 function commit() {
 	if [[ "$1" == "" ]]
