@@ -34,25 +34,25 @@ alias gc="git checkout"
 alias ..="cd .."
 alias cls='clear'
 
-function commit() {
-	if [[ "$1" == "" ]]
-  then
-		echo "Error: missing 'commit message'"
-		echo "Usage: commit <commit message>"
-	else
-		git add .
-		git commit -m "$1"
-    if [[ "$2" == "-p" ]]
-    then
-      if [[ "$3" == "" ]]
-      then
-        git push origin main
-      else
-        git push origin "$3"    
-      fi
-    fi
-	fi
-}
+# function commit() {
+# 	if [[ "$1" == "" ]]
+#   then
+# 		echo "Error: missing 'commit message'"
+# 		echo "Usage: commit <commit message>"
+# 	else
+# 		git add .
+# 		git commit -m "$1"
+#     if [[ "$2" == "-p" ]]
+#     then
+#       if [[ "$3" == "" ]]
+#       then
+#         git push origin main
+#       else
+#         git push origin "$3"    
+#       fi
+#     fi
+# 	fi
+# }
 
 [[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
 
