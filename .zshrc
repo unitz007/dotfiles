@@ -18,7 +18,7 @@ alias la="nu -c 'ls -la'"
 alias python=python3
 alias run="sdlc run"
 alias tst="sdlc test"
-#alias build="sdlc build"
+alias build="sdlc build"
 alias vim=nvim
 alias update="brew update"
 alias upgrade="brew upgrade"
@@ -30,7 +30,7 @@ alias ka="kubectl apply -f"
 alias kd="kubectl delete"
 alias pull="git pull"
 alias g="git"
-#alias gc="git checkout"
+alias gc="git checkout"
 alias ..="cd .."
 alias cls='clear'
 
