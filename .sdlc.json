@@ -24,7 +24,7 @@
     "test": "npm run test",
     "build": "npm run build"
   },
-  "build.gradle": {
+  "build.gradle.kts": {
     "run": "gradle bootRun",
     "build": "gradle build",
     "test": "gradle test"
