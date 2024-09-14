@@ -54,6 +54,9 @@ function commit() {
 	fi
 }
 
+# set language
+export LANG=en_US.UTF-
+
 [[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
 
 # Q post block. Keep at the bottom of this file.
