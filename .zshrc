@@ -55,7 +55,7 @@ function commit() {
 }
 
 # set language
-export LANG=en_US.UTF-
+export LANG=en_US.UTF-8
 
 [[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
 
