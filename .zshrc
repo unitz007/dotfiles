@@ -33,6 +33,7 @@ alias g="git"
 alias gc="git checkout"
 alias ..="cd .."
 alias cls='clear'
+tf=terraform
 
 function commit() {
 	if [[ "$1" == "" ]]
