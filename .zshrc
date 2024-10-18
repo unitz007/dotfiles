@@ -36,7 +36,7 @@ alias cls='clear'
 alias tf=terraform
 alias tfp="terraform plan"
 alias tfa="tf apply"
-alias ubuntu='multipass start ubuntu'
+alias ubuntu='multipass shell ubuntu'
 
 function commit() {
 	if [[ "$1" == "" ]]
