@@ -58,6 +58,14 @@ function commit() {
 	fi
 }
 
+function ubuntu() {
+  echo "provisioning ubuntu vm"
+  multipass launch 22.04 --name ubuntu
+  multipass mount ~/dotfiles/ ubuntu
+  multipass exec ubuntu bash ignore/setup-ubuntu.sh
+  multipass shell ubuntu
+}
+
 # set language
 export LANG=en_US.UTF-8
 
