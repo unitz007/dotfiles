@@ -58,13 +58,13 @@ function commit() {
 }
 
 function ustart() {
-   echo "Spinning up Ubuntu VM..."
+   echo "Spinning Up Ubuntu VM..."
   multipass launch -n ubuntu --cloud-init ~/Personal/IaaC/cloud-init.yaml
   multipass shell ubuntu
 }
 
 function uend() {
-  echo "Tearing down Ubuntu VM..."
+  echo "Tearing Down Ubuntu VM..."
   multipass delete ubuntu
   multipass purge 
 }
