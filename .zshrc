@@ -69,6 +69,10 @@ function uend() {
   multipass purge 
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> fe7f0b7 (ref)
 # set language
 export LANG=en_US.UTF-8
 
