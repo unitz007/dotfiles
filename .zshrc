@@ -57,12 +57,16 @@ function commit() {
 	fi
 }
 
-function ubuntu() {
-  echo "provisioning ubuntu vm"
-  multipass launch 22.04 --name ubuntu
-  multipass mount ~/dotfiles/ ubuntu
-  multipass exec ubuntu bash ignore/setup-ubuntu.sh
+function ustart() {
+   echo "Spinning up Ubuntu VM..."
+  multipass launch -n ubuntu --cloud-init ~/Personal/IaaC/cloud-init.yaml
   multipass shell ubuntu
+}
+
+function uend() {
+  echo "Tearing down Ubuntu VM..."
+  multipass delete ubuntu
+  multipass purge 
 }
 
 # set language
