@@ -67,12 +67,11 @@ function vm() {
   if [ $1 == 'up' ]
   then
     ustart()
-  elif [ $1 == 'down']
+  fi
+
+  if [ $1 == 'down']
   then
     uend()
-  else
-  then
-    echo "Invalid command"
   fi
 }
 
