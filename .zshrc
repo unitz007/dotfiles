@@ -73,7 +73,7 @@ function vm() {
   else
   then
     echo "Invalid command"
-  f
+  fi
 }
 
 function ustart() {
