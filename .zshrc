@@ -57,6 +57,25 @@ function commit() {
 	fi
 }
 
+function vm() {
+  if [ $# -eq 0 ]
+  then
+    echo "Usage: vm $arg"
+    return
+  fi
+
+  if [ $1 == 'up' ]
+  then
+    ustart()
+  elif [ $1 == 'down']
+  then
+    uend()
+  else
+  then
+    echo "Invalid command"
+  f
+}
+
 function ustart() {
    echo "Spinning Up Ubuntu VM..."
   multipass launch -n ubuntu --cloud-init ~/Personal/IaaC/cloud-init.yaml
