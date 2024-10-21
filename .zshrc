@@ -58,19 +58,16 @@ function commit() {
 }
 
 function vm() {
-  if [ $# -eq 0 ]
-  then
+  if [ $# -eq 0 ]; then
     echo "Usage: vm $arg"
     return
   fi
 
-  if [ $1 == 'up' ]
-  then
+  if [ $1 == 'up' ]; then
     ustart()
   fi
 
-  if [ $1 == 'down']
-  then
+  if [ $1 == 'down']; then
     uend()
   fi
 }
