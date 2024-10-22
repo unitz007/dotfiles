@@ -73,8 +73,8 @@ function commit() {
 # }
 
 function ustart() {
-   echo "Spinning Up Ubuntu VM..."
-  multipass launch -n ubuntu --cloud-init ~/Personal/IaaC/cloud-init.yaml
+  echo "Spinning Up Ubuntu VM..."
+  multipass launch -n ubuntu --cloud-init ~/cloud-init.yaml
   multipass shell ubuntu
 }
 
