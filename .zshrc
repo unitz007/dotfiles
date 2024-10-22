@@ -57,20 +57,20 @@ function commit() {
 	fi
 }
 
-function vm() {
-  if [[ $# -eq 0 ]]; then
-    echo "Usage: vm $arg"
-    return
-  fi
+# function vm() {
+#   if [[ $# -eq 0 ]]; then
+#     echo "Usage: vm $arg"
+#     return
+#   fi
 
-  if [[ $1 == 'up' ]]; then
-    ustart()
-  fi
+#   if [[ $1 == 'up' ]]; then
+#     ustart()
+#   fi
 
-  if [[ $1 == 'down']]; then
-    uend()
-  fi
-}
+#   if [[ $1 == 'down']]; then
+#     uend()
+#   fi
+# }
 
 function ustart() {
    echo "Spinning Up Ubuntu VM..."
