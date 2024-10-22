@@ -1,0 +1,22 @@
+#cloud-config
+users:
+  - default
+  - name: ubuntu
+    gecos: Ubuntu
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    shell: /bin/bash
+package_update: true
+package_upgrade: true
+packages:
+  - zsh
+  - unzip
+  - stow
+  - neovim
+  - nushell
+runcmd:
+  - curl -s https://ohmyposh.dev/install.sh | bash -s
+  - sudo snap install nushell --classic
+  - git clone https://github.com/unitz007/dotfiles.git
+  - sudo mv /dotfiles/.zshrc /dotfiles/.oh-my-posh-theme.json /home/ubuntu
+  - echo 'exec zsh' >> /home/ubuntu/.bashrc
