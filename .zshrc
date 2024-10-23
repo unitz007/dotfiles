@@ -74,7 +74,7 @@ function commit() {
 
 function ustart() {
   echo "Spinning Up Ubuntu VM..."
-  multipass launch -n ubuntu --cloud-init ~/cloud-init.yaml
+  multipass launch -n ubuntu --cpus 4 --disk 20G --memory 2G  --cloud-init ~/cloud-init.yaml
   multipass shell ubuntu
 }
 
