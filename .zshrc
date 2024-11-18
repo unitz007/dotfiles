@@ -35,7 +35,7 @@ alias ..="cd .."
 alias cls='clear'
 alias tf=terraform
 alias tfp="terraform plan"
-alias tfa="tf apply"
+lias tfa="tf apply"
 
 function commit() {
 	if [[ "$1" == "" ]]
