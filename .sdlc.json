@@ -9,11 +9,6 @@
     "test": "go test ./...",
     "build": "go build ."
   },
-  "Package.swift": {
-    "run": "swift run",
-    "test": "swift test",
-    "build": "swift build"
-  },
   "Cargo.toml": {
     "run": "cargo run",
     "test": "cargo test",
