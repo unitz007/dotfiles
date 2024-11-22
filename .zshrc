@@ -33,7 +33,7 @@ alias gc="git checkout"
 alias back="cd ../"
 alias cls='clear'
 alias tf=terraform
-alias tfp="terraform plan"
+#alias tfp="terraform plan"
 alias tfa="tf apply"
 
 function commit() {
