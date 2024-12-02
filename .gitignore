@@ -1,9 +1,9 @@
 # ignore oh-my-zsh custom directory
- .oh-my-zsh/custom
- .config/zed
- .config/fish
- .config/iterm2
- iterm
+.oh-my-zsh/custom
+.config/zed
+.config/fish
+.config/iterm2
+iterm
 
 #IDE directories
 .idea
