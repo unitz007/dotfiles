@@ -9,7 +9,7 @@
 eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
 
 export KUBE_EDITOR="nvim"
-#plugins=(zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(zsh-syntax-highlighting)
 #source $ZSH/oh-my-zsh.sh
 
 # Aliases
