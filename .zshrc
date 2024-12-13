@@ -35,7 +35,7 @@ alias cls='clear'
 alias tf=terraform
 alias tfp="terraform plan"
 alias tfa="tf apply"
-alias rmDir="rm -rf $1"
+# alias rmDir="rm -rf $1"
 
 function commit() {
 	if [[ "$1" == "" ]]
