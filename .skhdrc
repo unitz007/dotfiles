@@ -1,7 +1,7 @@
 # App Shortcuts
 ctrl - i : open -a 'iTerm'
-alt - g : open -a 'Goland'
-alt - v : open -a 'Visual Studio Code'
-alt - z : open -a 'Zed'
-alt - b : open -a 'Safari'
-alt - s : open -a 'Settings'
+ctrl - g : open -a 'Goland'
+ctrl - v : open -a 'Visual Studio Code'
+ctrl - z : open -a 'Zed'
+ctrl - b : open -a 'Safari'
+ctrl - s : open -a 'Settings'
