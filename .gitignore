@@ -4,6 +4,10 @@
 .config/fish
 .config/iterm2
 iterm
+.config/helix
+.config/filezilla
+.config/github-copilot
+.config/linode-cli
 
 #IDE directories
 .idea
