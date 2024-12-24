@@ -7,13 +7,3 @@ ctrl - b : open -a 'Safari'
 ctrl - s : open -a 'Settings'
 ctrl - w : open -a 'Wezterm'
 ctrl - m : open -a 'Mail'
-
-# Close shortcut
-alt - m : close -a 'Mail'
-alt - i : close -a 'iTerm'
-alt - g : close -a 'Goland'
-alt - v : close -a 'Visual Studio Code'
-alt - z : close -a 'Zed'
-alt - b : close -a 'Safari'
-alt - s : close -a 'Settings'
-alt - w : close -a 'Wezterm'
