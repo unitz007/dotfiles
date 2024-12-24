@@ -1,5 +1,5 @@
 # App Shortcuts
-alt - i : open -a 'iterm2'
+alt - i : open -a 'iIerm'
 alt - g : open -a 'Goland'
 alt - v : open -a 'Visual Studio Code'
 alt - z : open -a 'Zed'
