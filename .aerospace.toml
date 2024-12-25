@@ -123,7 +123,7 @@ alt-M = 'workspace M'
 alt-shift-B = 'move-node-to-workspace B'
 alt-shift-F = 'move-node-to-workspace F'
 alt-shift-I = 'move-node-to-workspace I'
-alt-shiftM2 = 'move-node-to-workspace M'
+alt-shift-M = 'move-node-to-workspace M'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
