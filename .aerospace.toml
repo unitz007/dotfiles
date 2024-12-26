@@ -164,7 +164,7 @@ shift-down = ['volume set 0', 'mode main']
 # Callbacks configuration 
 [[on-window-detected]]
 if.app-id = 'Goland'
-run = ['move-node-to-workspace CODING']
+run = ['move-node-to-workspace CODING', 'fullscreen']
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
