@@ -8,6 +8,7 @@ iterm
 .config/filezilla
 .config/github-copilot
 .config/linode-cli
+.config/neofetch/config.conf
 
 #IDE directories
 .idea
