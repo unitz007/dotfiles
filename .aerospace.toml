@@ -170,4 +170,4 @@ shift-down = ['volume set 0', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
-run = 'move-node-workspace BROWSER'
+run = 'move-node-to-workspace BROWSER'
