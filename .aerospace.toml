@@ -162,7 +162,7 @@ shift-down = ['volume set 0', 'mode main']
 # Callbacks configuration 
 [[on-window-detected]]
 if.app-name-regex-substring='Goland'
-run = 'move-node-worksapce IDE'
+run = 'move-node-worksapce CODING'
 
 [[on-window-detected]]
 if.app-name-regex-substring='iTerm2'
