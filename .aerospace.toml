@@ -166,8 +166,8 @@ shift-down = ['volume set 0', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
-run = 'move-node-worksapce TERMINAL'
+run = 'move-node-workspace TERMINAL'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
-run = 'move-node-worksapce BROSWER'
+run = 'move-node-workspace BROSWER'
