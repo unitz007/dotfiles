@@ -7,6 +7,10 @@
 
 # Variables & Assignments
 eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+  tmux attach-session -t default || tmux new-session -s default
+fi
+
 
 export KUBE_EDITOR="nvim"
 #plugins=(zsh-syntax-highlighting)
