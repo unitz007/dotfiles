@@ -161,13 +161,13 @@ shift-down = ['volume set 0', 'mode main']
 
 # Callbacks configuration 
 [[on-window-detected]]
-if.app-name-regex-substring='Goland'
+if.app-name-regex-substring = 'Goland'
 run = 'move-node-worksapce CODING'
 
 [[on-window-detected]]
-if.app-name-regex-substring='iTerm2'
+if.app-name-regex-substring = 'iTerm2'
 run = 'move-node-worksapce TERMINAL'
 
 [[on-window-detected]]
-if.app-name-regex-substring='Safari'
+if.app-name-regex-substring = 'Safari'
 run = 'move-node-worksapce BROSWER'
