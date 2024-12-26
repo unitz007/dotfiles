@@ -6,6 +6,10 @@
 # confirmations, etc.) must go above this block; everything else may go below.
 
 # load tmux
+if [ -z "$TMUX" ]
+then
+    tmux attach -t TMUX || tmux new -s TMUX
+fi
 
 # Variables & Assignments
 eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
