@@ -163,7 +163,7 @@ shift-down = ['volume set 0', 'mode main']
 
 # Callbacks configuration 
 [[on-window-detected]]
-if.app-id = 'Goland'
+if.app-id = 'com.jetbrains.goland'
 run = 'move-node-to-workspace CODING'
 
 [[on-window-detected]]
