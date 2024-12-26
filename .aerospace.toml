@@ -116,7 +116,7 @@ alt-shift-equal = 'resize smart +50'
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-c = 'workspace CODING'
 alt-b = 'workspace BROSWER'
-alt-t = 'workspace TERMINAL'
+alt-t = 'workspace UTILITY'
 
 # alt-F = 'workspace F'
 # alt-I = 'workspace I'
@@ -125,7 +125,7 @@ alt-t = 'workspace TERMINAL'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-c = 'move-node-to-workspace CODING'
 alt-shift-b = 'move-node-to-workspace BROWSER'
-alt-shift-t = 'move-node-to-workspace TERMINAL'
+alt-shift-t = 'move-node-to-workspace UTILITY'
 
 # alt-shift-F = 'move-node-to-workspace F'
 # alt-shift-I = 'move-node-to-workspace I'
@@ -168,11 +168,15 @@ run = 'move-node-to-workspace CODING'
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
-run = 'move-node-to-workspace TERMINAL'
+run = 'move-node-to-workspace CODING'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
 run = 'move-node-to-workspace BROWSER'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'move-node-to-workspace UTILTY'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
