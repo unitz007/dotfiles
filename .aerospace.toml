@@ -169,5 +169,5 @@ if.app-id = 'com.googlecode.iterm2'
 run = 'move-node-worksapce TERMINAL'
 
 [[on-window-detected]]
-if.app-id = 'com.apple.Safari
+if.app-id = 'com.apple.Safari'
 run = 'move-node-worksapce BROSWER'
