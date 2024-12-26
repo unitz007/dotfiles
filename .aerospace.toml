@@ -160,14 +160,14 @@ up = 'volume up'
 shift-down = ['volume set 0', 'mode main']
 
 # Callbacks configuration 
-[[on-window-detected]]
-if.app-name-regex-substring = 'Goland'
-run = 'move-node-worksapce CODING'
+#[[on-window-detected]]
+#if.app-id = 'Goland'
+#run = 'move-node-worksapce CODING'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'iTerm2'
+if.app-id = 'com.googlecode.iterm2'
 run = 'move-node-worksapce TERMINAL'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'Safari'
+if.app-id = 'com.apple.Safari
 run = 'move-node-worksapce BROSWER'
