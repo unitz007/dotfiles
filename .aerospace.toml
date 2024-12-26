@@ -158,3 +158,16 @@ alt-shift-l = ['join-with right', 'mode main']
 down = 'volume down'
 up = 'volume up'
 shift-down = ['volume set 0', 'mode main']
+
+# Callbacks configuration 
+[[on-window-detected]]
+if.app-name='Goland'
+run = 'move-node-worksapce IDE'
+
+[[on-window-detected]]
+if.app-name='iTerm2'
+run = 'move-node-worksapce TERMINAL'
+
+[[on-window-detected]]
+if.app-name='Safari'
+run = 'move-node-worksapce BROSWER'
