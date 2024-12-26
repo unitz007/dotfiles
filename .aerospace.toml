@@ -164,9 +164,9 @@ shift-down = ['volume set 0', 'mode main']
 #if.app-id = 'Goland'
 #run = 'move-node-worksapce CODING'
 
-[[on-window-detected]]
-if.app-id = 'com.googlecode.iterm2'
-run = 'move-node-workspace TERMINAL'
+#[[on-window-detected]]
+#if.app-id = 'com.googlecode.iterm2'
+#run = 'move-node-workspace TERMINAL'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
