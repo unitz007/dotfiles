@@ -160,13 +160,13 @@ up = 'volume up'
 shift-down = ['volume set 0', 'mode main']
 
 # Callbacks configuration 
-#[[on-window-detected]]
-#if.app-id = 'Goland'
-#run = 'move-node-worksapce CODING'
+[[on-window-detected]]
+if.app-id = 'Goland'
+run = 'move-node-to-workspace CODING'
 
 #[[on-window-detected]]
-#if.app-id = 'com.googlecode.iterm2'
-#run = 'move-node-workspace TERMINAL'
+if.app-id = 'com.googlecode.iterm2'
+run = 'move-node-to-workspace TERMINAL'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
