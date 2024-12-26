@@ -117,6 +117,7 @@ alt-shift-equal = 'resize smart +50'
 alt-c = 'workspace CODING'
 alt-b = 'workspace BROSWER'
 alt-t = 'workspace TERMINAL'
+alt-m = 'workspace MESSAGING'
 
 # alt-F = 'workspace F'
 # alt-I = 'workspace I'
@@ -126,6 +127,7 @@ alt-t = 'workspace TERMINAL'
 alt-shift-c = 'move-node-to-workspace CODING'
 alt-shift-b = 'move-node-to-workspace BROWSER'
 alt-shift-t = 'move-node-to-workspace TERMINAL'
+alt-shift-m = 'move-node-to-workspace MESSAGING'
 
 # alt-shift-F = 'move-node-to-workspace F'
 # alt-shift-I = 'move-node-to-workspace I'
@@ -173,6 +175,10 @@ run = 'move-node-to-workspace TERMINAL'
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
 run = 'move-node-to-workspace BROWSER'
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = 'move-node-to-workspace MESSAGING'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
