@@ -5,6 +5,9 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 
+# load tmux
+if [ "$TMUX" = "" ]; then tmux; fi
+
 # Variables & Assignments
 eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
 
