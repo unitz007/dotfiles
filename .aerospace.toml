@@ -162,12 +162,12 @@ shift-down = ['volume set 0', 'mode main']
 # Callbacks configuration 
 [[on-window-detected]]
 if.app-id = 'Goland'
-run = 'move-node-to-workspace CODING'
+run = ['move-node-to-workspace CODING', 'toggle fullscreen']
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
-run = 'move-node-to-workspace TERMINAL'
+run = ['move-node-to-workspace TERMINAL', 'toggle fullscreen']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
-run = 'move-node-to-workspace BROWSER'
+run = ['move-node-to-workspace BROWSER', 'toggle fullscreen']
