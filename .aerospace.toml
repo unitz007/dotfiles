@@ -164,7 +164,7 @@ shift-down = ['volume set 0', 'mode main']
 # Callbacks configuration 
 [[on-window-detected]]
 if.app-id = 'Goland'
-run = ['move-node-to-workspace CODING', 'fullscreen']
+run = 'move-node-to-workspace CODING'
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
@@ -173,3 +173,7 @@ run = 'move-node-to-workspace TERMINAL'
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
 run = 'move-node-to-workspace BROWSER'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
