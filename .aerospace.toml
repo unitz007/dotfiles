@@ -164,7 +164,7 @@ shift-down = ['volume set 0', 'mode main']
 if.app-id = 'Goland'
 run = 'move-node-to-workspace CODING'
 
-#[[on-window-detected]]
+[[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
 run = 'move-node-to-workspace TERMINAL'
 
