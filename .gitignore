@@ -9,6 +9,8 @@ iterm
 .config/github-copilot
 .config/linode-cli
 .config/neofetch/config.conf
+.config/gh
+.nixpkgs
 
 #IDE directories
 .idea

@@ -101,6 +101,9 @@ function uend() {
 # set language
 export LANG=en_US.UTF-8
 
+# neofetch
+neofetch
+
 [[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
 
 # Q post block. Keep at the bottom of this file.
