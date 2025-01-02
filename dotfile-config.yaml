@@ -11,6 +11,5 @@ home:
           - keypad.toml
           - theme.toml
       - nvim;
-      - tmux:
-          - tmux.conf
+      - tmux;
 
