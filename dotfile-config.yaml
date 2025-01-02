@@ -1,0 +1,16 @@
+home:
+  - .zshrc
+  - .sdlc.json
+  - cloud-init.yaml
+  - .skhdrc
+  - .oh-my-posh-theme.json
+  - .aerospace.toml
+  - .config:
+      - yazi:
+          - yazi.toml
+          - keypad.toml
+          - theme.toml
+      - nvim;
+      - tmux:
+          - tmux.conf
+
