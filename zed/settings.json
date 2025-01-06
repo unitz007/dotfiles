@@ -2,7 +2,7 @@
   "ui_front_size": 16,
   "buffer_font_size": 16,
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Atelier Cave Dark",
     "dark": "Atelier Cave Dark"
   }
