@@ -12,4 +12,5 @@ home:
           - theme.toml
       - nvim;
       - tmux;
+      - zed;
 
