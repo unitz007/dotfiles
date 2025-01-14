@@ -34,7 +34,7 @@ alias tf=terraform
 alias tfp="terraform plan"
 alias tfa="tf apply"
 alias rmDir="rm -rf $1"
-#alias gwp="cd ~/Personal/Golang" # Golang workspace
+alias gwp="cd ~/Personal/Golang" # Golang workspace
 
 function commit() {
 	if [[ "$1" == "" ]]
