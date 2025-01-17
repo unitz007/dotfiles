@@ -18,6 +18,7 @@ alias run="sdlc run"
 alias tst="sdlc test"
 alias build="sdlc build"
 alias vim=nvim
+alias vi=nvim
 alias update="brew upgrade && brew upgrade"
 alias k=kubectl
 alias kgs="kubectl get services"
