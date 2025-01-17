@@ -185,5 +185,9 @@ if.app-id = 'com.apple.finder'
 run = 'move-node-to-workspace UTILTY'
 
 [[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace BROWSER'
+
+[[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = 'layout floating'
