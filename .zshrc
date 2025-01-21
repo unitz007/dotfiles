@@ -14,7 +14,6 @@ export VISUAL=nvim
 # Aliases
 alias ls="nu -c ls"
 alias la="nu -c 'ls -la'"
-alias python=python3
 alias run="sdlc run"
 alias tst="sdlc test"
 alias build="sdlc build"
