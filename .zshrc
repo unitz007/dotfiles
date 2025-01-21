@@ -9,6 +9,7 @@
 eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
 
 export KUBE_EDITOR="nvim"
+export VISUAL=nvim
 
 # Aliases
 alias ls="nu -c ls"
