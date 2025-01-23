@@ -1,6 +1,6 @@
 # App Shortcuts
 ctrl - g : open -a 'Goland'
-ctrl - v : open -a 'Visual Studio Code'
+ctrl - v : open -a 'Fleet'
 ctrl - z : open -a 'Zed'
 ctrl - b : open -a 'Safari'
 ctrl - s : open -a 'Settings'
