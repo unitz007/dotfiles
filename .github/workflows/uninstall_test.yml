@@ -1,0 +1,61 @@
+name: Uninstall Verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  uninstall_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run install script
+        run: |
+          set -e
+          bash install.sh
+
+      - name: Verify symlinks exist after install
+        run: |
+          set -e
+          # Find symlinks in the home directory that point to any file inside the repository
+          SYMLINKS=$(find "$HOME" -maxdepth 1 -type l -lname "$(pwd)/*")
+          if [ -z "$SYMLINKS" ]; then
+            echo "❌ No symlinks were created by install.sh"
+            exit 1
+          fi
+          echo "✅ Symlinks created:"
+          echo "$SYMLINKS"
+
+      - name: Run uninstall script
+        run: |
+          set -e
+          bash uninstall.sh
+
+      - name: Verify cleanup after uninstall
+        run: |
+          set -e
+          # Ensure no symlinks created by install.sh remain
+          SYMLINKS=$(find "$HOME" -maxdepth 1 -type l -lname "$(pwd)/*")
+          if [ -n "$SYMLINKS" ]; then
+            echo "❌ Unexpected symlinks still present after uninstall:"
+            echo "$SYMLINKS"
+            exit 1
+          fi
+
+          # Ensure any backup files (e.g., *.backup) have been removed or restored
+          BACKUPS=$(find "$HOME" -maxdepth 1 -name "*.backup")
+          if [ -n "$BACKUPS" ]; then
+            echo "❌ Backup files still present after uninstall:"
+            echo "$BACKUPS"
+            exit 1
+          fi
+
+          echo "✅ Uninstall verification passed – no stray symlinks or backup files remain."
