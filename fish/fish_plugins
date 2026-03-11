@@ -1,0 +1,4 @@
+# Example Fish plugins (using fisher)
+# Uncomment the following line after installing fisher:
+# fisher add jorgebucaran/fisher
+# fisher add ilancosman/tide
