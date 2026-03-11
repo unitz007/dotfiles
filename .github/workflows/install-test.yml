@@ -1,0 +1,82 @@
+name: Install Script CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-install:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up temporary HOME directory
+        id: setup_home
+        run: |
+          TMP_HOME=$(mktemp -d)
+          echo "TMP_HOME=$TMP_HOME" >> $GITHUB_ENV
+          echo "HOME=$TMP_HOME" >> $GITHUB_ENV
+          echo "Temporary HOME set to $TMP_HOME"
+
+      - name: Make install.sh executable
+        run: chmod +x ./install.sh
+
+      - name: Run install.sh
+        run: |
+          ./install.sh
+
+      - name: Verify expected symlinks
+        env:
+          REPO_ROOT: ${{ github.workspace }}
+        run: |
+          # Define files that should be ignored by the symlink check
+          EXCLUDE=("install.sh" ".gitignore" "README.md" "LICENSE" ".github" ".git")
+          
+          # Function to determine if an element is in the exclude list
+          is_excluded() {
+            local item="$1"
+            for ex in "${EXCLUDE[@]}"; do
+              if [[ "$item" == "$ex" ]]; then
+                return 0
+              fi
+            done
+            return 1
+          }
+
+          # Iterate over repository root files
+          for f in *; do
+            # Skip directories and excluded entries
+            if [[ -d "$f" ]]; then
+              continue
+            fi
+            if is_excluded "$f"; then
+              continue
+            fi
+
+            TARGET="${HOME}/${f}"
+            if [[ ! -L "$TARGET" ]]; then
+              echo "❌ Missing symlink: $TARGET"
+              exit 1
+            fi
+
+            LINK_TARGET=$(readlink "$TARGET")
+            EXPECTED="${REPO_ROOT}/${f}"
+            if [[ "$LINK_TARGET" != "$EXPECTED" ]]; then
+              echo "❌ Symlink $TARGET points to $LINK_TARGET, expected $EXPECTED"
+              exit 1
+            fi
+          done
+
+          echo "✅ All expected symlinks are present and correct."
+
+      - name: Cleanup temporary HOME
+        if: always()
+        run: |
+          rm -rf "$TMP_HOME"
