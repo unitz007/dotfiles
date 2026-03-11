@@ -1,0 +1,8 @@
+# Windows-side WSL2 configuration
+# This file resides in the Windows user profile directory (e.g., C:\Users\<User>\.wslconfig)
+
+[wsl2]
+memory=4GB
+processors=2
+swap=0
+localhostForwarding=true
