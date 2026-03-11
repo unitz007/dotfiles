@@ -1,16 +1,9 @@
-# ignore oh-my-zsh custom directory
-.oh-my-zsh/custom
-.config/zed
-.config/fish
-.config/iterm2
-iterm
-.config/helix
-.config/filezilla
-.config/github-copilot
-.config/linode-cli
-.config/neofetch/config.conf
-.config/gh
-.nixpkgs
+# OS‑specific files
+.DS_Store
+Thumbs.db
 
-#IDE directories
-.idea
+# Backup and temporary files
+*~
+*.bak
+*.swp
+*.swo
