@@ -1,0 +1,51 @@
+name: Lint Configurations
+
+on:
+  push:
+    paths:
+      - '**/*.sh'
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '**/*.md'
+  pull_request:
+    paths:
+      - '**/*.sh'
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '**/*.md'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install linters
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck shfmt yamllint
+          npm install -g markdownlint-cli
+
+      - name: ShellCheck (shell scripts)
+        run: |
+          # Find all .sh files and run shellcheck
+          shopt -s globstar nullglob
+          shellcheck -x **/*.sh
+
+      - name: shfmt (shell script formatting)
+        run: |
+          shopt -s globstar nullglob
+          # -d prints diffs; exit code 0 if no differences, 1 otherwise
+          shfmt -d **/*.sh
+
+      - name: yamllint (YAML files)
+        run: |
+          shopt -s globstar nullglob
+          # Use the default configuration; you can customize as needed
+          yamllint -d "{extends: default, rules: {line-length: {max: 120}}}" **/*.yml **/*.yaml
+
+      - name: markdownlint (Markdown files)
+        run: |
+          # Lint all markdown files, ignoring typical vendor directories
+          markdownlint "**/*.md" --ignore node_modules --ignore vendor
