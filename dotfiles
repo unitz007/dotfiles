@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Main entry point for the dotfiles CLI
+
+set -euo pipefail
+
+# Determine script directory to locate subcommands
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Load common utilities if any (placeholder)
+# source "${SCRIPT_DIR}/lib.sh"
+
+# Show help if no arguments
+if [[ $# -eq 0 ]]; then
+    echo "dotfiles: a tool to manage your dotfiles."
+    echo "Usage: dotfiles <command> [options]"
+    echo "Commands:"
+    echo "  backup    Create a backup of managed dotfiles"
+    # Add other existing commands here...
+    exit 1
+fi
+
+COMMAND="$1"
+shift
+
+case "${COMMAND}" in
+    backup)
+        # Execute the backup subcommand script
+        "${SCRIPT_DIR}/backup.sh" "$@"
+        ;;
+    # Existing command cases (sync, status, etc.) should be listed here.
+    # For example:
+    # sync)
+    #     "${SCRIPT_DIR}/sync.sh" "$@"
+    #     ;;
+    # status)
+    #     "${SCRIPT_DIR}/status.sh" "$@"
+    #     ;;
+    *)
+        echo "Unknown command: ${COMMAND}"
+        echo "Run 'dotfiles' without arguments to see available commands."
+        exit 1
+        ;;
+esac
