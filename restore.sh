@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installer script with dry‑run support
+# Restore script with dry‑run support
 
 set -euo pipefail
 
@@ -55,13 +55,13 @@ ln()   { exec_cmd command ln   "$@"; }
 rm()   { exec_cmd command rm   "$@"; }
 
 # ----------------------------------------------------------------------
-# Rest of the original installer logic (unchanged except that it now
+# Rest of the original restore logic (unchanged except that it now
 # uses the overridden cp/mv/ln/rm functions)
 # ----------------------------------------------------------------------
-# Example placeholder – replace with the actual installer implementation
+# Example placeholder – replace with the actual restore implementation
 # -------------------------------------------------
 # The original script likely contains many calls such as:
-#   cp -r source dest
+#   cp -r backup dest
 #   mv old new
 #   ln -s target link
 #   rm -f file
@@ -69,10 +69,7 @@ rm()   { exec_cmd command rm   "$@"; }
 # we have overridden the commands above.
 # -------------------------------------------------
 
-# (Insert the original installer code here – no further changes required
-#  as the command overrides handle dry‑run behavior.)
-
 # If the original script defines its own functions named cp/mv/ln/rm,
 # rename them before this block to avoid clashes.
 
-# End of install.sh
+# End of restore.sh
