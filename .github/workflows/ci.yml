@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          pytest
+
+      - name: Run install script (Unix)
+        run: |
+          chmod +x ./install.sh
+          ./install.sh -p default
+
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up PowerShell 7
+        uses: actions/setup-powershell@v2
+        with:
+          version: '7.4'
+
+      - name: Install dependencies (if any)
+        run: |
+          # Add any Windows‑specific dependency installation here
+          Write-Host "No additional dependencies required."
+
+      - name: Run install script (Windows)
+        run: |
+          pwsh ./install.ps1 -Profile default
