@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Homebrew and bats-core (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          if ! command -v brew >/dev/null; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          fi
+          brew install bats-core
+
+      - name: Run install script
+        run: ./install.sh
+
+      - name: Run status script
+        run: ./status.sh
+
+      - name: Run restore script
+        run: ./restore.sh
+
+      - name: Run uninstall script
+        run: ./uninstall.sh
