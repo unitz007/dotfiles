@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Primary entry point for the dotfiles repository.
+# Supports sub‑commands such as 'install' and the newly added 'wizard'.
+
+set -euo pipefail
+
+# If no sub‑command is provided, show a short help message.
+if [[ $# -eq 0 ]]; then
+    echo "Usage: $0 {install|wizard} [options]"
+    exit 1
+fi
+
+cmd="${1}"
+shift || true
+
+case "$cmd" in
+    install)
+        # Forward all arguments to the main install script.
+        if [[ -x "./install.sh" ]]; then
+            ./install.sh "$@"
+        else
+            echo "Error: install.sh not found or not executable."
+            exit 1
+        fi
+        ;;
+    wizard)
+        # Run the interactive setup wizard.
+        if [[ -x "./wizard.sh" ]]; then
+            ./wizard.sh "$@"
+        else
+            echo "Error: wizard.sh not found or not executable."
+            exit 1
+        fi
+        ;;
+    *)
+        echo "Unknown command: $cmd"
+        echo "Available commands: install, wizard"
+        exit 1
+        ;;
+esac
