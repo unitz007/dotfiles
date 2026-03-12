@@ -1,0 +1,44 @@
+name: PowerShell Linting (PSScriptAnalyzer)
+
+on:
+  push:
+    paths:
+      - '**/*.ps1'
+  pull_request:
+    paths:
+      - '**/*.ps1'
+
+permissions:
+  contents: read
+  security-events: write  # needed for SARIF upload
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          # Install the latest version of PSScriptAnalyzer for the current user
+          Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+
+      - name: Run PSScriptAnalyzer and generate SARIF report
+        id: analyze
+        shell: pwsh
+        run: |
+          $outputPath = "$env:GITHUB_WORKSPACE/psscriptanalyzer.sarif"
+          # Run the analyzer on all .ps1 files recursively.
+          # -EnableExit causes the step to fail if any warning or error is found.
+          Invoke-ScriptAnalyzer -Path "$env:GITHUB_WORKSPACE" -Recurse -Severity Warning,Error `
+            -Format SARIF -OutputFile $outputPath -EnableExit
+
+          # Emit the SARIF file location for the upload step.
+          Write-Output "sarif=$outputPath" >> $env:GITHUB_OUTPUT
+
+      - name: Upload SARIF report to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ steps.analyze.outputs.sarif }}
