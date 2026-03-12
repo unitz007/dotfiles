@@ -1,0 +1,26 @@
+name: Bats Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Bats
+        uses: bats-core/bats-action@v2
+        with:
+          bats-version: 1.10.0
+
+      - name: Run Bats test suite
+        run: bats -r tests
