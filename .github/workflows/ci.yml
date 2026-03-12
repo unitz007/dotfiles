@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Bash (for Windows)
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: bash
+
+      - name: Run install script
+        run: ./install.sh
+        shell: bash
+
+      - name: Verify symlinks
+        run: |
+          # Verify that all expected symlinks exist and point to the correct targets
+          ./test_symlinks.sh
+        shell: bash
+
+      - name: Run uninstall script
+        run: ./uninstall.sh
+        shell: bash
