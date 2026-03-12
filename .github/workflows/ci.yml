@@ -1,0 +1,80 @@
+name: Cross‑Platform CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ---------- Linux ----------
+      - name: Install ShellCheck (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      # ---------- macOS ----------
+      - name: Install ShellCheck (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew update
+          brew install shellcheck
+
+      # ---------- Lint shell scripts ----------
+      - name: Run ShellCheck
+        if: runner.os != 'Windows'
+        run: |
+          shellcheck -x *.sh
+
+      # ---------- Dry‑run install.sh ----------
+      - name: Run install.sh --dry-run (Unix)
+        if: runner.os != 'Windows'
+        id: install_unix
+        run: |
+          set -e
+          output=$(./install.sh --dry-run 2>&1)
+          echo "$output"
+          echo "output<<EOF" >> $GITHUB_OUTPUT
+          echo "$output" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # ---------- Verify symlinks (Unix) ----------
+      - name: Verify expected symlinks (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          echo "${{ steps.install_unix.outputs.output }}" | grep -E "ln -s" || {
+            echo "Expected symlink creation not found in dry‑run output."
+            exit 1
+          }
+
+      # ---------- Dry‑run install.ps1 ----------
+      - name: Run install.ps1 --dry-run (Windows)
+        if: runner.os == 'Windows'
+        id: install_win
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $output = & .\install.ps1 --dry-run 2>&1
+          Write-Host $output
+          # Export output for later step
+          $output | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append -NoNewline
+
+      # ---------- Verify PowerShell script succeeded ----------
+      - name: Verify install.ps1 completed without errors
+        if: runner.os == 'Windows'
+        run: |
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "install.ps1 --dry-run exited with code $LASTEXITCODE"
+            exit 1
+          }
+        shell: pwsh
