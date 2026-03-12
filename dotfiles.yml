@@ -1,0 +1,6 @@
+components:
+  zsh: true
+  neovim: true
+  fish: true
+  fonts: true
+  secrets: true
