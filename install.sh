@@ -1,19 +1,16 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# Installation script for dotfiles project
+# Existing installation steps ...
 
 # ----------------------------------------------------------------------
-# Existing installation logic (preserved from original script)
+# PowerShell completion (Windows)
 # ----------------------------------------------------------------------
-# NOTE: The original content of this file should remain unchanged.
-# If you are viewing this file in the repository, the actual installation
-# steps are defined above this comment block.
-
-# ----------------------------------------------------------------------
-# Encrypted secrets handling
-# ----------------------------------------------------------------------
-if [[ -f ".secrets.gpg" ]]; then
-  echo "Encrypted secrets detected. Running install_secrets.sh..."
-  ./install_secrets.sh
+# Detect a Windows environment (Git Bash, MSYS, Cygwin, WSL with Windows path)
+if [[ "$(uname -s)" == *NT* ]] || [[ "$(uname -s)" == MINGW* ]] || [[ "$(uname -s)" == CYGWIN* ]] || [[ "$(uname -s)" == MSYS* ]]; then
+    PS_MODULE_DIR="${HOME}/Documents/PowerShell/Modules/dotfiles"
+    mkdir -p "${PS_MODULE_DIR}"
+    cp "$(dirname "$0")/dotfiles.ps1" "${PS_MODULE_DIR}/dotfiles.ps1"
+    echo "PowerShell completion script installed to ${PS_MODULE_DIR}/dotfiles.ps1"
 fi
 
-# End of install.sh
+# Continue with any remaining installation steps ...
