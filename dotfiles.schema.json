@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "dotfiles configuration",
+  "type": "object",
+  "additionalProperties": true,
+  "description": "Schema for dotfiles.yml. Adjust as needed for your configuration."
+}
