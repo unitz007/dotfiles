@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# Pre‑commit hook: validate dotfiles.yml against JSON schema and ensure repo consistency.
+# This file is intended to be copied into .git/hooks/pre-commit via the provided setup script.
+
+set -euo pipefail
+
+# ----------------------------------------------------------------------
+# Helper: print error and exit
+# ----------------------------------------------------------------------
+die() {
+  echo "pre‑commit hook error: $*" >&2
+  exit 1
+}
+
+# ----------------------------------------------------------------------
+# 1️⃣ Ensure repository is in a consistent state
+# ----------------------------------------------------------------------
+if ! ./status.sh --json; then
+  die "Repository status check failed (status.sh --json)."
+fi
+
+# ----------------------------------------------------------------------
+# 2️⃣ Validate dotfiles.yml against its JSON schema
+# ----------------------------------------------------------------------
+SCHEMA_FILE="dotfiles.schema.json"
+YAML_FILE="dotfiles.yml"
+
+# Verify required files exist
+[[ -f "$SCHEMA_FILE" ]] || die "Schema file '$SCHEMA_FILE' not found."
+[[ -f "$YAML_FILE" ]]   || die "Configuration file '$YAML_FILE' not found."
+
+# Prefer `ajv` (Node.js) if available, otherwise fall back to Python + jsonschema.
+if command -v ajv >/dev/null 2>&1; then
+  # Convert YAML → JSON using yq and pipe into ajv
+  if ! command -v yq >/dev/null 2>&1; then
+    die "yq is required for YAML→JSON conversion when using ajv."
+  fi
+  yq eval -o=json "$YAML_FILE" | ajv validate -s "$SCHEMA_FILE" -d - || die "Schema validation failed (ajv)."
+elif command -v python3 >/dev/null 2>&1; then
+  # Python validation path
+  python3 - <<'PY' "$SCHEMA_FILE" "$YAML_FILE"
+import sys, json, yaml, jsonschema
+
+schema_path, yaml_path = sys.argv[1], sys.argv[2]
+
+with open(schema_path, 'r') as f:
+    schema = json.load(f)
+
+with open(yaml_path, 'r') as f:
+    data = yaml.safe_load(f)
+
+jsonschema.validate(instance=data, schema=schema)
+PY
+  if [[ $? -ne 0 ]]; then
+    die "Schema validation failed (python jsonschema)."
+  fi
+else
+  die "Neither 'ajv' nor 'python3' with the 'jsonschema' package is available for validation."
+fi
+
+echo "✅ dotfiles.yml passed JSON‑schema validation."
+exit 0
