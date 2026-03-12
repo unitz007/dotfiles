@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Main entry point for the dotfiles CLI
+
+set -euo pipefail
+
+# Determine repository root (directory containing this script)
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Helper to display usage
+usage() {
+    cat <<EOF
+Usage: $(basename "$0") <command> [options]
+
+Commands:
+  install      Install symlinks and packages
+  update       Pull latest changes from upstream
+  status       Audit current setup (see \`dotfiles status --help\`)
+  help         Show this help message
+EOF
+    exit 1
+}
+
+# No arguments -> show usage
+[[ $# -eq 0 ]] && usage
+
+cmd="${1}"
+shift
+
+case "$cmd" in
+    install)
+        "$REPO_ROOT/install.sh" "$@"
+        ;;
+    update)
+        "$REPO_ROOT/update.sh" "$@"
+        ;;
+    status)
+        # Forward all flags to the status script
+        "$REPO_ROOT/status.sh" "$@"
+        ;;
+    help|--help|-h)
+        usage
+        ;;
+    *)
+        echo "Error: unknown command '$cmd'"
+        usage
+        ;;
+esac
