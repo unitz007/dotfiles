@@ -1,0 +1,35 @@
+site_name: Dotfiles Documentation
+site_url: https://yourusername.github.io/dotfiles
+repo_url: https://github.com/yourusername/dotfiles
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Configuration: configuration.md
+  - Components: components.md
+  - Backup & Restore: backup_restore.md
+  - Usage: usage.md
+  - Contributing: contribution.md
+plugins:
+  - search
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
