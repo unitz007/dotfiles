@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+# Pre‑commit hook to validate dotfiles.yml before allowing a commit.
+# This script is installed to .git/hooks/pre-commit via setup_hooks.sh.
+
+# If the user explicitly asked to skip hooks, just exit successfully.
+# Git passes the original command line arguments in the GIT_PARAMS env var.
+if [ -n "$GIT_PARAMS" ] && echo "$GIT_PARAMS" | grep -q -- '--skip-hooks'; then
+    exit 0
+fi
+
+# Path to the repository root (the directory containing this hook's parent .git)
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+CONFIG_FILE="$REPO_ROOT/dotfiles.yml"
+
+# Determine which validator script is available.
+VALIDATOR_SH="$REPO_ROOT/validate_config.sh"
+VALIDATOR_PY="$REPO_ROOT/validate_config.py"
+
+if [ -x "$VALIDATOR_SH" ]; then
+    "$VALIDATOR_SH" "$CONFIG_FILE"
+elif [ -x "$VALIDATOR_PY" ]; then
+    # Prefer python3 if available.
+    if command -v python3 >/dev/null 2>&1; then
+        python3 "$VALIDATOR_PY" "$CONFIG_FILE"
+    else
+        python "$VALIDATOR_PY" "$CONFIG_FILE"
+    fi
+else
+    echo "pre‑commit hook error: No validator (validate_config.sh or validate_config.py) found."
+    exit 1
+fi
+
+# The validator should exit with a non‑zero status on failure.
+if [ $? -ne 0 ]; then
+    echo "Commit aborted: dotfiles.yml validation failed."
+    echo "Fix the errors above or run the validator manually to see details."
+    exit 1
+fi
+
+exit 0
