@@ -1,0 +1,33 @@
+name: Config Validation
+
+# Run on every push and pull request to ensure the dotfiles configuration
+# remains syntactically correct and follows the minimal schema.
+on:
+  push:
+    paths:
+      - 'dotfiles.yml'
+  pull_request:
+    paths:
+      - 'dotfiles.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Run configuration validation
+        run: |
+          chmod +x scripts/validate_config.py
+          scripts/validate_config.py
