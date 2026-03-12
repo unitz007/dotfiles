@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up execution permissions
+        run: |
+          chmod +x *.sh
+
+      - name: Run install script
+        run: ./install.sh
+
+      - name: Run status script
+        run: ./status.sh
+
+      - name: Run backup script
+        run: ./backup.sh
+
+      - name: Run restore script
+        run: ./restore.sh
+
+      - name: Verify symlinks point to correct targets
+        run: |
+          # Adjust these checks to match the expected symlink layout of your project.
+          # Example: verify that a symlink named 'current' points to the expected file.
+          set -e
+          SYMLINKS=(
+            "backup/current"
+            "restore/current"
+          )
+          for link in "${SYMLINKS[@]}"; do
+            if [ ! -L "$link" ]; then
+              echo "❌ Expected symlink '$link' does not exist."
+              exit 1
+            fi
+            target=$(readlink "$link")
+            if [ -z "$target" ]; then
+              echo "❌ Symlink '$link' is empty."
+              exit 1
+            fi
+            echo "✅ Symlink '$link' points to '$target'."
+          done
