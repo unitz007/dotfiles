@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Main entry point for the dotfiles CLI.
+# Supports sub‑commands such as: install, update, ...
+
+set -euo pipefail
+
+# Determine the directory of this script (repo root)
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "${REPO_ROOT}"
+
+# No arguments – show help
+if [[ $# -eq 0 ]]; then
+  echo "Usage: dotfiles <command> [options]"
+  echo "Commands:"
+  echo "  install    Install or update dotfiles"
+  echo "  update     Pull latest changes and re‑apply dotfiles"
+  exit 1
+fi
+
+CMD="$1"
+shift
+
+case "${CMD}" in
+  install)
+    # Forward to the install script (preserves any flags)
+    ./install.sh "$@"
+    ;;
+  update)
+    # Forward to the update script (preserves any flags)
+    ./update.sh "$@"
+    ;;
+  *)
+    echo "Error: unknown command '${CMD}'" >&2
+    exit 1
+    ;;
+esac
