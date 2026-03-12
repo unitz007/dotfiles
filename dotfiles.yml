@@ -1,0 +1,10 @@
+# Existing configuration sections (e.g., LINUX, WINDOWS) are assumed to be present above.
+
+MACOS:
+  # Toggle to show hidden files in Finder (true enables, false disables)
+  show_hidden_files: true
+
+  # Toggle to disable the press‑and‑hold behavior for keys (enables key repeat)
+  disable_press_and_hold: true
+
+  # Add additional macOS‑specific toggles here as needed.
