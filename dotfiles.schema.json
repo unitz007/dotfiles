@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dotfiles Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profiles"],
+  "properties": {
+    "profiles": {
+      "type": "object",
+      "description": "Mapping of profile names to their configuration.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["files"],
+        "properties": {
+          "files": {
+            "type": "array",
+            "description": "List of file entries for the profile.",
+            "items": {
+              "type": "object",
+              "required": ["src", "dest"],
+              "additionalProperties": false,
+              "properties": {
+                "src": {
+                  "type": "string",
+                  "description": "Source path relative to the repository."
+                },
+                "dest": {
+                  "type": "string",
+                  "description": "Destination path on the target system."
+                },
+                "mode": {
+                  "type": "string",
+                  "enum": ["symlink", "copy", "hardlink"],
+                  "default": "symlink",
+                  "description": "How the file should be installed."
+                }
+              }
+            }
+          },
+          "variables": {
+            "type": "object",
+            "description": "Optional key/value pairs that can be used in templates.",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "backup": {
+      "type": "object",
+      "description": "Global backup options.",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to backup existing files before overwriting."
+        },
+        "strategy": {
+          "type": "string",
+          "enum": ["rename", "move", "none"],
+          "default": "rename",
+          "description": "Backup strategy to use."
+        },
+        "directory": {
+          "type": "string",
+          "description": "Directory where backups are stored (relative to repository root)."
+        }
+      }
+    },
+    "hooks": {
+      "type": "object",
+      "description": "Optional lifecycle hooks.",
+      "additionalProperties": false,
+      "properties": {
+        "pre_install": {
+          "type": "string",
+          "description": "Shell command executed before installing any files."
+        },
+        "post_install": {
+          "type": "string",
+          "description": "Shell command executed after installing all files."
+        }
+      }
+    }
+  }
+}
