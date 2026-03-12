@@ -2,7 +2,7 @@
 set -e
 
 # ------------------------------------------------------------
-#  Dotfiles installer
+#  Dotfiles uninstaller
 #  Added support for --dry-run flag (Issue #179)
 # ------------------------------------------------------------
 
@@ -24,7 +24,7 @@ Options:
   -h, --help       Show this help message and exit.
 
 Examples:
-  $(basename "$0")               # Perform a real installation
+  $(basename "$0")               # Perform a real uninstallation
   $(basename "$0") --dry-run    # Show what would happen without changing anything
 EOF
 }
@@ -63,8 +63,7 @@ maybe() {
 
 # ----------------------------------------------------------------
 #  Override common filesystem / package commands so they respect
-#  the dry‑run flag.  Using `command` ensures we call the original
-#  binary and not recurse into the wrapper.
+#  the dry‑run flag.
 # ----------------------------------------------------------------
 ln()      { maybe command ln "$@"; }
 cp()      { maybe command cp "$@"; }
@@ -81,42 +80,36 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 HOME_DIR="${HOME}"
 
 # ----------------------------------------------------------------
-#  Backup existing dotfiles
+#  Remove symlinks and restore backups if they exist
 # ----------------------------------------------------------------
-backup_file() {
-  local src="$1"
-  if [[ -e "${HOME_DIR}/${src}" && ! -L "${HOME_DIR}/${src}" ]]; then
-    local backup="${HOME_DIR}/${src}.backup.$(date +%s)"
-    echo "Backing up existing ${src} to ${backup}"
-    mv "${HOME_DIR}/${src}" "${backup}"
+restore_file() {
+  local target="$1"
+  local backup="${HOME_DIR}/${target}.backup"
+
+  if [[ -L "${HOME_DIR}/${target}" ]]; then
+    echo "Removing symlink ${HOME_DIR}/${target}"
+    rm "${HOME_DIR}/${target}"
+  fi
+
+  if [[ -e "${backup}" ]]; then
+    echo "Restoring backup ${backup} → ${HOME_DIR}/${target}"
+    mv "${backup}" "${HOME_DIR}/${target}"
   fi
 }
 
 # ----------------------------------------------------------------
-#  Create symlinks for dotfiles
+#  Uninstall packages (example for Debian/Ubuntu)
 # ----------------------------------------------------------------
-link_dotfile() {
-  local src="$1"
-  local dest="$2"
-  backup_file "$dest"
-  echo "Linking ${src} → ${HOME_DIR}/${dest}"
-  ln -sf "${DOTFILES_DIR}/${src}" "${HOME_DIR}/${dest}"
-}
-
-# ----------------------------------------------------------------
-#  Install required packages (example for Debian/Ubuntu)
-# ----------------------------------------------------------------
-install_packages() {
+uninstall_packages() {
   if command -v apt-get >/dev/null 2>&1; then
-    echo "Updating package index"
-    sudo apt-get update -y
-    echo "Installing required packages"
-    sudo apt-get install -y git curl zsh
+    echo "Removing installed packages"
+    sudo apt-get purge -y git curl zsh
+    sudo apt-get autoremove -y
   elif command -v brew >/dev/null 2>&1; then
-    echo "Installing required packages via Homebrew"
-    brew install git curl zsh
+    echo "Removing installed packages via Homebrew"
+    brew uninstall git curl zsh
   else
-    echo "No supported package manager found (apt-get or brew). Skipping package installation."
+    echo "No supported package manager found (apt-get or brew). Skipping package removal."
   fi
 }
 
@@ -124,9 +117,9 @@ install_packages() {
 #  Main execution
 # ----------------------------------------------------------------
 main() {
-  echo "Starting dotfiles installation (dry‑run: ${DRY_RUN})"
+  echo "Starting dotfiles uninstallation (dry‑run: ${DRY_RUN})"
 
-  # Example list of dotfiles to link
+  # Example list of dotfiles that were installed
   declare -a files=(
     ".bashrc"
     ".zshrc"
@@ -135,12 +128,12 @@ main() {
   )
 
   for file in "${files[@]}"; do
-    link_dotfile "${file}" "${file}"
+    restore_file "${file}"
   done
 
-  install_packages
+  uninstall_packages
 
-  echo "Installation complete."
+  echo "Uninstallation complete."
 }
 
 main
