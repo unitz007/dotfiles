@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Set up the appropriate shell for each platform
+      - name: Set up Bash (Linux/macOS)
+        if: runner.os != 'Windows'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'   # bats-core is installed via pip
+
+      - name: Install Bats (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install bats
+
+      - name: Set up PowerShell (Windows)
+        if: runner.os == 'Windows'
+        uses: actions/setup-powershell@v2
+
+      - name: Install Bats (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          # Install Git for Windows which provides a Bash environment
+          choco install git -y
+          # Ensure bash is on PATH
+          $env:Path += ";$env:ProgramFiles\Git\usr\bin"
+          # Install bats via npm (cross‑platform)
+          npm install -g bats
+
+      # Run the install flow (existing step – assumed to be present)
+      - name: Run install script
+        run: |
+          bash ./install.sh
+
+      # Run the new restore test suite
+      - name: Run Bats tests
+        run: |
+          bats test/
+        shell: bash
