@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Main entry point for the dotfiles manager.
+# Dispatches to platform‑specific scripts.
+
+# Detect Windows environments (Git Bash, WSL, native PowerShell)
+if [[ "$OSTYPE" == "msys"* ]] || [[ "$OSTYPE" == "cygwin"* ]] || [[ "$OSTYPE" == "win32"* ]]; then
+    # Resolve the directory containing this script
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    case "$1" in
+        install)
+            shift
+            # Preserve the --dry-run flag if present
+            DRY_RUN_FLAG=()
+            for arg in "$@"; do
+                if [[ "$arg" == "--dry-run" ]]; then
+                    DRY_RUN_FLAG+=(--dry-run)
+                fi
+            done
+            powershell -NoProfile -ExecutionPolicy Bypass -File "$SCRIPT_DIR/install.ps1" "${DRY_RUN_FLAG[@]}" "$@"
+            exit $?
+            ;;
+        uninstall)
+            shift
+            DRY_RUN_FLAG=()
+            for arg in "$@"; do
+                if [[ "$arg" == "--dry-run" ]]; then
+                    DRY_RUN_FLAG+=(--dry-run)
+                fi
+            done
+            powershell -NoProfile -ExecutionPolicy Bypass -File "$SCRIPT_DIR/uninstall.ps1" "${DRY_RUN_FLAG[@]}" "$@"
+            exit $?
+            ;;
+        *)
+            echo "Unsupported command on Windows: $1"
+            exit 1
+            ;;
+    esac
+fi
+
+# -------------------------------------------------------------------------
+# Existing non‑Windows logic (macOS / Linux) continues unchanged.
+# -------------------------------------------------------------------------
+
+# Example placeholder – replace with the actual implementation if needed.
+case "$1" in
+    install)
+        ./install.sh "${@:2}"
+        ;;
+    uninstall)
+        ./uninstall.sh "${@:2}"
+        ;;
+    *)
+        echo "Usage: $0 {install|uninstall} [--dry-run]"
+        exit 1
+        ;;
+esac
