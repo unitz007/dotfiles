@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # ... existing build steps ...
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # ... existing test steps ...
+
+  shellcheck:
+    name: ShellCheck Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install ShellCheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+      - name: Run ShellCheck on all .sh files
+        run: |
+          files=$(git ls-files '*.sh')
+          if [ -z "$files" ]; then
+            echo "No shell scripts found."
+            exit 0
+          fi
+          shellcheck $files
+
+  shfmt:
+    name: shfmt Formatting Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install shfmt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shfmt
+      - name: Verify formatting with shfmt
+        run: |
+          files=$(git ls-files '*.sh')
+          if [ -z "$files" ]; then
+            echo "No shell scripts found."
+            exit 0
+          fi
+          shfmt -d $files
