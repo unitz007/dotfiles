@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Run the appropriate install script based on OS
+      - name: Run install script (Unix/macOS)
+        if: matrix.os != 'windows-latest'
+        run: |
+          chmod +x install.sh
+          ./install.sh
+        shell: bash
+
+      - name: Run install script (Windows PowerShell Core)
+        if: matrix.os == 'windows-latest'
+        run: |
+          pwsh -NoProfile -ExecutionPolicy Bypass -File install.ps1
+        shell: pwsh
+
+      # Verify that all expected symlinks were created
+      - name: Verify symlinks
+        run: |
+          chmod +x status.sh
+          ./status.sh
+        shell: bash
