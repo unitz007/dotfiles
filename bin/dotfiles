@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Main entry point for the dotfiles CLI.
+# Dispatches sub‑commands to scripts in the ./scripts directory.
+
+set -euo pipefail
+
+# Resolve the directory containing this script (the repo root)
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPTS_DIR="${REPO_ROOT}/scripts"
+
+if [[ $# -eq 0 ]]; then
+  echo "Usage: dotfiles <command> [options]"
+  exit 1
+fi
+
+CMD="$1"
+shift
+
+case "${CMD}" in
+  install)
+    exec "${SCRIPTS_DIR}/install.sh" "$@"
+    ;;
+  sync)
+    exec "${SCRIPTS_DIR}/sync.sh" "$@"
+    ;;
+  list)
+    exec "${SCRIPTS_DIR}/list.sh" "$@"
+    ;;
+  *)
+    echo "Error: unknown command '${CMD}'" >&2
+    exit 1
+    ;;
+esac
