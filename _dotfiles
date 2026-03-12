@@ -1,0 +1,27 @@
+#compdef install.sh status.sh backup.sh restore.sh sync_dotfiles.sh
+
+# Zsh completion for dotfiles management scripts
+
+# Helper function to provide profile names from dotfiles.yml
+_dotfiles_profiles() {
+    local yaml_file="${HOME}/dotfiles.yml"
+    if [[ -f "${yaml_file}" ]]; then
+        # Extract lines that look like list items (e.g., "- profile_name")
+        local -a profiles
+        profiles=(${(f)"$(grep -E '^\s*-\s*[^[:space:]]' "${yaml_file}" | sed -E 's/^\s*-\s*//')"})
+        if (( ${#profiles} )); then
+            _describe 'profile' profiles
+        else
+            _message 'No profiles found in dotfiles.yml'
+        fi
+    else
+        _message "dotfiles.yml not found at ${yaml_file}"
+    fi
+}
+
+# Define the common options for all scripts
+_arguments -s \
+    '--dry-run[Perform a trial run without making changes]' \
+    '--json[Output results in JSON format]' \
+    '--profile=[Select a profile]:profile:_dotfiles_profiles' \
+    '*:filename:_files'

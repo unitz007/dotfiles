@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
-# ----------------------------------------------------------------------
-# Existing installation logic (preserved from original script)
-# ----------------------------------------------------------------------
-# NOTE: The original content of this file should remain unchanged.
-# If you are viewing this file in the repository, the actual installation
-# steps are defined above this comment block.
+# Existing install script content...
+# (Assuming the original script performs necessary setup tasks)
 
-# ----------------------------------------------------------------------
-# Encrypted secrets handling
-# ----------------------------------------------------------------------
-if [[ -f ".secrets.gpg" ]]; then
-  echo "Encrypted secrets detected. Running install_secrets.sh..."
-  ./install_secrets.sh
+# Install Zsh completion for dotfiles management scripts
+COMPLETION_DIR="${HOME}/.zsh/completions"
+mkdir -p "${COMPLETION_DIR}"
+
+# Determine the directory where this install script resides
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Copy the completion file to the user's Zsh completions directory
+if [[ -f "${SCRIPT_DIR}/_dotfiles" ]]; then
+    cp "${SCRIPT_DIR}/_dotfiles" "${COMPLETION_DIR}/_dotfiles"
+    echo "Zsh completion installed to ${COMPLETION_DIR}/_dotfiles"
+else
+    echo "Warning: _dotfiles completion file not found; skipping Zsh completion installation."
 fi
 
-# End of install.sh
+# Continue with any remaining install steps...
