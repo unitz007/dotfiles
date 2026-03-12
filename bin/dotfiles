@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Main entry point for the dotfiles management CLI.
+# Existing sub‑commands are preserved; a new `diff` command is added.
+
+set -euo pipefail
+
+# Determine the directory containing this script (repo root)
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Load helper functions if any (placeholder for existing logic)
+# source "$BASE_DIR/lib/helpers.sh"
+
+# Dispatch based on the first argument
+cmd="${1:-}"
+shift || true
+
+case "$cmd" in
+  install)
+    exec "$BASE_DIR/install.sh" "$@"
+    ;;
+  link)
+    exec "$BASE_DIR/link.sh" "$@"
+    ;;
+  clean)
+    exec "$BASE_DIR/clean.sh" "$@"
+    ;;
+  diff)
+    exec "$BASE_DIR/diff.sh" "$@"
+    ;;
+  *)
+    echo "Usage: $(basename "$0") <command> [options]"
+    echo "Commands:"
+    echo "  install   Install dotfiles"
+    echo "  link      Create symlinks"
+    echo "  clean     Remove generated files"
+    echo "  diff      Show configuration drift (see 'dotfiles diff --help')"
+    exit 1
+    ;;
+esac
