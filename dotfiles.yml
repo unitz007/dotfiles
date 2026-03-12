@@ -1,0 +1,10 @@
+components:
+  bash:
+    src: bash
+    dest: ~/.bashrc
+  zsh:
+    src: zsh
+    dest: ~/.zshrc
+  fish:
+    src: fish
+    dest: ~/.config/fish
