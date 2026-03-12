@@ -1,0 +1,10 @@
+# Dotfiles configuration
+# Set to true to enable the corresponding component, false to disable.
+
+# Example existing components
+vim: true
+git: true
+# ...
+
+# Zsh component
+zsh: true   # Set to false to skip Zsh installation and configuration
