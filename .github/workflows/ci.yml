@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # ---------- Linux & macOS steps ----------
+      - name: Set up Bash (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y shellcheck bats
+
+      - name: Run ShellCheck (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: |
+          shellcheck **/*.sh
+
+      - name: Run Bats tests (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: |
+          bats tests/
+
+      # ---------- Windows steps ----------
+      - name: Set up PowerShell Core
+        if: runner.os == 'Windows'
+        uses: actions/setup-powershell@v2
+        with:
+          version: '7.x'
+
+      - name: Install ShellCheck and Bats (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          # Install Chocolatey if not present (Windows runners have it by default)
+          if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+            Set-ExecutionPolicy Bypass -Scope Process -Force;
+            iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'));
+          }
+          choco install -y shellcheck bats
+
+      - name: Run ShellCheck (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          # Recursively find all .sh files and run shellcheck
+          Get-ChildItem -Recurse -Filter *.sh | ForEach-Object {
+            & shellcheck $_.FullName
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+
+      - name: Run Bats tests (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          # Execute Bats test suite using PowerShell
+          & bats tests/
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
