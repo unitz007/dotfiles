@@ -1,0 +1,62 @@
+name: CI - Windows
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Chocolatey packages
+        run: |
+          choco install git powershell-core -y --no-progress
+          # Refresh environment to make newly installed tools available
+          $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH","User")
+
+      - name: Verify Git installation
+        run: |
+          git --version
+
+      - name: Run PowerShell installation script (minimal profile)
+        run: |
+          ./install.ps1 --profile minimal
+
+      - name: Run PowerShell installation script (full profile)
+        run: |
+          ./install.ps1 --profile full
+
+      - name: Verify expected files and symlinks
+        run: |
+          $home = $env:USERPROFILE
+
+          # Example expected dotfiles – adjust as needed for the repository
+          $expectedFiles = @(
+            Join-Path $home ".gitconfig"
+            Join-Path $home ".vimrc"
+          )
+
+          foreach ($path in $expectedFiles) {
+            if (-not (Test-Path $path)) {
+              throw "Expected file not found: $path"
+            }
+
+            $item = Get-Item $path -Force
+            if ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) {
+              # It's a symlink – ensure it points to a target inside the repo
+              $target = $item.Target
+              if (-not $target) {
+                throw "Symlink $path has no target."
+              }
+            }
+          }
+
+          Write-Host "All expected files and symlinks are present."
