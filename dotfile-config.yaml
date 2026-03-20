@@ -98,6 +98,14 @@ dotfiles:
       - path: .tmux.conf
         target: home
 
+  - software: fzf
+    install:
+      linux: apt install -y fzf
+      darwin: brew install fzf
+    files:
+      - path: fzf;
+        target: home/.config
+
   - software: openssh-client
     install:
       linux: apt install -y openssh-client
