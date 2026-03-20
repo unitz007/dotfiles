@@ -24,18 +24,17 @@ if command -v fzf &>/dev/null; then
   export FZF_CTRL_R_OPTS="
     --preview 'echo {}'
     --preview-window down:3:wrap
-    --sort
+    --tac
   "
 
   # --- File finding (Ctrl+T) ---
   export FZF_CTRL_T_OPTS="
-    --preview 'bat --color=always --style=numbers --line-range=:500 {}'
     --multi
   "
 
   # --- Directory cd (Alt+C) ---
   export FZF_ALT_C_OPTS="
-    --preview 'eza --tree --color=always {} | head -200'
+    --preview 'command -v eza &>/dev/null && eza --tree --color=always {} | head -200 || ls --color=always {}'
   "
 
   # --- Source fzf keybindings and completion ---
