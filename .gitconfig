@@ -1,0 +1,45 @@
+# Git configuration
+#
+# NOTE: The following values are machine-specific and must be set per-machine:
+#   - user.name
+#   - user.email
+#   - user.signingkey
+#
+# Replace the placeholder values below with your own.
+
+[user]
+	name = Your Name
+	email = you@example.com
+	signingkey = <placeholder>
+
+[commit]
+	gpgsign = true
+
+[gpg]
+	program = gpg
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[credential]
+	helper = osxkeychain
+
+[core]
+	excludesfile = ~/.gitignore_global
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	lg = log --oneline --graph --decorate --all
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	amend = commit --amend --no-edit
+	pushf = push --force-with-lease
+	fetchp = fetch --prune
+	rb = rebase
+	rs = rebase --skip
