@@ -59,9 +59,33 @@ This configures macOS preferences (key repeat speed, Dock auto-hide, Finder sett
 ### Phase 4 — Post-symlink initialization
 
 ```sh
-tmux   # triggers TPM plugin install on first launch
 nvim   # triggers Lazy.nvim bootstrap and plugin install on first launch
 ```
+
+### Tmux Plugins
+
+The tmux configuration uses [TPM](https://github.com/tmux-plugins/tpm) (Tmux Plugin Manager) with the following plugins:
+
+| Plugin | Purpose |
+|--------|---------|
+| **tmux-sensible** | Sane default options |
+| **catppuccin_tmux** | Catppuccin color theme |
+| **tmux-resurrect** | Save and restore tmux sessions |
+| **tmux-continuum** | Automatic session saving and restoring |
+| **tmux-yank** | System clipboard integration |
+
+TPM is automatically cloned by `bootstrap.sh`. If you need to install it manually:
+
+```sh
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+**One-time plugin install:** Open tmux and press `prefix + I` (i.e., `Ctrl-Space` then `I`) to install all plugins via TPM.
+
+**Session persistence:**
+- `prefix + Ctrl-s` — save the current tmux session
+- `prefix + Ctrl-r` — restore a previously saved session
+- Sessions auto-save every 15 minutes and auto-restore on tmux server start (via tmux-continuum)
 
 ## Manual Post-Install Steps
 
