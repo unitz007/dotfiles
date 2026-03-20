@@ -11,6 +11,9 @@ eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
 export KUBE_EDITOR="nvim"
 export VISUAL=nvim
 
+# fzf configuration
+[[ -f "$HOME/.config/fzf/.fzf.zsh" ]] && source "$HOME/.config/fzf/.fzf.zsh"
+
 # Aliases
 alias ls="nu -c ls"
 alias la="nu -c 'ls -la'"
