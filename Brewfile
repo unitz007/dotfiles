@@ -3,7 +3,6 @@
 # Check installation status: brew bundle check --file=Brewfile
 
 # Taps — third-party repositories required by formulae/casks below
-tap "homebrew/cask-fonts" # needed for Nerd Fonts (AstroNvim has icons_enabled = true in nvim/lua/lazy_setup.lua line 9)
 tap "koekeishiya/formulae" # required for skhd (referenced by .skhdrc)
 
 # Brews — CLI formulae referenced across the dotfiles
