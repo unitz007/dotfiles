@@ -1,0 +1,34 @@
+# === Core Settings ===
+[init]
+    defaultBranch = main
+
+[push]
+    autoSetupRemote = true
+
+[pull]
+    rebase = true
+
+[core]
+    autocrlf = input
+    editor = nvim
+
+[safe]
+    directory = *
+
+# === Aliases ===
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+    lg = log --oneline --graph --decorate --all
+    unstage = reset HEAD --
+    amend = commit --amend --no-edit
+    last = log -1 HEAD
+    visual = log --graph --oneline --decorate --all
+    diffc = diff --cached
+    pushf = push --force-with-lease
+
+# === Machine-specific overrides (not tracked) ===
+[includeIf "exists:~/.gitconfig-local"]
+    path = ~/.gitconfig-local

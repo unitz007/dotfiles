@@ -14,3 +14,6 @@ iterm
 
 #IDE directories
 .idea
+
+# Git local overrides (contains personal identity)
+.gitconfig-local
