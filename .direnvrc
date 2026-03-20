@@ -1,0 +1,66 @@
+# direnv layout helpers — sourced by direnv's source_up or source_env
+#
+# Place this file at ~/.direnvrc so that any .envrc can call
+# `source_up` or `source_env ~/.direnvrc` to reuse these functions.
+
+# use_node — sets up Node.js from .node-version or .nvmrc via asdf or nvm
+use_node() {
+  local version_file
+  if [[ -f .node-version ]]; then
+    version_file=.node-version
+  elif [[ -f .nvmrc ]]; then
+    version_file=.nvmrc
+  else
+    log_error "use_node: no .node-version or .nvmrc found"
+    return 1
+  fi
+
+  local node_version
+  node_version=$(cat "$version_file" | tr -d '[:space:]')
+
+  if command -v asdf >/dev/null 2>&1; then
+    log_status "using node ${node_version} (asdf)"
+    asdf shell node "$node_version"
+  elif command -v nvm >/dev/null 2>&1; then
+    log_status "using node ${node_version} (nvm)"
+    nvm use "$node_version"
+  else
+    log_error "use_node: neither asdf nor nvm found"
+    return 1
+  fi
+}
+
+# use_python — sets up Python from .python-version via asdf or pyenv
+use_python() {
+  if [[ ! -f .python-version ]]; then
+    log_error "use_python: no .python-version found"
+    return 1
+  fi
+
+  local python_version
+  python_version=$(cat .python-version | tr -d '[:space:]')
+
+  if command -v asdf >/dev/null 2>&1; then
+    log_status "using python ${python_version} (asdf)"
+    asdf shell python "$python_version"
+  elif command -v pyenv >/dev/null 2>&1; then
+    log_status "using python ${python_version} (pyenv)"
+    PYENV_VERSION="$python_version" path_add PYENV_ROOT "$HOME/.pyenv"
+    path_add PATH "$HOME/.pyenv/shims"
+    export PYENV_VERSION
+  else
+    log_error "use_python: neither asdf nor pyenv found"
+    return 1
+  fi
+}
+
+# use_flake — loads a Nix flake's dev shell if nix is available
+use_flake() {
+  if ! command -v nix >/dev/null 2>&1; then
+    log_error "use_flake: nix not found"
+    return 1
+  fi
+
+  log_status "loading nix flake environment"
+  eval "$(nix print-dev-env --profile shell.flake)"
+}

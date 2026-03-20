@@ -137,6 +137,16 @@ dotfiles:
       - path: starship.toml
         target: home/.config
 
+  - software: direnv
+    install:
+      linux: apt install -y direnv
+      darwin: brew install direnv
+    files:
+      - path: .direnvrc
+        target: home
+      - path: direnv.toml
+        target: home
+
   # Development tools
 #  - software: npm
 #    install:

@@ -8,6 +8,9 @@
 # Variables & Assignments
 eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
 
+# direnv hook
+eval "$(direnv hook zsh)"
+
 export KUBE_EDITOR="nvim"
 export VISUAL=nvim
 
