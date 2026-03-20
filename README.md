@@ -15,6 +15,7 @@ Personal configuration files for a macOS development environment, covering termi
 | **Zed** | Code editor with Atelier Cave Dark theme | `zed/settings.json` |
 | **Zsh** | Shell configuration with aliases for git, kubectl, terraform, and a Yazi cwd-wrapper function | `.zshrc` |
 | **Git** | Global git config with aliases, GPG commit signing, default branch, and macOS credential helper | `.gitconfig` |
+| **direnv** | Auto-loading project-specific environment variables on directory change | `.direnvrc`, `direnv.toml` |
 
 ## Prerequisites
 
@@ -61,6 +62,16 @@ This configures macOS preferences (key repeat speed, Dock auto-hide, Finder sett
 ```sh
 nvim   # triggers Lazy.nvim bootstrap and plugin install on first launch
 ```
+
+### direnv
+
+[direnv](https://direnv.net/) automatically loads project-specific environment variables when you `cd` into a directory.
+
+- **Install:** `brew install direnv` (or via `brew bundle --file=Brewfile`)
+- **Shell hook:** The `eval "$(direnv hook zsh)"` line in `.zshrc` activates direnv automatically in every new shell session
+- **Usage:** Place an `.envrc` file in any project directory — it is auto-evaluated on `cd`. Run `direnv allow` the first time to trust it
+- **Global layout helpers:** `~/.direnvrc` provides reusable functions (`use_node`, `use_python`, `use_flake`) that can be called from any `.envrc` via `source_up` or `source_env ~/.direnvrc`
+- **Global settings:** `direnv.toml` enforces `strict_env = true` (explicit variable declarations required)
 
 ### Tmux Plugins
 

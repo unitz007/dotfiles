@@ -21,6 +21,7 @@ brew "terraform" # .zshrc lines 34-36 (tf aliases)
 brew "neofetch" # .zshrc line 101
 brew "starship" # dotfile-config.yaml line 113
 brew "stow" # cloud-init.yaml line 14
+brew "direnv" # .zshrc line 12 (direnv hook), .direnvrc, direnv.toml
 brew "ripgrep" # required by nvim Telescope plugin (AstroNvim dependency)
 brew "fd" # required by nvim Telescope plugin (AstroNvim dependency)
 brew "node" # required by some nvim plugins (AstroNvim ecosystem)
