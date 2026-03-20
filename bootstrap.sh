@@ -25,9 +25,10 @@ MAPPINGS=(
   ".skhdrc|.skhdrc"
   ".zshrc|.zshrc"
   ".oh-my-posh-theme.json|.oh-my-posh-theme.json"
+  ".gitconfig|.gitconfig"
   "nvim|.config/nvim"
-  "tmux|.config/tmux"
-  "yazi.toml|.config/yazi/yazi.toml"
+  "tmux/tmux.conf|.tmux.conf"
+  "yazi.toml|.config/yazi.toml"
   "zed/settings.json|.config/zed/settings.json"
 )
 

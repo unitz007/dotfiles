@@ -14,6 +14,7 @@ Personal configuration files for a macOS development environment, covering termi
 | **Yazi** | Terminal file manager configured to show hidden files | `yazi.toml` |
 | **Zed** | Code editor with Atelier Cave Dark theme | `zed/settings.json` |
 | **Zsh** | Shell configuration with aliases for git, kubectl, terraform, and a Yazi cwd-wrapper function | `.zshrc` |
+| **Git** | Global git config with aliases, GPG commit signing, default branch, and macOS credential helper | `.gitconfig` |
 
 ## Prerequisites
 
@@ -64,16 +65,66 @@ nvim   # triggers Lazy.nvim bootstrap and plugin install on first launch
 
 ## Manual Post-Install Steps
 
-- **Set Git user name and email:**
+- **Set Git user name, email, and signing key:**
   ```sh
   git config --global user.name "Your Name"
   git config --global user.email "you@example.com"
+  git config --global user.signingkey <YOUR_GPG_KEY_ID>
   ```
 - **Grant Accessibility permissions to AeroSpace:** System Settings → Privacy & Security → Accessibility → add AeroSpace (required for window management)
 - **Grant Accessibility permissions to skhd:** System Settings → Privacy & Security → Accessibility → add skhd (required for global hotkeys)
 - **Install a Nerd Font** (e.g., JetBrains Mono Nerd Font) and set it as the terminal font in Ghostty/iTerm2 (required for Oh-My-Posh and AstroNvim icons to render)
 - **Sign into App Store** and manually install WhatsApp, Microsoft Teams, and PyCharm Community Edition if desired (referenced in `.skhdrc` hotkeys)
 - **Start AeroSpace and skhd services:** AeroSpace has `start-at-login = true` in `.aerospace.toml`, but skhd may need `brew services start skhd`
+
+## Git Configuration
+
+The `.gitconfig` file provides consistent git settings across all machines, including common aliases, GPG commit signing, and macOS credential storage.
+
+> **Note:** `user.name`, `user.email`, and `user.signingkey` must be configured per-machine (see [Manual Post-Install Steps](#manual-post-install-steps)).
+
+### Aliases
+
+| Alias | Command | Description |
+|-------|---------|-------------|
+| `git co` | `checkout` | Switch branches |
+| `git br` | `branch` | List/create branches |
+| `git ci` | `commit` | Create a commit |
+| `git st` | `status` | Show working tree status |
+| `git lg` | `log --oneline --graph --decorate --all` | Pretty log graph |
+| `git unstage` | `reset HEAD --` | Unstage files |
+| `git last` | `log -1 HEAD` | Show last commit |
+| `git amend` | `commit --amend --no-edit` | Amend last commit |
+| `git pushf` | `push --force-with-lease` | Safe force push |
+| `git fetchp` | `fetch --prune` | Fetch and prune remote branches |
+| `git rb` | `rebase` | Rebase |
+| `git rs` | `rebase --skip` | Skip current rebase commit |
+
+### Settings
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `init.defaultBranch` | `main` | Default branch name for new repos |
+| `pull.rebase` | `true` | Always rebase on pull |
+| `credential.helper` | `osxkeychain` | Store credentials in macOS Keychain |
+| `commit.gpgsign` | `true` | Sign all commits with GPG |
+| `gpg.program` | `gpg` | GPG program for signing |
+| `core.excludesfile` | `~/.gitignore_global` | Global gitignore file |
+
+## Other Configurations
+
+- **Neovim** — AstroNvim v4 distribution with LSP, Treesitter, and Mason plugin management ([`nvim/`](nvim/))
+- **Tmux** — Terminal multiplexer with TPM, catppuccin theme, and `Ctrl+Space` prefix ([`tmux/tmux.conf`](tmux/tmux.conf))
+- **Zsh** — Shell configuration with aliases for git, kubectl, terraform, and a Yazi cwd-wrapper function ([`.zshrc`](.zshrc))
+- **AeroSpace** — Tiling window manager with vim-like navigation and per-app workspace assignment ([`.aerospace.toml`](.aerospace.toml))
+- **skhd** — Global hotkey daemon for launching apps via `ctrl+key` shortcuts ([`.skhdrc`](.skhdrc))
+- **Oh-My-Posh** — Custom shell prompt theme showing git status, kubectl context, and language versions ([`.oh-my-posh-theme.json`](.oh-my-posh-theme.json))
+- **Yazi** — Terminal file manager configured to show hidden files ([`yazi.toml`](yazi.toml))
+- **Zed** — Code editor with Atelier Cave Dark theme ([`zed/settings.json`](zed/settings.json))
+
+## VM Provisioning
+
+The `cloud-init.yaml` file provisions an Ubuntu VM via [Multipass](https://multipass.run/) with zsh, neovim, nushell, and oh-my-posh pre-installed. Use the `ustart` and `uend` functions defined in [`.zshrc`](.zshrc) to launch and stop the VM.
 
 ## Troubleshooting / FAQ
 
