@@ -27,36 +27,35 @@ Personal configuration files for a macOS development environment, covering termi
 
 ## Setup
 
-There is no Brewfile, bootstrap script, or macOS defaults script in this repo, so dependencies and symlinks must be set up manually. Follow the three phases below in order.
+Run the following commands in order from the repository root:
 
 ### Phase 1 — Install dependencies via Homebrew
 
 ```sh
-brew install neovim tmux oh-my-posh yazi nushell neofetch kubectl terraform multipass
+brew bundle --file=Brewfile
 ```
 
-```sh
-brew install --cask aerospace skhd ghostty goland pycharm-community
-```
+This installs all CLI tools (neovim, tmux, oh-my-posh, yazi, etc.) and GUI applications (AeroSpace, Ghostty, Zed, GoLand, etc.) declared in the Brewfile.
 
-> **Note:** Safari, Mail, Finder, Notes, Dictionary, and Preview are built-in macOS apps. WhatsApp and Microsoft Teams require manual installation from the App Store.
+> **Note:** WhatsApp and Microsoft Teams require manual installation from the App Store (Homebrew casks are not available for these).
 
 ### Phase 2 — Create symlinks
 
 ```sh
-ln -sf "$(pwd)/.zshrc" ~/.zshrc
-ln -sf "$(pwd)/.oh-my-posh-theme.json" ~/.oh-my-posh-theme.json
-ln -sf "$(pwd)/.aerospace.toml" ~/.aerospace.toml
-ln -sf "$(pwd)/.skhdrc" ~/.skhdrc
-mkdir -p ~/.config/yazi
-ln -sf "$(pwd)/yazi.toml" ~/.config/yazi/yazi.toml
-ln -sf "$(pwd)/nvim" ~/.config/nvim
-ln -sf "$(pwd)/tmux/tmux.conf" ~/.tmux.conf
-mkdir -p ~/.config/zed
-ln -sf "$(pwd)/zed/settings.json" ~/.config/zed/settings.json
+bash bootstrap.sh
 ```
 
-### Phase 3 — Post-symlink initialization
+This symlinks all dotfiles to their target locations under `$HOME`. Existing files are backed up with a `.bak` suffix. Use `bash bootstrap.sh --dry-run` to preview changes without making them.
+
+### Phase 3 — Apply macOS system defaults
+
+```sh
+bash macos-defaults.sh
+```
+
+This configures macOS preferences (key repeat speed, Dock auto-hide, Finder settings, screenshot location, etc.). Some changes require logging out and back in to take full effect.
+
+### Phase 4 — Post-symlink initialization
 
 ```sh
 tmux   # triggers TPM plugin install on first launch
