@@ -84,6 +84,36 @@ for mapping in "${MAPPINGS[@]}"; do
   fi
 done
 
+# --- SSH Config ---
+setup_ssh() {
+  local ssh_dir="$HOME/.ssh"
+  local ssh_config="$ssh_dir/config"
+  local template="$REPO_ROOT/ssh/config"
+
+  # Ensure ~/.ssh exists with correct permissions
+  mkdir -p "$ssh_dir"
+  chmod 700 "$ssh_dir"
+
+  # Only copy if no existing config is present (non-destructive)
+  if [ ! -f "$ssh_config" ]; then
+    if [ -f "$template" ]; then
+      cp "$template" "$ssh_config"
+      chmod 600 "$ssh_config"
+      echo "  [ssh] Copied SSH config template to ~/.ssh/config"
+    else
+      echo "  [ssh] Warning: template $template not found, skipping"
+    fi
+  else
+    echo "  [ssh] Existing ~/.ssh/config found, skipping (not overwriting)"
+  fi
+
+  # Ensure the sockets directory exists for connection multiplexing
+  mkdir -p "$ssh_dir/sockets"
+  chmod 700 "$ssh_dir/sockets"
+}
+
+setup_ssh
+
 # Summary
 if [ "$DRY_RUN" -eq 1 ]; then
   echo "Dry run complete. No changes were made."

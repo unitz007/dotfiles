@@ -94,6 +94,14 @@ dotfiles:
       - path: .tmux.conf
         target: home
 
+  - software: openssh-client
+    install:
+      linux: apt install -y openssh-client
+      darwin: ""
+    files:
+      - path: ssh/config
+        target: home/.ssh
+
   - software: alacritty
     install:
       linux: apt install -y alacritty
