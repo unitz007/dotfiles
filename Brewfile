@@ -9,8 +9,6 @@ tap "koekeishiya/formulae" # required for skhd (referenced by .skhdrc)
 brew "zsh" # .zshrc, dotfile-config.yaml, cloud-init.yaml
 brew "bash" # dotfile-config.yaml
 brew "git" # .zshrc aliases, dotfile-config.yaml
-brew "gnupg" # GPG for commit signing (.gitconfig)
-brew "pinentry-mac" # macOS pinentry for GPG passphrase entry (.gitconfig)
 brew "neovim" # .zshrc (VISUAL, KUBE_EDITOR), nvim/ directory, dotfile-config.yaml, cloud-init.yaml
 brew "vim" # dotfile-config.yaml
 brew "tmux" # tmux/tmux.conf, dotfile-config.yaml
@@ -40,5 +38,5 @@ cask "microsoft-teams" # .skhdrc line 13
 cask "google-chrome" # .skhdrc line 14, .aerospace.toml line 189 (window rule)
 cask "pycharm-ce" # .skhdrc line 17
 cask "alacritty" # dotfile-config.yaml line 100
-cask "kitty" # dotfile-config.yaml line 108
+cask "kitty" # kitty/kitty.conf, dotfile-config.yaml line 108
 cask "multipass" # .zshrc lines 85-95 (ustart/uend functions)

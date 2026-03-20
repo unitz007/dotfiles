@@ -28,8 +28,9 @@ MAPPINGS=(
   ".gitconfig|.gitconfig"
   "nvim|.config/nvim"
   "tmux/tmux.conf|.tmux.conf"
-  "yazi.toml|.config/yazi.toml"
+  "yazi.toml|.config/yazi/yazi.toml"
   "zed/settings.json|.config/zed/settings.json"
+  "kitty/kitty.conf|.config/kitty/kitty.conf"
 )
 
 FAILED=0
