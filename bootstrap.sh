@@ -114,6 +114,15 @@ setup_ssh() {
 
 setup_ssh
 
+# --- TPM (Tmux Plugin Manager) ---
+TPM_DIR="$HOME/.tmux/plugins/tpm"
+if [ ! -d "$TPM_DIR" ]; then
+  echo "Installing TPM to $TPM_DIR..."
+  git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+else
+  echo "TPM already installed at $TPM_DIR"
+fi
+
 # Summary
 if [ "$DRY_RUN" -eq 1 ]; then
   echo "Dry run complete. No changes were made."
