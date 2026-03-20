@@ -30,7 +30,7 @@ apply_defaults "Disable recent apps in Dock" com.apple.dock show-recents -bool f
 # Uncomment the next line to enable:
 # apply_defaults "Clear default Dock icons" com.apple.dock persistent-apps -array
 
-killall Dock
+killall Dock || true
 
 # ── Finder ──────────────────────────────────────────────────────────────────
 apply_defaults "Show hidden files in Finder" com.apple.finder AppleShowAllFiles -bool true
@@ -41,14 +41,14 @@ apply_defaults "Show full POSIX path in Finder title" com.apple.finder _FXShowPo
 apply_defaults "Disable extension change warning in Finder" com.apple.finder FXEnableExtensionChangeWarning -bool false
 apply_defaults "Hide icons on Desktop" com.apple.finder CreateDesktop -bool false
 
-killall Finder
+killall Finder || true
 
 # ── Screenshots ─────────────────────────────────────────────────────────────
 mkdir -p ~/Screenshots
 apply_defaults "Set screenshot save location to ~/Screenshots" com.apple.screencapture location -string "$HOME/Screenshots"
 apply_defaults "Set screenshot format to PNG" com.apple.screencapture type -string "png"
 
-killall SystemUIServer
+killall SystemUIServer || true
 
 # ── Network Volumes (.DS_Store) ────────────────────────────────────────────
 apply_defaults "Disable .DS_Store creation on network volumes" com.apple.desktopservices DSDontWriteNetworkStores -bool true
