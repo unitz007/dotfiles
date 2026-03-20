@@ -1,0 +1,55 @@
+#!/bin/bash
+set -euo pipefail
+
+echo "Apply macOS defaults? (y/n)"
+read -r response
+if [[ "$response" != "y" && "$response" != "Y" ]]; then
+  echo "Aborted."
+  exit 1
+fi
+
+set_default() {
+  local domain="$1"
+  local key="$2"
+  local type="$3"
+  local value="$4"
+  local label="$5"
+
+  echo "  → Setting: ${label}"
+  defaults write "$domain" "$key" -"$type" "$value"
+}
+
+# ── Dock ──────────────────────────────────────────────────────────────────────
+set_default "com.apple.dock" "autohide" "bool" "true" "Dock: automatically hide and show"
+# shellcheck disable=SC2068
+set_default "com.apple.dock" "autohide-delay" "float" "0" "Dock: remove auto-hide delay"
+# shellcheck disable=SC2068
+set_default "com.apple.dock" "autohide-time-modifier" "float" "0" "Dock: remove auto-hide animation time"
+killall Dock 2>/dev/null || true
+
+# ── Trackpad ──────────────────────────────────────────────────────────────────
+set_default "com.apple.AppleMultitouchTrackpad" "Clicking" "int" "1" "Trackpad: enable tap to click"
+set_default "com.apple.driver.AppleBluetoothMultitouch.trackpad" "Clicking" "int" "1" "Trackpad (Bluetooth): enable tap to click"
+
+# ── Finder ────────────────────────────────────────────────────────────────────
+set_default "NSGlobalDomain" "AppleShowAllExtensions" "bool" "true" "Finder: show all file extensions"
+set_default "com.apple.finder" "AppleShowAllFiles" "bool" "true" "Finder: show hidden files"
+set_default "com.apple.finder" "ShowPathbar" "bool" "true" "Finder: show path bar"
+set_default "com.apple.finder" "ShowStatusBar" "bool" "true" "Finder: show status bar"
+killall Finder 2>/dev/null || true
+
+# ── Screenshots ───────────────────────────────────────────────────────────────
+set_default "com.apple.screencapture" "type" "string" "png" "Screenshots: save as PNG"
+set_default "com.apple.screencapture" "location" "string" "${HOME}/Desktop" "Screenshots: save to ~/Desktop"
+
+# ── General dialogs ───────────────────────────────────────────────────────────
+set_default "NSGlobalDomain" "NSNavPanelExpandedStateForSaveMode" "bool" "true" "General: expand save dialogs by default"
+set_default "NSGlobalDomain" "NSNavPanelExpandedStateForOpenMode" "bool" "true" "General: expand open dialogs by default"
+
+# ── Keyboard ──────────────────────────────────────────────────────────────────
+set_default "NSGlobalDomain" "ApplePressAndHoldEnabled" "bool" "false" "Keyboard: disable press-and-hold for key repeat"
+set_default "NSGlobalDomain" "KeyRepeat" "int" "2" "Keyboard: set key repeat rate to fast"
+set_default "NSGlobalDomain" "InitialKeyRepeat" "int" "15" "Keyboard: set initial key repeat delay to short"
+
+echo "Done. Some changes may require a restart to take effect."
+exit 0
