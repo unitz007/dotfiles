@@ -1,0 +1,51 @@
+# SSH Client Configuration
+# Managed by dotfiles — customize per-user as needed.
+# This template provides sensible defaults for connection multiplexing,
+# keep-alive, and common identity files. Uncomment and modify the
+# example host blocks below for your specific hosts.
+
+# --- Global defaults ---
+Host *
+  # Connection multiplexing: reuse a single SSH connection for multiple sessions
+  ControlMaster auto
+  ControlPath ~/.ssh/sockets/%r@%h-%p
+  ControlPersist 600
+
+  # Keep-alive: send a heartbeat every 60 seconds, disconnect after 3 misses
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+
+  # Common identity files (tried in order)
+  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_rsa
+
+  # Add keys to the SSH agent automatically
+  AddKeysToAgent yes
+
+  # Store passphrases in macOS Keychain (harmless on Linux)
+  UseKeychain yes
+
+  # Enable compression for faster transfers on slow links
+  Compression yes
+
+# --- Example host blocks ---
+
+# GitHub
+#Host github.com
+#  HostName github.com
+#  User git
+#  IdentityFile ~/.ssh/id_ed25519
+#  # Generate a key with: ssh-keygen -t ed25519 -C "your@email.com"
+
+# Generic work server template
+#Host work-server
+#  HostName example.com
+#  User your-username
+#  Port 22
+#  ForwardAgent yes
+#  IdentityFile ~/.ssh/id_ed25519
+
+# AWS EC2 instances
+#Host *.compute.amazonaws.com
+#  User ubuntu
+#  IdentityFile ~/.ssh/aws-key.pem
