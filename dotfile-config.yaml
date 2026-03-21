@@ -248,6 +248,13 @@ dotfiles:
 #      - path: .kube/config
 #        target: home
 
+  - software: macos-defaults
+    install:
+      darwin: echo "Run manually: bash macos/defaults.sh"
+    files:
+      - path: macos/defaults.sh
+        target: home
+
 # SECURITY WARNING:
 # Never include sensitive files like:
 #   - Private SSH keys (.ssh/id_rsa, .ssh/id_ed25519)
