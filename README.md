@@ -18,6 +18,10 @@ Personal configuration files for a macOS development environment, covering termi
 | **Karabiner-Elements** | Keyboard remapper — Caps Lock as Hyper key (⌃⌥⌘⇧) + Escape, Vim-style arrow keys | `karabiner/karabiner.json` |
 | **direnv** | Auto-loading project-specific environment variables on directory change | `.direnvrc`, `direnv.toml` |
 | **Zoxide** | Smarter `cd` that learns from navigation habits; integrates with fzf for interactive directory selection | `zoxide` |
+| **Eza** | Modern `ls` replacement with file type icons, git status indicators, and tree view | `.zshrc` (aliases) |
+| **Bat** | Syntax-highlighted `cat` replacement with git integration and line numbers | `bat/config` |
+| **fzf** | General-purpose fuzzy finder for files, directories, and command history | `fzf/.fzf.zsh` |
+| **ripgrep** | Fast recursive search tool (used by nvim Telescope plugin) | `Brewfile` |
 
 ## Prerequisites
 
