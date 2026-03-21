@@ -4,6 +4,7 @@
 
 # Taps — third-party repositories required by formulae/casks below
 tap "homebrew/cask-fonts"
+tap "koekeishiya/formulae"
 
 # Brews — CLI formulae referenced across the dotfiles
 brew "bat"
