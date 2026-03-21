@@ -26,11 +26,11 @@ Personal configuration files for a macOS development environment, covering termi
 ## Prerequisites
 
 - **macOS Sonoma or later** (required by AeroSpace)
-- **Homebrew** installed:
+- **Homebrew** installed (required by `brew bundle` in the setup step below):
   ```sh
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   ```
-- **Apple ID** signed in to App Store (required for apps referenced in `.skhdrc` such as WhatsApp, Microsoft Teams, PyCharm Community Edition)
+- **Apple ID** signed in to App Store (required for apps referenced in `.skhdrc` such as Microsoft Teams, PyCharm Community Edition)
 - **A Nerd Font** installed in the terminal (required by Oh-My-Posh icons and AstroNvim icon support — see `icons_enabled = true` in `nvim/lua/lazy_setup.lua`)
 
 ## Setup
@@ -43,9 +43,9 @@ Run the following commands in order from the repository root:
 brew bundle --file=Brewfile
 ```
 
-This installs all CLI tools (neovim, tmux, oh-my-posh, yazi, etc.) and GUI applications (AeroSpace, Ghostty, Zed, GoLand, etc.) declared in the Brewfile.
+This installs all CLI tools (neovim, tmux, oh-my-posh, yazi, kubectl, terraform, etc.) and GUI applications (AeroSpace, Ghostty, Zed, GoLand, Google Chrome, WhatsApp, etc.) declared in the Brewfile.
 
-> **Note:** WhatsApp and Microsoft Teams require manual installation from the App Store (Homebrew casks are not available for these).
+> **Note:** Microsoft Teams and PyCharm Community Edition require manual installation from the App Store (Homebrew casks are not available for these).
 
 ### Phase 2 — Create symlinks
 
@@ -68,6 +68,8 @@ This configures macOS preferences (key repeat speed, Dock auto-hide, Finder sett
 ```sh
 nvim   # triggers Lazy.nvim bootstrap and plugin install on first launch
 ```
+
+Open tmux and press `prefix + I` (i.e., `Ctrl-Space` then `I`) to install all tmux plugins via TPM.
 
 ### direnv
 
@@ -169,7 +171,7 @@ To add new keyboard remapping rules:
 - **Grant Accessibility permissions to skhd:** System Settings → Privacy & Security → Accessibility → add skhd (required for global hotkeys)
 - **Grant Input Monitoring permissions to Karabiner-Elements:** System Settings → Privacy & Security → Input Monitoring → add Karabiner-Elements (required for key remapping)
 - **Install a Nerd Font** (e.g., JetBrains Mono Nerd Font) and set it as the terminal font in Ghostty/iTerm2 (required for Oh-My-Posh and AstroNvim icons to render)
-- **Sign into App Store** and manually install WhatsApp, Microsoft Teams, and PyCharm Community Edition if desired (referenced in `.skhdrc` hotkeys)
+- **Sign into App Store** and manually install Microsoft Teams and PyCharm Community Edition if desired (referenced in `.skhdrc` hotkeys)
 - **Start AeroSpace and skhd services:** AeroSpace has `start-at-login = true` in `.aerospace.toml`, but skhd may need `brew services start skhd`
 
 ## Git Configuration
