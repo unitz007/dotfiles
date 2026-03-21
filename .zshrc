@@ -8,6 +8,9 @@
 # Variables & Assignments
 eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
 
+# Atuin shell history (replaces Ctrl+R with searchable history)
+eval "$(atuin init zsh)"
+
 # direnv hook
 eval "$(direnv hook zsh)"
 
