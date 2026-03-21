@@ -6,6 +6,7 @@
 tap "koekeishiya/formulae" # required for skhd (referenced by .skhdrc)
 
 # Brews — CLI formulae referenced across the dotfiles
+brew "atuin" # atuin/config.toml, .zshrc (atuin init zsh)
 brew "zsh" # .zshrc, dotfile-config.yaml, cloud-init.yaml
 brew "bash" # dotfile-config.yaml
 brew "git" # .zshrc aliases, dotfile-config.yaml

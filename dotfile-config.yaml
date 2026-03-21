@@ -171,6 +171,14 @@ dotfiles:
       - path: zoxide
         target: home
 
+  - software: atuin
+    install:
+      linux: curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+      darwin: brew install atuin
+    files:
+      - path: atuin;
+        target: home/.config
+
   # Development tools
 #  - software: npm
 #    install:
