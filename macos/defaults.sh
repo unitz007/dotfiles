@@ -24,14 +24,15 @@ if [[ "$(uname)" != "Darwin" ]]; then
 fi
 
 # Helper function: set a macOS default and print what changed
-# Usage: set_default <domain> <key> <value> [description]
+# Usage: set_default <domain> <key> <type_flag> <value> [description]
 set_default() {
   local domain="$1"
   local key="$2"
-  local value="$3"
-  local description="${4:-Setting $domain $key to $value}"
+  local type_flag="$3"
+  local value="$4"
+  local description="${5:-Setting $domain $key to $value}"
   echo "→ $description"
-  defaults write "$domain" "$key" "$value"
+  defaults write "$domain" "$key" $type_flag "$value"
 }
 
 # ── Dock ──────────────────────────────────────────────────────────────────────
