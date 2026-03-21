@@ -23,8 +23,11 @@ eval "$(zoxide init zsh --cmd z)"
 [[ -f "$HOME/.config/fzf/.fzf.zsh" ]] && source "$HOME/.config/fzf/.fzf.zsh"
 
 # Aliases
-alias ls="nu -c ls"
-alias la="nu -c 'ls -la'"
+alias ls='eza --icons --git'
+alias la='eza -a --icons --git'
+alias ll='eza -l --icons --git'
+alias lt='eza --tree --icons --git'
+alias tree='eza --tree --icons --git'
 alias run="sdlc run"
 alias tst="sdlc test"
 alias build="sdlc build"
