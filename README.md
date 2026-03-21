@@ -15,6 +15,7 @@ Personal configuration files for a macOS development environment, covering termi
 | **Zed** | Code editor with Atelier Cave Dark theme | `zed/settings.json` |
 | **Zsh** | Shell configuration with aliases for git, kubectl, terraform, and a Yazi cwd-wrapper function | `.zshrc` |
 | **Git** | Global git config with aliases, GPG commit signing, default branch, and macOS credential helper | `.gitconfig` |
+| **Karabiner-Elements** | Keyboard remapper — Caps Lock as Hyper key (⌃⌥⌘⇧) + Escape, Vim-style arrow keys | `karabiner/karabiner.json` |
 | **direnv** | Auto-loading project-specific environment variables on directory change | `.direnvrc`, `direnv.toml` |
 
 ## Prerequisites
@@ -98,6 +99,42 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 - `prefix + Ctrl-r` — restore a previously saved session
 - Sessions auto-save every 15 minutes and auto-restore on tmux server start (via tmux-continuum)
 
+## Karabiner-Elements
+
+[Karabiner-Elements](https://karabiner-elements.pqrs.org/) is a powerful keyboard remapper for macOS that operates at a lower level than skhd — it transforms key inputs before they reach any application.
+
+### Caps Lock → Hyper Key + Escape
+
+Caps Lock is remapped to act as a **Hyper key** (Ctrl+Option+Cmd+Shift simultaneously) when **held** alongside another key, and as **Escape** when **tapped alone**. This unlocks powerful global shortcuts via skhd that avoid conflicts with standard modifier combinations.
+
+### Vim-style Arrow Keys
+
+When the Hyper key is held, `h`/`j`/`k`/`l` are remapped to arrow keys:
+
+| Key | Action |
+|-----|--------|
+| Hyper + `h` | ← Left |
+| Hyper + `j` | ↓ Down |
+| Hyper + `k` | ↑ Up |
+| Hyper + `l` | → Right |
+
+This provides Vim-like navigation in any application without a dedicated Vim mode.
+
+### Configuration
+
+The config lives in [`karabiner/karabiner.json`](karabiner/karabiner.json) and is symlinked to `~/.config/karabiner` by `bootstrap.sh`.
+
+#### Customization
+
+To add new keyboard remapping rules:
+
+1. Edit [`karabiner/karabiner.json`](karabiner/karabiner.json)
+2. Add a new entry to the `profiles[0].complex_modifications.rules` array
+3. Reload the configuration — either via the Karabiner-Elements GUI (menu bar icon → "Reload configuration") or by running:
+   ```sh
+   killall karabiner_grabber
+   ```
+
 ## Manual Post-Install Steps
 
 - **Set Git user name, email, and signing key:**
@@ -108,6 +145,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   ```
 - **Grant Accessibility permissions to AeroSpace:** System Settings → Privacy & Security → Accessibility → add AeroSpace (required for window management)
 - **Grant Accessibility permissions to skhd:** System Settings → Privacy & Security → Accessibility → add skhd (required for global hotkeys)
+- **Grant Input Monitoring permissions to Karabiner-Elements:** System Settings → Privacy & Security → Input Monitoring → add Karabiner-Elements (required for key remapping)
 - **Install a Nerd Font** (e.g., JetBrains Mono Nerd Font) and set it as the terminal font in Ghostty/iTerm2 (required for Oh-My-Posh and AstroNvim icons to render)
 - **Sign into App Store** and manually install WhatsApp, Microsoft Teams, and PyCharm Community Edition if desired (referenced in `.skhdrc` hotkeys)
 - **Start AeroSpace and skhd services:** AeroSpace has `start-at-login = true` in `.aerospace.toml`, but skhd may need `brew services start skhd`
@@ -153,6 +191,7 @@ The `.gitconfig` file provides consistent git settings across all machines, incl
 - **Zsh** — Shell configuration with aliases for git, kubectl, terraform, and a Yazi cwd-wrapper function ([`.zshrc`](.zshrc))
 - **AeroSpace** — Tiling window manager with vim-like navigation and per-app workspace assignment ([`.aerospace.toml`](.aerospace.toml))
 - **skhd** — Global hotkey daemon for launching apps via `ctrl+key` shortcuts ([`.skhdrc`](.skhdrc))
+- **Karabiner-Elements** — Keyboard remapper: Caps Lock as Hyper key + Escape, Vim-style arrow keys ([`karabiner/karabiner.json`](karabiner/karabiner.json))
 - **Oh-My-Posh** — Custom shell prompt theme showing git status, kubectl context, and language versions ([`.oh-my-posh-theme.json`](.oh-my-posh-theme.json))
 - **Yazi** — Terminal file manager configured to show hidden files ([`yazi.toml`](yazi.toml))
 - **Zed** — Code editor with Atelier Cave Dark theme ([`zed/settings.json`](zed/settings.json))

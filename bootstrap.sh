@@ -31,6 +31,7 @@ MAPPINGS=(
   "yazi.toml|.config/yazi/yazi.toml"
   "zed/settings.json|.config/zed/settings.json"
   "kitty/kitty.conf|.config/kitty/kitty.conf"
+  "karabiner|.config/karabiner"
 )
 
 FAILED=0
