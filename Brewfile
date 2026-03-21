@@ -26,6 +26,7 @@ brew "ripgrep" # required by nvim Telescope plugin (AstroNvim dependency)
 brew "fd" # required by nvim Telescope plugin (AstroNvim dependency)
 brew "node" # required by some nvim plugins (AstroNvim ecosystem)
 brew "gcc" # required for treesitter C parser compilation in nvim
+brew "zoxide" # .zshrc (zoxide init zsh), zoxide config file
 
 # Casks — GUI applications referenced across the dotfiles
 cask "aerospace" # .aerospace.toml (tiling window manager config)
