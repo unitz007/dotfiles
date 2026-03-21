@@ -32,6 +32,7 @@ MAPPINGS=(
   "zed/settings.json|.config/zed/settings.json"
   "kitty/kitty.conf|.config/kitty/kitty.conf"
   "karabiner|.config/karabiner"
+  "bat/config|.config/bat/config"
 )
 
 FAILED=0

@@ -13,6 +13,7 @@ eval "$(direnv hook zsh)"
 
 export KUBE_EDITOR="nvim"
 export VISUAL=nvim
+export BAT_THEME="Monokai Extended"
 
 # Zoxide configuration
 [[ -f "${HOME}/.zoxide" ]] && source "${HOME}/.zoxide"
