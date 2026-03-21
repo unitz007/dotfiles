@@ -17,6 +17,7 @@ Personal configuration files for a macOS development environment, covering termi
 | **Git** | Global git config with aliases, GPG commit signing, default branch, and macOS credential helper | `.gitconfig` |
 | **Karabiner-Elements** | Keyboard remapper — Caps Lock as Hyper key (⌃⌥⌘⇧) + Escape, Vim-style arrow keys | `karabiner/karabiner.json` |
 | **direnv** | Auto-loading project-specific environment variables on directory change | `.direnvrc`, `direnv.toml` |
+| **Zoxide** | Smarter `cd` that learns from navigation habits; integrates with fzf for interactive directory selection | `zoxide` |
 
 ## Prerequisites
 
@@ -73,6 +74,23 @@ nvim   # triggers Lazy.nvim bootstrap and plugin install on first launch
 - **Usage:** Place an `.envrc` file in any project directory — it is auto-evaluated on `cd`. Run `direnv allow` the first time to trust it
 - **Global layout helpers:** `~/.direnvrc` provides reusable functions (`use_node`, `use_python`, `use_flake`) that can be called from any `.envrc` via `source_up` or `source_env ~/.direnvrc`
 - **Global settings:** `direnv.toml` enforces `strict_env = true` (explicit variable declarations required)
+
+### Zoxide
+
+[Zoxide](https://github.com/ajeetdsouza/zoxide) is a smarter `cd` command that learns from your navigation habits. It ranks directories by "frecency" (frequency + recency) so the paths you visit most often are the easiest to jump to.
+
+- **Install:** `brew install zoxide` (or via `brew bundle --file=Brewfile`)
+- **Shell init:** The `eval "$(zoxide init zsh --cmd z)"` line in `.zshrc` registers the `z` command in every new shell session
+- **Configuration:** Environment variables (`_ZO_DATA_DIR`, `_ZO_FZF_OPTS`, `_ZO_EXCLUDE_DIRS`) are set in `~/.zoxide`, sourced by `.zshrc` before zoxide init
+
+#### Usage
+
+| Command | Description |
+|---------|-------------|
+| `z <query>` | Jump to the best-matching directory based on frecency (e.g., `z proj`, `z nvim`) |
+| `z` | Open an interactive fzf-based directory selector — fuzzy-search over all learned directories |
+
+The interactive `z` (no arguments) integrates with the existing [fzf](https://github.com/junegunn/fzf) setup configured in `fzf/.fzf.zsh`. When fzf is installed, zoxide uses it automatically for interactive selection, giving you a familiar fuzzy-search interface over your navigation history.
 
 ### Tmux Plugins
 

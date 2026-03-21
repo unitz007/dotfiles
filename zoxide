@@ -1,0 +1,12 @@
+# Zoxide environment variables
+# Source this file before running `zoxide init` to configure zoxide behaviour.
+# See: https://github.com/ajeetdsouza/zoxide#configuration
+
+# Directory where zoxide stores its database (XDG-style path)
+export _ZO_DATA_DIR="$HOME/.local/share/zoxide"
+
+# Options passed to fzf when zoxide opens interactive selection
+export _ZO_FZF_OPTS="--layout=reverse --border=horizontal"
+
+# Directories excluded from zoxide's database
+export _ZO_EXCLUDE_DIRS="/tmp"

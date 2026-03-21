@@ -14,6 +14,10 @@ eval "$(direnv hook zsh)"
 export KUBE_EDITOR="nvim"
 export VISUAL=nvim
 
+# Zoxide configuration
+[[ -f "${HOME}/.zoxide" ]] && source "${HOME}/.zoxide"
+eval "$(zoxide init zsh --cmd z)"
+
 # fzf configuration
 [[ -f "$HOME/.config/fzf/.fzf.zsh" ]] && source "$HOME/.config/fzf/.fzf.zsh"
 
