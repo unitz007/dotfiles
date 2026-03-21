@@ -1,0 +1,3 @@
+# Additional git configuration (loaded from ~/.config/git/config)
+[pull]
+	rebase = true

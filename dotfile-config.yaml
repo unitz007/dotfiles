@@ -69,6 +69,14 @@ dotfiles:
       - path: git;
         target: home/.config
 
+  - software: delta
+    install:
+      linux: apt install -y git-delta
+      darwin: brew install git-delta
+    files:
+      - path: delta;
+        target: home/.config
+
   - software: vim
     install:
       linux: apt install -y vim
