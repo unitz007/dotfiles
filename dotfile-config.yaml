@@ -130,6 +130,14 @@ dotfiles:
       - path: kitty;
         target: home/.config
 
+  # Keyboard customization
+  - software: karabiner-elements
+    install:
+      darwin: brew install --cask karabiner-elements
+    files:
+      - path: karabiner;
+        target: home/.config
+
   - software: starship
     install:
       all: curl -sS https://starship.rs/install.sh | sh

@@ -41,3 +41,6 @@ cask "pycharm-ce" # .skhdrc line 17
 cask "alacritty" # dotfile-config.yaml line 100
 cask "kitty" # kitty/kitty.conf, dotfile-config.yaml line 108
 cask "multipass" # .zshrc lines 85-95 (ustart/uend functions)
+
+# Keyboard customization
+cask "karabiner-elements" # karabiner/karabiner.json (Caps Lock → Hyper key, Vim-style navigation)
