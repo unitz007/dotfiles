@@ -6,15 +6,14 @@ gui:
 
 keybinding:
   universal:
-    confirm: <c-k>
-    cancel: <c-j>
+    confirm: <c-j>
+    cancel: <c-k>
     return: <c-m> # default Enter binding preserved
   files:
     push: <c-p>
 
 os:
   editCommand: 'nvim {{filename}}'
-  editCommandTemplate: 'nvim {{filename}}'
   openCommand: 'open {{filename}}'
 
 update:
@@ -22,11 +21,11 @@ update:
 
 git:
   paging:
-    externalDiffCommand: 'delta'
+    externalDiffCommand: 'delta --dark'
 
 customCommands:
-  - key: 'lg'
+  - key: 'b'
     context: 'files'
-    command: 'lazygit'
-    description: 'Open lazygit'
+    command: 'gh repo view --web'
+    description: 'Open repo in browser'
     subprocess: true
