@@ -1,4 +1,4 @@
-# macOS Dotfiles
+# Dotfiles
 
 Personal configuration files for a macOS development environment, covering terminal, editor, window manager, shell prompt, and more.
 
