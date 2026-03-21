@@ -69,6 +69,16 @@ dotfiles:
       - path: git;
         target: home/.config
 
+  - software: gnupg
+    install:
+      linux: apt install -y gnupg pinentry-curses
+      darwin: brew install gnupg pinentry-mac
+    files:
+      - path: gpg/gpg.conf
+        target: home/.gnupg
+      - path: gpg/gpg-agent.conf
+        target: home/.gnupg
+
   - software: delta
     install:
       linux: apt install -y git-delta
