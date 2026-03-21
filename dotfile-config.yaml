@@ -98,6 +98,14 @@ dotfiles:
       - path: .tmux.conf
         target: home
 
+  - software: bat
+    install:
+      linux: apt install -y bat
+      darwin: brew install bat
+    files:
+      - path: bat;
+        target: home/.config
+
   - software: fzf
     install:
       linux: apt install -y fzf
