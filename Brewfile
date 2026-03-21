@@ -30,7 +30,6 @@ brew "kubectl" # Kubernetes CLI; aliased in .zshrc (k, kgs, kgp, kgd, ka, kd), s
 brew "terraform" # infrastructure-as-code CLI; aliased in .zshrc (tf, tfp, tfa)
 brew "nushell" # modern shell; installed in cloud-init.yaml VM provisioning
 brew "stow" # GNU Stow for managing symlinks; referenced in cloud-init.yaml
-brew "multipass" # Ubuntu VM manager; used by ustart/uend functions in .zshrc
 brew "node" # Node.js runtime; required by some nvim LSP servers and tools
 brew "gcc" # C compiler; required for building native nvim modules (e.g., treesitter parsers)
 
@@ -45,3 +44,4 @@ cask "goland" # JetBrains Go IDE; referenced in .skhdrc (ctrl-g) and .aerospace.
 cask "fleet" # JetBrains Fleet IDE; referenced in .skhdrc (ctrl-v)
 cask "google-chrome" # web browser; referenced in .skhdrc (ctrl-h) and .aerospace.toml (workspace assignment)
 cask "whatsapp" # messaging app; referenced in .skhdrc (ctrl-w) and .aerospace.toml (workspace assignment)
+cask "multipass" # Ubuntu VM manager; used by ustart/uend functions in .zshrc
