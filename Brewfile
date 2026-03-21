@@ -30,6 +30,8 @@ brew "gcc" # required for treesitter C parser compilation in nvim
 brew "zoxide" # .zshrc (zoxide init zsh), zoxide config file
 brew "bat" # bat/config, .zshrc (BAT_THEME), fzf preview integration
 brew "eza" # .zshrc (ls, la, ll, lt, tree aliases with --icons --git)
+brew "lazygit" # lazygit/config.yml (terminal git UI)
+brew "git-delta" # lazygit/config.yml (diff pager)
 
 # Casks — GUI applications referenced across the dotfiles
 cask "aerospace" # .aerospace.toml (tiling window manager config)

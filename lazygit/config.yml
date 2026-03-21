@@ -1,0 +1,32 @@
+gui:
+  editor: nvim
+  pager: delta --dark --paging=never
+  theme:
+    lightTheme: false
+
+keybinding:
+  universal:
+    confirm: <c-k>
+    cancel: <c-j>
+    return: <c-m> # default Enter binding preserved
+  files:
+    push: <c-p>
+
+os:
+  editCommand: 'nvim {{filename}}'
+  editCommandTemplate: 'nvim {{filename}}'
+  openCommand: 'open {{filename}}'
+
+update:
+  method: prompt
+
+git:
+  paging:
+    externalDiffCommand: 'delta'
+
+customCommands:
+  - key: 'lg'
+    context: 'files'
+    command: 'lazygit'
+    description: 'Open lazygit'
+    subprocess: true

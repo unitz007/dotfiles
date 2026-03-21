@@ -22,6 +22,8 @@ Personal configuration files for a macOS development environment, covering termi
 | **Bat** | Syntax-highlighted `cat` replacement with git integration and line numbers | `bat/config` |
 | **fzf** | General-purpose fuzzy finder for files, directories, and command history | `fzf/.fzf.zsh` |
 | **ripgrep** | Fast recursive search tool (used by nvim Telescope plugin) | `Brewfile` |
+| **Lazygit** | Terminal UI for git with nvim editor, delta pager, and vim-style keybindings | `lazygit/config.yml` |
+| **git-delta** | Syntax-highlighted diff pager used by lazygit and git | `lazygit/config.yml` |
 
 ## Prerequisites
 

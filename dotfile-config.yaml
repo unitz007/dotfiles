@@ -69,6 +69,14 @@ dotfiles:
       - path: git;
         target: home/.config
 
+  - software: lazygit
+    install:
+      linux: "lazygit"
+      darwin: brew install lazygit
+    files:
+      - path: lazygit;
+        target: home/.config
+
   - software: vim
     install:
       linux: apt install -y vim
