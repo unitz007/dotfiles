@@ -8,29 +8,12 @@
 # Variables & Assignments
 eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
 
-# Atuin shell history (replaces Ctrl+R with searchable history)
-eval "$(atuin init zsh)"
-
-# direnv hook
-eval "$(direnv hook zsh)"
-
 export KUBE_EDITOR="nvim"
 export VISUAL=nvim
-export BAT_THEME="Monokai Extended"
-
-# Zoxide configuration
-[[ -f "${HOME}/.zoxide" ]] && source "${HOME}/.zoxide"
-eval "$(zoxide init zsh --cmd z)"
-
-# fzf configuration
-[[ -f "$HOME/.config/fzf/.fzf.zsh" ]] && source "$HOME/.config/fzf/.fzf.zsh"
 
 # Aliases
-alias ls='eza --icons --git'
-alias la='eza -a --icons --git'
-alias ll='eza -l --icons --git'
-alias lt='eza --tree --icons --git'
-alias tree='eza --tree --icons --git'
+alias ls="nu -c ls"
+alias la="nu -c 'ls -la'"
 alias run="sdlc run"
 alias tst="sdlc test"
 alias build="sdlc build"

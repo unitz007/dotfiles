@@ -3,6 +3,7 @@
 	autoSetupRemote = true
 	pager = delta
 	excludesfile = ~/.gitignore_global
+	autocrlf = input
 
 [interactive]
 	diffFilter = delta --color-only
@@ -29,11 +30,7 @@
 	ui = auto
 
 [commit]
-	gpgsign = true
-
-[gpg]
-	program = gpg
-
+	gpgsign = false
 [pull]
 	rebase = true
 
@@ -57,3 +54,13 @@
 # ~/.gitconfig_user should contain [user] with name, email, and signingKey.
 [includeIf "gitdir:~/"]
 	path = ~/.gitconfig_user
+[user]
+	name = unitz007
+	email = dinneyacharles007@gmail.com
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
