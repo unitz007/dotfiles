@@ -1,0 +1,42 @@
+# Atuin shell history configuration
+# Docs: https://atuin.sh/docs/config/
+
+[stats]
+# Common commands to exclude from statistics and history sync
+common_commands = [
+  "ls",
+  "cd",
+  "clear",
+  "exit",
+]
+
+[history]
+# Filter out privacy-sensitive and noisy commands
+filter = [
+  "^\\s*export\\s+.*SECRET",
+  "^\\s*export\\s+.*TOKEN",
+  "^\\s*export\\s+.*KEY",
+  "^\\s*export\\s+.*PASSWORD",
+  "^\\s*export\\s+.*PASS",
+  "^\\s*export\\s+.*CREDENTIAL",
+  "^\\s*curl\\s+.*-[dD]\\s+.*@",
+  "^\\s*wget\\s+.*--post-data",
+  "^\\s*history\\s+-d",
+  "^\\s*rm\\s+-rf\\s+/",
+]
+
+[sync]
+# Enable automatic history sync on shell startup/exit
+auto_sync = true
+# Sync frequency in seconds (0 = on every prompt)
+sync_frequency = "5m"
+# Records are not deleted on sync conflict; local copy wins
+records = true
+
+[search]
+# Fuzzy search mode — aligns with fzf preferences in this dotfiles repo
+mode = "fuzzy"
+
+[keys]
+# Emacs-style keybindings for consistency with zsh line editing
+keybinding_style = "emacs"

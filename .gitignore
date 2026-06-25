@@ -14,3 +14,19 @@ iterm
 
 #IDE directories
 .idea
+
+# SSH private keys and secrets
+ssh/id_rsa
+ssh/id_ed25519
+ssh/id_ecdsa
+ssh/*.pem
+ssh/sockets/
+
+# GPG private keys and secrets
+*.gpg
+*.asc
+!gpg/gpg.conf
+!gpg/gpg-agent.conf
+*.key
+*.pem
+*.secret

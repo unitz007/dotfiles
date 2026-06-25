@@ -69,6 +69,24 @@ dotfiles:
       - path: git;
         target: home/.config
 
+  - software: gnupg
+    install:
+      linux: apt install -y gnupg pinentry-curses
+      darwin: brew install gnupg pinentry-mac
+    files:
+      - path: gpg/gpg.conf
+        target: home/.gnupg
+      - path: gpg/gpg-agent.conf
+        target: home/.gnupg
+
+  - software: delta
+    install:
+      linux: apt install -y git-delta
+      darwin: brew install git-delta
+    files:
+      - path: delta;
+        target: home/.config
+
   - software: vim
     install:
       linux: apt install -y vim
@@ -90,9 +108,37 @@ dotfiles:
     install:
       linux: apt install -y tmux
       darwin: brew install tmux
+      all: |
+        if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+          git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+        fi
     files:
       - path: .tmux.conf
         target: home
+
+  - software: bat
+    install:
+      linux: apt install -y bat
+      darwin: brew install bat
+    files:
+      - path: bat;
+        target: home/.config
+
+  - software: fzf
+    install:
+      linux: apt install -y fzf
+      darwin: brew install fzf
+    files:
+      - path: fzf;
+        target: home/.config
+
+  - software: openssh-client
+    install:
+      linux: apt install -y openssh-client
+      darwin: ""
+    files:
+      - path: ssh/config
+        target: home/.ssh
 
   - software: alacritty
     install:
@@ -110,11 +156,45 @@ dotfiles:
       - path: kitty;
         target: home/.config
 
+  # Keyboard customization
+  - software: karabiner-elements
+    install:
+      darwin: brew install --cask karabiner-elements
+    files:
+      - path: karabiner;
+        target: home/.config
+
   - software: starship
     install:
       all: curl -sS https://starship.rs/install.sh | sh
     files:
       - path: starship.toml
+        target: home/.config
+
+  - software: direnv
+    install:
+      linux: apt install -y direnv
+      darwin: brew install direnv
+    files:
+      - path: .direnvrc
+        target: home
+      - path: direnv.toml
+        target: home
+
+  - software: zoxide
+    install:
+      linux: apt install -y zoxide
+      darwin: brew install zoxide
+    files:
+      - path: zoxide
+        target: home
+
+  - software: atuin
+    install:
+      linux: curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+      darwin: brew install atuin
+    files:
+      - path: atuin;
         target: home/.config
 
   # Development tools
@@ -167,6 +247,13 @@ dotfiles:
 #    files:
 #      - path: .kube/config
 #        target: home
+
+  - software: macos-defaults
+    install:
+      darwin: echo "Run manually: bash macos/defaults.sh"
+    files:
+      - path: macos/defaults.sh
+        target: home
 
 # SECURITY WARNING:
 # Never include sensitive files like:

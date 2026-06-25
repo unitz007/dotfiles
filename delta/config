@@ -1,0 +1,24 @@
+# Syntax highlighting
+syntax-theme = Dracula
+# Side-by-side diff display
+side-by-side = true
+# Line numbers in diff
+line-numbers = true
+# Navigate mode (use n/N to jump between file sections)
+navigate = true
+# Keep the default file-decoration style
+file-decoration-style = blue ol
+# Commit decoration style
+commit-decoration-style = blue ol
+# Commit-style for git log
+commit-style = raw
+# File-style for git log
+file-style = raw
+# Hunk-header decoration
+hunk-header-decoration-style = blue box
+# Use 24-bit color
+true-color = true
+# Wrap lines (useful for commit messages)
+wrap-max-lines = 0
+# Pager settings
+pager = less -R

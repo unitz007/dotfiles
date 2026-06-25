@@ -1,0 +1,66 @@
+[core]
+	defaultBranch = main
+	autoSetupRemote = true
+	pager = delta
+	excludesfile = ~/.gitignore_global
+	autocrlf = input
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Nord
+	file-decoration-style = blue ol
+	hunk-header-decoration-style = blue box
+	commit-decoration-style = blue ol
+	commit-style = raw
+	file-style = omit
+	map-styles = bold purple => bold blue, bold cyan => bold cyan
+
+[merge]
+	conflictstyle = diff3
+
+[rerere]
+	enabled = true
+
+[color]
+	ui = auto
+
+[commit]
+	gpgsign = false
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	lg = log --oneline --graph --decorate --all
+	type = cat-file -t
+	dump = cat-file -p
+	amend = commit --amend --no-edit
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = log --graph --oneline --decorate --all
+
+# Personal identity is loaded from an untracked file to keep secrets out of the repo.
+# ~/.gitconfig_user should contain [user] with name, email, and signingKey.
+[includeIf "gitdir:~/"]
+	path = ~/.gitconfig_user
+[user]
+	name = unitz007
+	email = dinneyacharles007@gmail.com
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -1,0 +1,42 @@
+apiVersion: dotsync/v1
+kind: SyncPolicy
+metadata:
+  name: charles-dotfiles
+
+spec:
+  repository: https://github.com/unitz007/dotfiles
+  branch: main
+  strategy: symlink
+  mode: enforce
+
+  files:
+    - source: .zshrc
+      target: ~/.zshrc
+    - source: .tmux.conf
+      target: ~/.tmux.conf
+    - source: nvim
+      target: ~/.config/nvim
+    - source: starship.toml
+      target: ~/.config/starship.toml
+
+  packages:
+    darwin:
+      - manager: brew
+        name: neovim
+      - manager: brew
+        name: tmux
+      - manager: brew
+        name: starship
+      - manager: brew
+        name: fzf
+    linux:
+      - manager: apt
+        name: neovim
+      - manager: apt
+        name: tmux
+      - manager: apt
+        name: fzf
+
+  hooks:
+    post_sync:
+      - source: scripts/post-sync.sh
