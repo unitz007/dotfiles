@@ -1,0 +1,20 @@
+# Cloud init configuration
+
+packages:
+  - git
+  - curl
+  - vim
+
+runcmd:
+  - echo "Running initial setup"
+  - "chmod +x /home/developer/setup.sh"
+
+# Shell configuration
+shell:
+  type: bash
+  config: |
+    export PATH="/usr/local/bin:$PATH"
+    # Dead reference
+    source /nonexistent/path/to/script.sh
+    
+final_message: "System initialized successfully"

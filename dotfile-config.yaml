@@ -1,0 +1,21 @@
+# Dotfile configuration
+
+references:
+  # Valid references
+  - path: "./.zshrc"
+    description: "Main shell configuration"
+  
+  - path: "./.aerospace.toml"
+    description: "Aerospace window manager config"
+    
+  # Dead reference
+  - path: "./nonexistent-file.conf"
+    description: "This file doesn't exist"
+    
+  # Typo in path
+  - path: "./cloud-init.yml"  # Should be .yaml
+    description: "Cloud initialization config"
+
+settings:
+  backup: true
+  sync_interval: "24h"
