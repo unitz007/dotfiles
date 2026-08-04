@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'phase*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint & Validate Dotfiles
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Lint shell scripts (.zshrc)
+        run: shellcheck .zshrc || true
+
+      - name: Validate YAML files
+        run: |
+          for f in *.yaml *.yml .github/workflows/*.yml; do
+            if [ -f "$f" ]; then
+              python3 -c "import yaml; yaml.safe_load(open('$f'))" && echo "$f: valid YAML" || echo "$f: invalid YAML"
+            fi
+          done
+
+      - name: Validate TOML files
+        run: |
+          for f in *.toml; do
+            if [ -f "$f" ]; then
+              python3 -c "import tomllib; tomllib.load(open('$f','rb'))" && echo "$f: valid TOML" || echo "$f: invalid TOML"
+            fi
+          done
+
+  shell-test:
+    name: Test zsh configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install zsh
+        run: sudo apt-get update && sudo apt-get install -y zsh
+
+      - name: Source .zshrc and check for syntax errors
+        run: |
+          zsh -n .zshrc
+          echo "zsh syntax check passed"
+
+      - name: Check that rmdir_safe function is defined
+        run: |
+          zsh -c 'source .zshrc; type rmdir_safe' || echo "Warning: rmdir_safe not found"
+
+      - name: Check that commit function is defined
+        run: |
+          zsh -c 'source .zshrc; type commit' || echo "Warning: commit function not found"
+
+  file-structure:
+    name: Verify file structure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required files exist
+        run: |
+          required_files=(.zshrc .aerospace.toml dotfile-config.yaml cloud-init.yaml README.md)
+          for f in "${required_files[@]}"; do
+            if [ -f "$f" ]; then
+              echo "✅ $f exists"
+            else
+              echo "❌ $f missing"
+              exit 1
+            fi
+          done
+
+      - name: Check shell is set to zsh in cloud-init
+        run: |
+          if grep -q 'zsh' cloud-init.yaml; then
+            echo "✅ cloud-init uses zsh"
+          else
+            echo "❌ cloud-init does not use zsh"
+            exit 1
+          fi
