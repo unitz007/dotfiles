@@ -7,13 +7,6 @@ name = "Development"
 [workspace.Two]
 name = "Communication"
 
-# Invalid reference for testing
-[workspace.Three]
-name = "NonExistent"
+# Removed invalid and deprecated workspace references
 
-# Dead reference
-[workspace.Four]
-name = "Deprecated"
-
-[[invalid]]
-something = "wrong"
+# Fixed configuration structure
