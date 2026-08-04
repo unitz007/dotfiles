@@ -44,7 +44,7 @@ ustart() {
 		return 1
 	fi
 	
-  multipass launch -n ubuntu --cpus 4 --disk 20G --memory 2G --cloud-init ~/cloud-init.yaml
+  multipass launch -n ubuntu --cpus 4 --disk 20G --memory 2G --cloud-init $CLOUD_INIT_PATH
   multipass shell ubuntu
 }
 
