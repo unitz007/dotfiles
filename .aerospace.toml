@@ -115,7 +115,7 @@ alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-c = 'workspace CODING'
-alt-b = 'workspace BROSWER'
+alt-b = 'workspace BROWSER'
 alt-m = 'workspace MESSAGING'
 alt-t = 'workspace UTILITY'
 
@@ -182,7 +182,7 @@ run = 'move-node-to-workspace MESSAGING'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
-run = 'move-node-to-workspace UTILTY'
+run = 'move-node-to-workspace UTILITY'
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
