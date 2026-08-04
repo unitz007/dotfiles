@@ -48,7 +48,7 @@ alias psa='ps aux'
 alias ports='netstat -tulanp'
 
 # Personal workspace
-gwp() { cd ~/Personal/Golang 2>/dev/null || echo "⚠️ Golang workspace not found at ~/Personal/Golang"; }
+gwp() { cd $GOWORK 2>/dev/null || echo "⚠️ Golang workspace not found at $GOWORK"; }
 
 # Docker
 alias d="docker"

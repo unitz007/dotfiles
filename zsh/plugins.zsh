@@ -1,5 +1,5 @@
 # Plugin initialization
-eval "$(oh-my-posh init zsh --config ~/.oh-my-posh-theme.json)"
+eval "$(oh-my-posh init zsh --config $OH_MY_POSH_THEME)"
 
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"

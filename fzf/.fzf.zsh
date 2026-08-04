@@ -38,15 +38,13 @@ if command -v fzf &>/dev/null; then
   "
 
   # --- Source fzf keybindings and completion ---
-  if [[ -d "/opt/homebrew/opt/fzf/shell" ]]; then
-    source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
-    source "/opt/homebrew/opt/fzf/shell/completion.zsh"
-  elif [[ -d "/usr/local/opt/fzf/shell" ]]; then
-    source "/usr/local/opt/fzf/shell/key-bindings.zsh"
-    source "/usr/local/opt/fzf/shell/completion.zsh"
-  elif [[ -d "$HOME/.fzf/shell" ]]; then
-    source "$HOME/.fzf/shell/key-bindings.zsh"
-    source "$HOME/.fzf/shell/completion.zsh"
+  # Use dynamic detection of fzf installation path
+  if command -v fzf >/dev/null 2>&1; then
+    local fzf_base="$(dirname $(dirname $(command -v fzf)))"
+    if [[ -d "$fzf_base/shell" ]]; then
+      source "$fzf_base/shell/key-bindings.zsh"
+      source "$fzf_base/shell/completion.zsh"
+    fi
   fi
 
 fi

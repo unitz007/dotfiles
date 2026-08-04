@@ -3,7 +3,7 @@
 
 # Source plugin initializations (keep at top)
 # Initialize zsh plugins and theme settings
-source ~/.oh-my-posh-theme.json
+source $OH_MY_POSH_THEME
 source ~/zsh/plugins.zsh
 
 # Source all modular files in appropriate order

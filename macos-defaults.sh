@@ -44,8 +44,8 @@ apply_defaults "Hide icons on Desktop" com.apple.finder CreateDesktop -bool fals
 killall Finder || true
 
 # ── Screenshots ─────────────────────────────────────────────────────────────
-mkdir -p ~/Screenshots
-apply_defaults "Set screenshot save location to ~/Screenshots" com.apple.screencapture location -string "$HOME/Screenshots"
+mkdir -p $SCREENSHOT_DIR
+apply_defaults "Set screenshot save location to $SCREENSHOT_DIR" com.apple.screencapture location -string "$SCREENSHOT_DIR"
 apply_defaults "Set screenshot format to PNG" com.apple.screencapture type -string "png"
 
 killall SystemUIServer || true
