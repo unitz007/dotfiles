@@ -100,8 +100,6 @@ export LANG=en_US.UTF-8
 # neofetch
 neofetch
 
-[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
-
 # Q post block. Keep at the bottom of this file.
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 

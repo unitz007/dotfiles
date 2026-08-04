@@ -5,18 +5,6 @@
 #
 # Structure:
 #   software: Name of the software
-#   install: Installation command(s)
-#   files: List of dotfiles to sync
-#     - path: File/directory path (directories end with ;)
-#       target: Target location (home is replaced with $HOME)
-
-# Enhanced Dotfile Agent Configuration
-# 
-# This format includes installation commands as structured data
-# that can be parsed and used programmatically.
-#
-# Structure:
-#   software: Name of the software
 #   install: Installation command(s) - can be string or platform-specific map
 #   files: List of dotfiles to sync
 #     - path: File/directory path (directories end with ;)
@@ -209,7 +197,7 @@ dotfiles:
 #
 #  - software: yarn
 #    install:
-#      all: npm install -g yarn
+#      all: npm install -y yarn
 #    files:
 #      - path: .yarnrc
 #        target: home
