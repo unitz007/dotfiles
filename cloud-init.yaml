@@ -11,10 +11,8 @@ runcmd:
 
 # Shell configuration
 shell:
-  type: bash
+  type: zsh
   config: |
     export PATH="/usr/local/bin:$PATH"
-    # Dead reference
-    source /nonexistent/path/to/script.sh
     
 final_message: "System initialized successfully"

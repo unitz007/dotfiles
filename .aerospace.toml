@@ -6,14 +6,3 @@ name = "Development"
 
 [workspace.Two]
 name = "Communication"
-
-# Invalid reference for testing
-[workspace.Three]
-name = "NonExistent"
-
-# Dead reference
-[workspace.Four]
-name = "Deprecated"
-
-[[invalid]]
-something = "wrong"
