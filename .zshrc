@@ -2,6 +2,7 @@
 # It sources modular configuration files from this repo (aliases.zsh, functions.zsh, etc).
 
 # Source plugin initializations (keep at top)
+# Initialize zsh plugins and theme settings
 source ~/.oh-my-posh-theme.json
 source ~/zsh/plugins.zsh
 
