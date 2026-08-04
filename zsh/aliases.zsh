@@ -25,9 +25,6 @@ alias ..="cd ../"
 alias ...="cd ../../"
 alias ....="cd ../../../"
 alias cls='clear'
-alias tf=terraform
-alias tfp="tf plan"
-alias tfa="tf apply"
 alias h="cd ~/"
 alias nf=neofetch
 
