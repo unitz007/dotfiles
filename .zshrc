@@ -1,4 +1,5 @@
-# Main .zshrc file that sources all modular components
+# This is the main zsh configuration file.
+# It sources modular configuration files from this repo (aliases.zsh, functions.zsh, etc).
 
 # Source plugin initializations (keep at top)
 source ~/.oh-my-posh-theme.json
