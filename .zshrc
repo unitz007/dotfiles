@@ -38,19 +38,18 @@ alias rmDir="rm -rf $1"
 alias gwp="cd ~/Personal/Golang" # Golang workspace
 alias h="cd ~/"
 
-function commit() {
-	if [[ "$1" == "" ]]
-  then
+# Improved Functions
+commit() {
+	if [[ -z "$1" ]]; then
 		echo "Error: missing 'commit message'"
-		echo "Usage: commit <commit message>"
+		echo "Usage: commit <commit message> [-p] [branch]"
+		return 1
 	else
 		git add .
 		git commit -m "$1"
-    if [[ "$2" == "-p" ]]
-    then
-      if [[ "$3" == "" ]]
-      then
-        git push origin main
+    if [[ "$2" == "-p" ]]; then
+      if [[ -z "$3" ]]; then
+        git push origin "$(git rev-parse --abbrev-ref HEAD)"
       else
         git push origin "$3"    
       fi
@@ -58,47 +57,90 @@ function commit() {
 	fi
 }
 
-function y() {
+# Enhanced yazi function with error handling
+y() {
+	if ! command -v yazi >/dev/null 2>&1; then
+		echo "Error: yazi is not installed"
+		return 1
+	fi
+	
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
+	
 	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd"
 	fi
+	
 	rm -f -- "$tmp"
 }
 
-# function vm() {
-#   if [[ $# -eq 0 ]]; then
-#     echo "Usage: vm $arg"
-#     return
-#   fi
-
-#   if [[ $1 == 'up' ]]; then
-#     ustart()
-#   fi
-
-#   if [[ $1 == 'down']]; then
-#     uend()
-#   fi
-# }
-
-function ustart() {
+ustart() {
   echo "Spinning Up Ubuntu VM..."
-  multipass launch -n ubuntu --cpus 4 --disk 20G --memory 2G  --cloud-init ~/cloud-init.yaml
+  if ! command -v multipass >/dev/null 2>&1; then
+		echo "Error: multipass is not installed"
+		return 1
+	fi
+	
+  multipass launch -n ubuntu --cpus 4 --disk 20G --memory 2G --cloud-init ~/cloud-init.yaml
   multipass shell ubuntu
 }
 
-function uend() {
+uend() {
   echo "Tearing Down Ubuntu VM..."
+  if ! command -v multipass >/dev/null 2>&1; then
+		echo "Error: multipass is not installed"
+		return 1
+	fi
+	
   multipass delete ubuntu
   multipass purge 
+}
+
+# New utility functions
+backup() {
+	if [[ -z "$1" ]]; then
+		echo "Error: missing filename"
+		echo "Usage: backup <filename>"
+		return 1
+	fi
+	
+	if [[ ! -f "$1" ]]; then
+		echo "Error: '$1' is not a file"
+		return 1
+	fi
+	
+	cp "$1" "$1.backup.$(date +%Y%m%d%H%M%S)"
+	echo "Backup created: $1.backup.$(date +%Y%m%d%H%M%S)"
+}
+
+# Enhanced navigation functions
+mkcd() {
+	if [[ -z "$1" ]]; then
+		echo "Error: missing directory name"
+		echo "Usage: mkcd <directory>"
+		return 1
+	fi
+	
+	mkdir -p "$1" && cd "$1"
+}
+
+# System information function
+sysinfo() {
+	echo "=== System Information ==="
+	echo "OS: $(uname -s)"
+	echo "Kernel: $(uname -r)"
+	echo "Architecture: $(uname -m)"
+	echo "Uptime: $(uptime)"
+	echo "Load Average: $(uptime | awk -F'load averages:' '{print $2}')"
+	echo "Memory Usage: $(free -h | grep Mem | awk '{print $3 "/" $2}')"
+	echo "Disk Usage: $(df -h / | tail -1 | awk '{print $3 "/" $2}')"
 }
 
 # set language
 export LANG=en_US.UTF-8
 
-# neofetch
-neofetch
+# neofetch moved to function for on-demand execution
+alias nf=neofetch
 
 # Q post block. Keep at the bottom of this file.
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
