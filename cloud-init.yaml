@@ -1,26 +1,18 @@
-#cloud-config
-users:
-  - default
-  - name: ubuntu
-    gecos: Ubuntu
-    sudo: ALL=(ALL) NOPASSWD:ALL
-    groups: users, admin
-    shell: /bin/zsh
-package_update: true
-package_upgrade: true
+# Cloud init configuration
+
 packages:
-  - zsh
-  - unzip
-  - stow
-  - neovim
-  - nushell
   - git
   - curl
+  - vim
+
 runcmd:
-  - chsh -s /bin/zsh ubuntu
-  - curl -s https://ohmyposh.dev/install.sh | bash -s
-  - sudo snap install nushell --classic
-  - git clone https://github.com/unitz007/dotfiles.git /home/ubuntu/dotfiles
-  - cp /home/ubuntu/dotfiles/.zshrc /home/ubuntu/
-  - cp /home/ubuntu/dotfiles/.oh-my-posh-theme.json /home/ubuntu/
-  - echo 'exec zsh' >> /home/ubuntu/.bashrc
+  - echo "Running initial setup"
+  - "chmod +x /home/developer/setup.sh"
+
+# Shell configuration
+shell:
+  type: zsh
+  config: |
+    export PATH="/usr/local/bin:$PATH"
+    
+final_message: "System initialized successfully"
