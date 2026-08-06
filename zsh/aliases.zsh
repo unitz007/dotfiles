@@ -54,3 +54,37 @@ gwp() { cd $GOWORK 2>/dev/null || echo "⚠️ Golang workspace not found at $GO
 alias d="docker"
 alias dc="docker compose"
 alias dkx="docker exec -it"
+
+# New useful aliases for productivity
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias h='history'
+alias j='jobs'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Random fun aliases
+alias starwars='telnet towel.blinkenlights.nl'
+alias weather='curl wttr.in'
+alias matrix='echo -e "\e[32m"; while :; do for i in {1..16}; do r="$(($RANDOM % 2))"; if [[ $(($RANDOM % 5)) == 1 ]]; then if [[ $(($RANDOM % 4)) == 1 ]]; then v+="\e[1m $r   "; else v+="\e[2m $r   "; fi; else v+="     "; fi; done; echo -e "$v"; v=""; done'
+
+# Additional Git aliases
+alias gl='git log --oneline'
+
+# Additional Docker aliases
+alias dps='docker ps'
+alias dpa='docker ps -a'
+alias di='docker images'
+alias drm='docker rm'
+alias drmi='docker rmi'
+
+# Additional Kubernetes aliases
+alias kgn='kubectl get nodes'
+alias kdp='kubectl describe pod'
+alias kdnp='kubectl describe node'
+
+# Additional safety aliases
+alias cp='cp -i'
+alias mv='mv -i'
