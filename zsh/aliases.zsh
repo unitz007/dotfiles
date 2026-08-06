@@ -59,7 +59,7 @@ alias dkx="docker exec -it"
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias h='history'
+alias hh='history'
 alias j='jobs'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
