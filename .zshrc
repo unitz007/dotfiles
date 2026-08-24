@@ -1,13 +1,13 @@
 # This is the main zsh configuration file.
 # It sources modular configuration files from this repo (aliases.zsh, functions.zsh, etc).
 
-# Source plugin initializations (keep at top)
+# Source exports first: plugins.zsh depends on OH_MY_POSH_THEME being set
+source ~/zsh/exports.zsh
+
 # Initialize zsh plugins and theme settings
-source $OH_MY_POSH_THEME
 source ~/zsh/plugins.zsh
 
-# Source all modular files in appropriate order
-source ~/zsh/exports.zsh
+# Source remaining modular files in appropriate order
 source ~/zsh/aliases.zsh
 source ~/zsh/functions.zsh
 source ~/zsh/path.zsh

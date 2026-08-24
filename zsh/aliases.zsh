@@ -44,8 +44,8 @@ alias df='df -h'
 alias du='du -h'
 alias psa='ps aux'
 
-# Networking
-alias ports='netstat -tulanp'
+# Networking (macOS-compatible; netstat -tulanp is Linux/net-tools only)
+alias ports='lsof -iTCP -sTCP:LISTEN -nP'
 
 # Personal workspace
 gwp() { cd $GOWORK 2>/dev/null || echo "⚠️ Golang workspace not found at $GOWORK"; }
@@ -57,7 +57,6 @@ alias dkx="docker exec -it"
 
 # New useful aliases for productivity
 alias ll='ls -alF'
-alias la='ls -A'
 alias l='ls -CF'
 alias hh='history'
 alias j='jobs'
