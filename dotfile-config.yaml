@@ -136,13 +136,13 @@ dotfiles:
       - path: alacritty;
         target: home/.config
 
-  - software: kitty
+  - software: ghostty
     install:
-      linux: apt install -y kitty
-      darwin: brew install --cask kitty
+      linux: echo "See https://ghostty.org/docs/install/binary for Linux install options"
+      darwin: brew install --cask ghostty
     files:
-      - path: kitty;
-        target: home/.config
+      - path: ghostty/config
+        target: home/.config/ghostty
 
   # Keyboard customization
   - software: karabiner-elements

@@ -31,7 +31,7 @@ MAPPINGS=(
   "tmux/tmux.conf|.tmux.conf"
   "yazi.toml|.config/yazi/yazi.toml"
   "zed/settings.json|.config/zed/settings.json"
-  "kitty/kitty.conf|.config/kitty/kitty.conf"
+  "ghostty/config|.config/ghostty/config"
   "karabiner|.config/karabiner"
   "bat/config|.config/bat/config"
 )
