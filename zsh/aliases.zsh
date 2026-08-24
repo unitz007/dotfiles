@@ -57,6 +57,7 @@ alias dkx="docker exec -it"
 
 # New useful aliases for productivity
 alias ll='ls -alF'
+alias la='ls -A'
 alias l='ls -CF'
 alias hh='history'
 alias j='jobs'
