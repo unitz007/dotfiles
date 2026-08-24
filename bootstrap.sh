@@ -24,6 +24,7 @@ MAPPINGS=(
   ".aerospace.toml|.aerospace.toml"
   ".skhdrc|.skhdrc"
   ".zshrc|.zshrc"
+  "zsh|zsh"
   ".oh-my-posh-theme.json|.oh-my-posh-theme.json"
   ".gitconfig|.gitconfig"
   "nvim|.config/nvim"
