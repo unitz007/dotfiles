@@ -238,7 +238,7 @@ dotfiles:
 
   - software: macos-defaults
     install:
-      darwin: echo "Run manually: bash macos/defaults.sh"
+      darwin: 'echo "Run manually: bash macos/defaults.sh"'
     files:
       - path: macos/defaults.sh
         target: home
