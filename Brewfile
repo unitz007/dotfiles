@@ -35,7 +35,7 @@ brew "eza" # .zshrc (ls, la, ll, lt, tree aliases with --icons --git)
 # Casks — GUI applications referenced across the dotfiles
 cask "aerospace" # .aerospace.toml (tiling window manager config)
 cask "zed" # zed/settings.json, .skhdrc line 4
-cask "ghostty" # .skhdrc line 7, .aerospace.toml line 173 (window rule)
+cask "ghostty" # ghostty/config, dotfile-config.yaml, .skhdrc line 7, .aerospace.toml line 173 (window rule)
 cask "goland" # .skhdrc line 2, .aerospace.toml line 168 (window rule)
 cask "fleet" # .skhdrc line 3
 cask "postman" # .skhdrc line 9
@@ -44,7 +44,6 @@ cask "microsoft-teams" # .skhdrc line 13
 cask "google-chrome" # .skhdrc line 14, .aerospace.toml line 189 (window rule)
 cask "pycharm-ce" # .skhdrc line 17
 cask "alacritty" # dotfile-config.yaml line 100
-cask "kitty" # kitty/kitty.conf, dotfile-config.yaml line 108
 cask "multipass" # .zshrc lines 85-95 (ustart/uend functions)
 
 # Keyboard customization

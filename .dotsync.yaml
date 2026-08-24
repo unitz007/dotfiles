@@ -18,6 +18,8 @@ spec:
       target: ~/.config/nvim
     - source: starship.toml
       target: ~/.config/starship.toml
+    - source: ghostty/config
+      target: ~/.config/ghostty/config
 
   packages:
     darwin:
