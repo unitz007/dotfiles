@@ -14,4 +14,8 @@ source ~/zsh/path.zsh
 source ~/zsh/options.zsh
 source ~/zsh/keybindings.zsh
 
-# Additional configurations can be added here as needed
+# Automatically attach interactive terminals to tmux.
+# Set DOTSYNC_NO_TMUX=1 before starting zsh to open a plain shell.
+if [[ -o interactive && -z "${TMUX:-}" && -z "${DOTSYNC_NO_TMUX:-}" ]] && command -v tmux >/dev/null 2>&1; then
+  exec tmux new-session -A -s main
+fi
