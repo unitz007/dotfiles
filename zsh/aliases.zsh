@@ -1,11 +1,6 @@
 # Aliases
-if command -v nu >/dev/null 2>&1; then
-  alias ls="nu -c ls"
-  alias la="nu -c 'ls -la'"
-else
-  alias ls="ls"
-  alias la="ls -la"
-fi
+alias ls="ls"
+alias la="ls -la"
 alias run="sdlc run"
 alias tst="sdlc test"
 alias build="sdlc build"
