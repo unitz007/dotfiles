@@ -18,6 +18,10 @@ spec:
           target: ~/.config/zsh
         - source: ghostty/config
           target: ~/.config/ghostty/config
+        - source: karabiner/karabiner.json
+          target: ~/.config/karabiner/karabiner.json
+        - source: .skhdrc
+          target: ~/.skhdrc
         - source: .oh-my-posh-theme.json
           target: ~/.oh-my-posh-theme.json
 

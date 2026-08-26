@@ -14,7 +14,7 @@
       "complex_modifications": {
         "rules": [
           {
-            "description": "Caps Lock → Hyper Key (⌃⌥⌘⇧) + Escape if alone",
+            "description": "Caps Lock → Super Key (⌥⌘⇧) + Escape if alone",
             "manipulators": [
               {
                 "type": "basic",
@@ -25,12 +25,6 @@
                   }
                 },
                 "to": [
-                  {
-                    "key_code": "left_control",
-                    "modifiers": {
-                      "optional": ["any"]
-                    }
-                  },
                   {
                     "key_code": "left_option",
                     "modifiers": {
@@ -66,7 +60,7 @@
                 "from": {
                   "key_code": "h",
                   "modifiers": {
-                    "mandatory": ["left_control", "left_option", "left_command", "left_shift"],
+                    "mandatory": ["left_option", "left_command", "left_shift"],
                     "optional": ["any"]
                   }
                 },
@@ -81,7 +75,7 @@
                 "from": {
                   "key_code": "j",
                   "modifiers": {
-                    "mandatory": ["left_control", "left_option", "left_command", "left_shift"],
+                    "mandatory": ["left_option", "left_command", "left_shift"],
                     "optional": ["any"]
                   }
                 },
@@ -96,7 +90,7 @@
                 "from": {
                   "key_code": "k",
                   "modifiers": {
-                    "mandatory": ["left_control", "left_option", "left_command", "left_shift"],
+                    "mandatory": ["left_option", "left_command", "left_shift"],
                     "optional": ["any"]
                   }
                 },
@@ -111,7 +105,7 @@
                 "from": {
                   "key_code": "l",
                   "modifiers": {
-                    "mandatory": ["left_control", "left_option", "left_command", "left_shift"],
+                    "mandatory": ["left_option", "left_command", "left_shift"],
                     "optional": ["any"]
                   }
                 },
