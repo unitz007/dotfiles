@@ -6,21 +6,29 @@ export KEYTIMEOUT=1
 
 # Make the cursor show which mode the prompt is in:
 # insert mode = beam, normal mode = block.
+function dotsync-tmux-vi-mode {
+  [[ -n "${TMUX:-}" ]] && tmux set-option -p -q @zsh_vi_mode "$1"
+}
+
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]]; then
     echo -ne '\e[2 q'
+    dotsync-tmux-vi-mode NORMAL
   else
     echo -ne '\e[6 q'
+    dotsync-tmux-vi-mode INSERT
   fi
 }
 
 function zle-line-init {
   zle -K viins
   echo -ne '\e[6 q'
+  dotsync-tmux-vi-mode INSERT
 }
 
 function zle-line-finish {
   echo -ne '\e[0 q'
+  dotsync-tmux-vi-mode INSERT
 }
 
 zle -N zle-keymap-select
