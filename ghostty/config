@@ -57,6 +57,8 @@ keybind = ctrl+t=new_tab
 keybind = ctrl+shift+w=close_surface
 keybind = alt+h=previous_tab
 keybind = alt+l=next_tab
+keybind = alt+j=scroll_page_lines:3
+keybind = alt+k=scroll_page_lines:-3
 keybind = ctrl+shift+enter=new_split:right
 keybind = ctrl+equal=increase_font_size:1
 keybind = ctrl+minus=decrease_font_size:1
