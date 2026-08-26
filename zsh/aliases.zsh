@@ -17,10 +17,11 @@ alias kgs="kubectl get services"
 alias kgp="kubectl get pods"
 alias kgd="kubectl get deployments"
 alias ka="kubectl apply -f"
-alias kd="kubectl delete --wait"
+# kd moved to functions.zsh: kubectl delete is destructive and now confirms before running
 alias gpl="git pull"
 alias g="git"
 alias gco="git checkout"
+alias gd="git diff" # missing counterpart to gs/ga/gm/gp/gb — diff is used constantly alongside status/add/commit
 alias ..="cd ../"
 alias ...="cd ../../"
 alias ....="cd ../../../"
@@ -57,7 +58,8 @@ alias dkx="docker exec -it"
 
 # New useful aliases for productivity
 alias ll='ls -alF'
-alias la='ls -A'
+# la intentionally not redefined here: it was silently overriding the
+# nu-aware "la" set above (line 4), so the nu -c 'ls -la' version never ran
 alias l='ls -CF'
 alias hh='history'
 alias j='jobs'
@@ -84,6 +86,7 @@ alias drmi='docker rmi'
 alias kgn='kubectl get nodes'
 alias kdp='kubectl describe pod'
 alias kdnp='kubectl describe node'
+alias kl='kubectl logs' # missing despite 8 other kubectl shortcuts — logs is used as often as get/describe
 
 # Additional safety aliases
 alias cp='cp -i'

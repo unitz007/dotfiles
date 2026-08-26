@@ -107,5 +107,30 @@ rmDir() {
     echo "Usage: rmDir <directory>"
     return 1
   fi
+  # rm -rf has no built-in confirmation (unlike the rm -i/cp -i/mv -i aliases
+  # elsewhere in this repo), so prompt before deleting recursively.
+  read -q "REPLY?Delete directory '$1' and everything in it? [y/N] "
+  echo
+  if [[ "$REPLY" != [Yy] ]]; then
+    echo "Aborted."
+    return 1
+  fi
   rm -rf "$1"
+}
+
+# kubectl delete is destructive and had no safety consideration as a plain
+# alias; confirm before running, same spirit as the rm -i/cp -i/mv -i aliases.
+kd() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: kd <resource> [name] [flags...]"
+    return 1
+  fi
+  echo "About to run: kubectl delete --wait $*"
+  read -q "REPLY?Proceed? [y/N] "
+  echo
+  if [[ "$REPLY" != [Yy] ]]; then
+    echo "Aborted."
+    return 1
+  fi
+  kubectl delete --wait "$@"
 }
