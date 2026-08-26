@@ -25,7 +25,6 @@ function dotsync-zle-mode-refresh {
 
 function zle-keymap-select {
   dotsync-zle-mode-refresh
-  zle reset-prompt
 }
 
 function zle-line-init {
