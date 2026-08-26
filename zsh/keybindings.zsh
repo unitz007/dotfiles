@@ -7,7 +7,7 @@ export KEYTIMEOUT=1
 # Make the cursor show which mode the prompt is in:
 # insert mode = beam, normal mode = block.
 function dotsync-tmux-vi-mode {
-  [[ -n "${TMUX:-}" ]] && tmux set-option -p -q @zsh_vi_mode "$1"
+  [[ -n "${TMUX:-}" ]] && tmux set-option -g -q @zsh_vi_mode "$1"
 }
 
 function zle-keymap-select {
