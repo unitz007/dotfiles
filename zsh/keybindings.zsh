@@ -8,7 +8,6 @@ export KEYTIMEOUT=1
 function dotsync-tmux-vi-mode {
   if [[ -n "${TMUX:-}" ]]; then
     tmux set-option -gq @zsh_vi_mode "$1"
-    tmux refresh-client -S
   fi
 }
 
@@ -37,6 +36,8 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 zle -N zle-line-finish
 zle -N dotsync-zle-mode-refresh
+autoload -Uz add-zle-hook-widget
+add-zle-hook-widget -d line-pre-redraw dotsync-zle-mode-refresh 2>/dev/null
 
 # Keep common Emacs-style shortcuts available while in insert mode.
 bindkey -M viins '^A' beginning-of-line
