@@ -44,7 +44,7 @@ alias psa='ps aux'
 alias ports='lsof -iTCP -sTCP:LISTEN -nP'
 
 # Personal workspace
-gwp() { cd $GOWORK 2>/dev/null || echo "⚠️ Golang workspace not found at $GOWORK"; }
+gwp() { cd $GOWORKSPACE 2>/dev/null || echo "⚠️ Golang workspace not found at $GOWORKSPACE"; }
 
 # Docker
 alias d="docker"

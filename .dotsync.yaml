@@ -9,35 +9,59 @@ spec:
   strategy: symlink
   mode: enforce
 
-  files:
-    - source: .zshrc
-      target: ~/.zshrc
-    - source: .tmux.conf
-      target: ~/.tmux.conf
-    - source: nvim
-      target: ~/.config/nvim
-    - source: starship.toml
-      target: ~/.config/starship.toml
-    - source: ghostty/config
-      target: ~/.config/ghostty/config
+  software:
+    - name: shell
+      configs:
+        - source: .zshrc
+          target: ~/.zshrc
+        - source: zsh
+          target: ~/.config/zsh
+        - source: ghostty/config
+          target: ~/.config/ghostty/config
+        - source: .oh-my-posh-theme.json
+          target: ~/.oh-my-posh-theme.json
 
-  packages:
-    darwin:
-      - manager: brew
-        name: neovim
-      - manager: brew
-        name: tmux
-      - manager: brew
-        name: starship
-      - manager: brew
-        name: fzf
-    linux:
-      - manager: apt
-        name: neovim
-      - manager: apt
-        name: tmux
-      - manager: apt
-        name: fzf
+    - name: neovim
+      configs:
+        - source: nvim
+          target: ~/.config/nvim
+      packages:
+        darwin:
+          - manager: brew
+            name: neovim
+        linux:
+          - manager: apt
+            name: neovim
+
+    - name: tmux
+      configs:
+        - source: tmux/tmux.conf
+          target: ~/.tmux.conf
+      packages:
+        darwin:
+          - manager: brew
+            name: tmux
+        linux:
+          - manager: apt
+            name: tmux
+
+    - name: starship
+      packages:
+        darwin:
+          - manager: brew
+            name: starship
+
+    - name: fzf
+      configs:
+        - source: fzf/.fzf.zsh
+          target: ~/.fzf.zsh
+      packages:
+        darwin:
+          - manager: brew
+            name: fzf
+        linux:
+          - manager: apt
+            name: fzf
 
   hooks:
     post_sync:

@@ -4,8 +4,8 @@ export VISUAL=nvim
 export LANG=en_US.UTF-8
 
 # New environment variables with defaults
-: ${GOWORK:=$HOME/Personal/Golang}
-export GOWORK
+: ${GOWORKSPACE:=$HOME/Personal/Golang}
+export GOWORKSPACE
 
 : ${CLOUD_INIT_PATH:=$HOME/cloud-init.yaml}
 export CLOUD_INIT_PATH
