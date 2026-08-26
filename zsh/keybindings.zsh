@@ -7,7 +7,10 @@ export KEYTIMEOUT=1
 # Make the cursor show which mode the prompt is in:
 # insert mode = beam, normal mode = block.
 function dotsync-tmux-vi-mode {
-  [[ -n "${TMUX:-}" ]] && tmux set-option -g -q @zsh_vi_mode "$1" \; refresh-client -S
+  if [[ -n "${TMUX:-}" ]]; then
+    tmux set-option -gq @zsh_vi_mode "$1"
+    tmux refresh-client -S
+  fi
 }
 
 function dotsync-zle-mode-refresh {
@@ -22,6 +25,7 @@ function dotsync-zle-mode-refresh {
 
 function zle-keymap-select {
   dotsync-zle-mode-refresh
+  zle reset-prompt
 }
 
 function zle-line-init {
@@ -38,6 +42,7 @@ function zle-line-finish {
 zle -N zle-keymap-select
 zle -N zle-line-init
 zle -N zle-line-finish
+zle -N dotsync-zle-mode-refresh
 autoload -Uz add-zle-hook-widget
 add-zle-hook-widget line-pre-redraw dotsync-zle-mode-refresh
 
