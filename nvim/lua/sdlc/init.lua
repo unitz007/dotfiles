@@ -7,9 +7,13 @@ local defaults = {
   float_col = nil,
   float_width = 0.88,
   float_height = 0.75,
-  terminal_direction = "horizontal",
+  terminal_direction = "float",
   terminal_size = 15,
   terminal_width = 80,
+  terminal_float_width = 0.88,
+  terminal_float_height = 0.5,
+  terminal_float_row = 3,
+  terminal_float_col = nil,
   keymaps = true,
   root_markers = {
     ".sdlc.json",
@@ -54,6 +58,7 @@ local known_value_flags = {
 M.options = vim.deepcopy(defaults)
 M.last_module = nil
 M.last_output = nil
+M.watch = { buf = nil, win = nil, job_id = nil, args = nil }
 
 local function notify(message, level)
   vim.notify(message, level or vim.log.levels.INFO, { title = "SDLC" })
@@ -144,6 +149,8 @@ local function parse_user_args(raw)
     elseif word == "--vertical" then
       opts.terminal_direction = "vertical"
     elseif word == "--horizontal" then
+      opts.terminal_direction = "horizontal"
+    elseif word == "--split" then
       opts.terminal_direction = "horizontal"
     elseif word == "--size" then
       if words[i + 1] then
@@ -328,11 +335,52 @@ local function run_float(action, opts)
   end)
 end
 
-local function open_terminal(args, opts)
+local function valid_win(win)
+  return win and vim.api.nvim_win_is_valid(win)
+end
+
+local function valid_buf(buf)
+  return buf and vim.api.nvim_buf_is_valid(buf)
+end
+
+local function terminal_float_config(opts)
+  opts = opts or {}
+  local width = math.min(math.floor(vim.o.columns * (opts.terminal_float_width or M.options.terminal_float_width)), 130)
+  local height = math.min(math.floor(vim.o.lines * (opts.terminal_float_height or M.options.terminal_float_height)), vim.o.lines - 6)
+  local row = opts.terminal_float_row or M.options.terminal_float_row
+  local col = opts.terminal_float_col or M.options.terminal_float_col or math.floor((vim.o.columns - width) / 2)
+
+  return {
+    relative = "editor",
+    style = "minimal",
+    border = "rounded",
+    title = " SDLC watch ",
+    title_pos = "center",
+    row = row,
+    col = col,
+    width = width,
+    height = math.max(height, 10),
+  }
+end
+
+local function decorate_terminal_buffer(buf)
+  vim.bo[buf].bufhidden = "hide"
+  vim.bo[buf].filetype = "sdlc"
+  vim.keymap.set("t", "<esc>", [[<C-\><C-n><cmd>SdlcHide<cr>]], { buffer = buf, silent = true })
+  vim.keymap.set("t", "<C-q>", [[<C-\><C-n><cmd>SdlcHide<cr>]], { buffer = buf, silent = true })
+  vim.keymap.set("n", "q", "<cmd>SdlcHide<cr>", { buffer = buf, silent = true })
+  vim.keymap.set("n", "<esc>", "<cmd>SdlcHide<cr>", { buffer = buf, silent = true })
+end
+
+local function open_terminal_window(buf, opts)
   opts = opts or {}
   local direction = opts.terminal_direction or M.options.terminal_direction
   local height = opts.terminal_size or M.options.terminal_size
   local width = opts.terminal_width or M.options.terminal_width
+
+  if direction == "float" then
+    return vim.api.nvim_open_win(buf, true, terminal_float_config(opts))
+  end
 
   if direction == "vertical" then
     vim.cmd("botright " .. width .. "vsplit")
@@ -340,13 +388,48 @@ local function open_terminal(args, opts)
     vim.cmd("botright " .. height .. "split")
   end
 
-  vim.cmd("terminal " .. shell_join(args))
+  vim.api.nvim_win_set_buf(0, buf)
+  return vim.api.nvim_get_current_win()
+end
+
+local function open_terminal(args, opts)
+  opts = opts or {}
+  local buf = vim.api.nvim_create_buf(false, false)
+  decorate_terminal_buffer(buf)
+  open_terminal_window(buf, opts)
+  vim.fn.termopen(args)
   vim.cmd("startinsert")
 end
 
 local function run_terminal(action, opts)
   opts = opts or {}
   open_terminal(command_args(action, opts), opts)
+end
+
+local function ensure_watch_terminal(args, opts)
+  opts = opts or {}
+
+  if valid_buf(M.watch.buf) and M.watch.job_id then
+    notify("SDLC watch is already running; showing it")
+    M.show()
+    return
+  end
+
+  local buf = vim.api.nvim_create_buf(false, false)
+  decorate_terminal_buffer(buf)
+  M.watch.buf = buf
+  M.watch.args = args
+  M.watch.win = open_terminal_window(buf, vim.tbl_extend("force", { terminal_direction = "float" }, opts))
+  M.watch.job_id = vim.fn.termopen(args, {
+    on_exit = function(_, code)
+      M.watch.job_id = nil
+      vim.schedule(function()
+        notify("SDLC watch exited " .. code, code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR)
+      end)
+    end,
+  })
+  vim.cmd("startinsert")
+  notify("SDLC watch started")
 end
 
 local function run_with_output(action, opts)
@@ -410,7 +493,8 @@ function M.run(opts)
 end
 
 function M.run_watch(opts)
-  run_terminal("run", vim.tbl_extend("force", opts or {}, { watch = true }))
+  opts = vim.tbl_extend("force", { terminal_direction = "float" }, opts or {}, { watch = true })
+  ensure_watch_terminal(command_args("run", opts), opts)
 end
 
 function M.test(opts)
@@ -474,6 +558,45 @@ function M.clear_module()
   notify("Cleared selected module")
 end
 
+function M.hide()
+  if valid_win(M.watch.win) then
+    vim.api.nvim_win_close(M.watch.win, true)
+    M.watch.win = nil
+    notify("SDLC watch hidden")
+  else
+    notify("No SDLC watch window to hide", vim.log.levels.WARN)
+  end
+end
+
+function M.show()
+  if not valid_buf(M.watch.buf) then
+    notify("No SDLC watch buffer exists", vim.log.levels.WARN)
+    return
+  end
+
+  if valid_win(M.watch.win) then
+    vim.api.nvim_set_current_win(M.watch.win)
+  else
+    M.watch.win = open_terminal_window(M.watch.buf, { terminal_direction = "float" })
+  end
+  vim.cmd("startinsert")
+end
+
+function M.stop()
+  if M.watch.job_id then
+    vim.fn.jobstop(M.watch.job_id)
+    M.watch.job_id = nil
+  end
+  if valid_win(M.watch.win) then
+    vim.api.nvim_win_close(M.watch.win, true)
+  end
+  if valid_buf(M.watch.buf) then
+    vim.api.nvim_buf_delete(M.watch.buf, { force = true })
+  end
+  M.watch = { buf = nil, win = nil, job_id = nil, args = nil }
+  notify("SDLC watch stopped")
+end
+
 function M.command(action, raw_args, opts)
   opts = vim.tbl_extend("force", parse_user_args(raw_args or ""), opts or {})
   if action == "run-watch" then
@@ -534,6 +657,7 @@ local function complete_args()
     "--float",
     "--vertical",
     "--horizontal",
+    "--split",
     "--size",
   }
 end
@@ -581,6 +705,15 @@ function M.setup(opts)
   vim.api.nvim_create_user_command("SdlcDryRun", function(command)
     M.command("dry-run", command.args)
   end, command_options())
+  vim.api.nvim_create_user_command("SdlcHide", function()
+    M.hide()
+  end, {})
+  vim.api.nvim_create_user_command("SdlcShow", function()
+    M.show()
+  end, {})
+  vim.api.nvim_create_user_command("SdlcStop", function()
+    M.stop()
+  end, {})
 end
 
 M._parse_user_args = parse_user_args

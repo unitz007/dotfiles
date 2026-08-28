@@ -16,6 +16,9 @@ return {
       "SdlcPickModule",
       "SdlcClearModule",
       "SdlcDryRun",
+      "SdlcHide",
+      "SdlcShow",
+      "SdlcStop",
     },
     keys = {
       { "<leader>sr", "<cmd>SdlcRun<cr>", desc = "SDLC Run" },
@@ -29,6 +32,9 @@ return {
       { "<leader>sm", "<cmd>SdlcPickModule<cr>", desc = "SDLC Pick Module" },
       { "<leader>sM", "<cmd>SdlcClearModule<cr>", desc = "SDLC Clear Module" },
       { "<leader>sd", "<cmd>SdlcDryRun<cr>", desc = "SDLC Dry Run" },
+      { "<leader>sh", "<cmd>SdlcHide<cr>", desc = "SDLC Hide Watch" },
+      { "<leader>ss", "<cmd>SdlcShow<cr>", desc = "SDLC Show Watch" },
+      { "<leader>sk", "<cmd>SdlcStop<cr>", desc = "SDLC Stop Watch" },
       {
         "<leader>sx",
         function()
@@ -43,9 +49,12 @@ return {
       float_row = 2,
       float_width = 0.88,
       float_height = 0.75,
-      terminal_direction = "horizontal",
+      terminal_direction = "float",
       terminal_size = 15,
       terminal_width = 72,
+      terminal_float_width = 0.88,
+      terminal_float_height = 0.5,
+      terminal_float_row = 3,
     },
     config = function(_, opts)
       require("sdlc").setup(opts)
