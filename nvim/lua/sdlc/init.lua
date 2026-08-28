@@ -9,6 +9,7 @@ local defaults = {
   float_height = 0.75,
   terminal_direction = "horizontal",
   terminal_size = 15,
+  terminal_width = 80,
   keymaps = true,
   root_markers = {
     ".sdlc.json",
@@ -144,6 +145,12 @@ local function parse_user_args(raw)
       opts.terminal_direction = "vertical"
     elseif word == "--horizontal" then
       opts.terminal_direction = "horizontal"
+    elseif word == "--size" then
+      if words[i + 1] then
+        opts.terminal_size = tonumber(words[i + 1]) or opts.terminal_size
+        opts.terminal_width = tonumber(words[i + 1]) or opts.terminal_width
+        i = i + 1
+      end
     elseif known_boolean_flags[word] then
       table.insert(opts.sdlc_args, word)
     elseif known_value_flags[word] then
@@ -324,12 +331,13 @@ end
 local function open_terminal(args, opts)
   opts = opts or {}
   local direction = opts.terminal_direction or M.options.terminal_direction
-  local size = opts.terminal_size or M.options.terminal_size
+  local height = opts.terminal_size or M.options.terminal_size
+  local width = opts.terminal_width or M.options.terminal_width
 
   if direction == "vertical" then
-    vim.cmd("botright " .. size .. "vsplit")
+    vim.cmd("botright " .. width .. "vsplit")
   else
-    vim.cmd("botright " .. size .. "split")
+    vim.cmd("botright " .. height .. "split")
   end
 
   vim.cmd("terminal " .. shell_join(args))
@@ -526,6 +534,7 @@ local function complete_args()
     "--float",
     "--vertical",
     "--horizontal",
+    "--size",
   }
 end
 

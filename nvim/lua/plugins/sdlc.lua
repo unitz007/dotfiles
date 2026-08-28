@@ -45,6 +45,7 @@ return {
       float_height = 0.75,
       terminal_direction = "horizontal",
       terminal_size = 15,
+      terminal_width = 72,
     },
     config = function(_, opts)
       require("sdlc").setup(opts)
