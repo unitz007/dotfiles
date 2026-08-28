@@ -41,6 +41,8 @@ return {
       bin = "sdlc",
       output = "float",
       float_row = 2,
+      float_width = 0.88,
+      float_height = 0.75,
       terminal_direction = "horizontal",
       terminal_size = 15,
     },

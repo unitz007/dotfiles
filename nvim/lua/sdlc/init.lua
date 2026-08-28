@@ -5,6 +5,8 @@ local defaults = {
   output = "float",
   float_row = 2,
   float_col = nil,
+  float_width = 0.88,
+  float_height = 0.75,
   terminal_direction = "horizontal",
   terminal_size = 15,
   keymaps = true,
@@ -212,14 +214,20 @@ local function shell_join(args)
   return table.concat(vim.tbl_map(vim.fn.shellescape, args), " ")
 end
 
-local function show_float(title, lines)
+local function apply_highlights(buf, highlights)
+  for _, item in ipairs(highlights or {}) do
+    vim.api.nvim_buf_add_highlight(buf, -1, item.group, item.line, item.start_col or 0, item.end_col or -1)
+  end
+end
+
+local function show_float(title, lines, highlights)
   lines = lines or { "" }
   if #lines == 0 then
     lines = { "" }
   end
 
-  local width = math.min(math.floor(vim.o.columns * 0.85), 120)
-  local height = math.min(math.floor(vim.o.lines * 0.75), math.max(#lines, 8))
+  local width = math.min(math.floor(vim.o.columns * M.options.float_width), 130)
+  local height = math.min(math.floor(vim.o.lines * M.options.float_height), math.max(#lines, 10))
   local row = M.options.float_row
   local col = M.options.float_col or math.floor((vim.o.columns - width) / 2)
 
@@ -227,6 +235,7 @@ local function show_float(title, lines)
   vim.bo[buf].bufhidden = "wipe"
   vim.bo[buf].filetype = "sdlc"
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  apply_highlights(buf, highlights)
 
   local win = vim.api.nvim_open_win(buf, true, {
     relative = "editor",
@@ -241,8 +250,56 @@ local function show_float(title, lines)
   })
 
   vim.wo[win].wrap = false
+  vim.wo[win].cursorline = true
   vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, silent = true })
   vim.keymap.set("n", "<esc>", "<cmd>close<cr>", { buffer = buf, silent = true })
+end
+
+local function append_line(lines, highlights, text, group)
+  table.insert(lines, text)
+  if group then
+    table.insert(highlights, { line = #lines - 1, group = group })
+  end
+end
+
+local function result_view(action, args, result, output_lines)
+  local ok = result.code == 0
+  local icon = ok and "✓" or "✗"
+  local status = ok and "SUCCESS" or "FAILED"
+  local status_group = ok and "DiagnosticOk" or "DiagnosticError"
+  local lines = {}
+  local highlights = {}
+
+  append_line(lines, highlights, " " .. icon .. " SDLC " .. string.upper(action) .. " · " .. status, status_group)
+  append_line(lines, highlights, " " .. string.rep("─", 72), "Comment")
+  append_line(lines, highlights, " Command", "Title")
+  append_line(lines, highlights, "   " .. shell_join(args), "Comment")
+  append_line(lines, highlights, " Exit", "Title")
+  append_line(lines, highlights, "   code " .. tostring(result.code), status_group)
+  append_line(lines, highlights, "")
+  append_line(lines, highlights, " Output", "Title")
+
+  if #output_lines == 0 then
+    append_line(lines, highlights, "   No output", "Comment")
+  else
+    for _, line in ipairs(output_lines) do
+      local group = nil
+      local lower = line:lower()
+      if lower:match("error") or lower:match("fail") or lower:match("panic") then
+        group = "DiagnosticError"
+      elseif lower:match("warn") or lower:match("skip") then
+        group = "DiagnosticWarn"
+      elseif lower:match("pass") or lower:match("success") or lower:match("ok%s") then
+        group = "DiagnosticOk"
+      end
+      append_line(lines, highlights, "   " .. line, group)
+    end
+  end
+
+  append_line(lines, highlights, "")
+  append_line(lines, highlights, " q/Esc close · :SdlcRun --terminal for live output", "Comment")
+
+  return lines, highlights
 end
 
 local function run_float(action, opts)
@@ -258,7 +315,8 @@ local function run_float(action, opts)
     vim.schedule(function()
       local level = result.code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR
       notify(action .. " exited " .. result.code, level)
-      show_float("sdlc " .. action, lines)
+      local view_lines, highlights = result_view(action, args, result, output ~= "" and lines or {})
+      show_float("sdlc " .. action, view_lines, highlights)
     end)
   end)
 end
