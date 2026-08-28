@@ -40,6 +40,7 @@ return {
     opts = {
       bin = "sdlc",
       output = "float",
+      float_row = 2,
       terminal_direction = "horizontal",
       terminal_size = 15,
     },

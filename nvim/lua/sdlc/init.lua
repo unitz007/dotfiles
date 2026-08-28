@@ -3,6 +3,8 @@ local M = {}
 local defaults = {
   bin = "sdlc",
   output = "float",
+  float_row = 2,
+  float_col = nil,
   terminal_direction = "horizontal",
   terminal_size = 15,
   keymaps = true,
@@ -218,8 +220,8 @@ local function show_float(title, lines)
 
   local width = math.min(math.floor(vim.o.columns * 0.85), 120)
   local height = math.min(math.floor(vim.o.lines * 0.75), math.max(#lines, 8))
-  local row = math.floor((vim.o.lines - height) / 2)
-  local col = math.floor((vim.o.columns - width) / 2)
+  local row = M.options.float_row
+  local col = M.options.float_col or math.floor((vim.o.columns - width) / 2)
 
   local buf = vim.api.nvim_create_buf(false, true)
   vim.bo[buf].bufhidden = "wipe"
