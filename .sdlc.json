@@ -5,7 +5,7 @@
     "build": "mvn package"
   },
   "go.mod": {
-    "run": "go run ./...",
+    "run": "go run .",
     "test": "go test ./...",
     "build": "go build ."
   },
