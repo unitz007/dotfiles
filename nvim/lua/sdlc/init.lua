@@ -19,6 +19,33 @@ local defaults = {
   },
 }
 
+local known_boolean_flags = {
+  ["--all"] = true,
+  ["-a"] = true,
+  ["--dry-run"] = true,
+  ["-n"] = true,
+  ["--verbose"] = true,
+  ["--watch"] = true,
+  ["-w"] = true,
+  ["--no-color"] = true,
+}
+
+local known_value_flags = {
+  ["--config"] = true,
+  ["-c"] = true,
+  ["--debounce"] = true,
+  ["--depth"] = true,
+  ["-D"] = true,
+  ["--dir"] = true,
+  ["-d"] = true,
+  ["--ignore"] = true,
+  ["-i"] = true,
+  ["--module"] = true,
+  ["-m"] = true,
+  ["--parallel"] = true,
+  ["-p"] = true,
+}
+
 M.options = vim.deepcopy(defaults)
 M.last_module = nil
 M.last_output = nil
@@ -51,6 +78,100 @@ local function project_root()
   return root or vim.uv.cwd()
 end
 
+local function shell_words(raw)
+  local words = {}
+  local current = {}
+  local quote = nil
+  local escaped = false
+
+  for i = 1, #raw do
+    local char = raw:sub(i, i)
+    if escaped then
+      table.insert(current, char)
+      escaped = false
+    elseif char == "\\" then
+      escaped = true
+    elseif quote then
+      if char == quote then
+        quote = nil
+      else
+        table.insert(current, char)
+      end
+    elseif char == '"' or char == "'" then
+      quote = char
+    elseif char:match("%s") then
+      if #current > 0 then
+        table.insert(words, table.concat(current))
+        current = {}
+      end
+    else
+      table.insert(current, char)
+    end
+  end
+
+  if escaped then
+    table.insert(current, "\\")
+  end
+  if #current > 0 then
+    table.insert(words, table.concat(current))
+  end
+
+  return words
+end
+
+local function parse_user_args(raw)
+  local opts = { sdlc_args = {}, extra_args = {} }
+  local words = type(raw) == "table" and raw or shell_words(raw or "")
+  local extra_only = false
+  local i = 1
+
+  while i <= #words do
+    local word = words[i]
+
+    if extra_only then
+      table.insert(opts.extra_args, word)
+    elseif word == "--" then
+      extra_only = true
+    elseif word == "--float" then
+      opts.output = "float"
+    elseif word == "--term" or word == "--terminal" then
+      opts.output = "terminal"
+    elseif word == "--vertical" then
+      opts.terminal_direction = "vertical"
+    elseif word == "--horizontal" then
+      opts.terminal_direction = "horizontal"
+    elseif known_boolean_flags[word] then
+      table.insert(opts.sdlc_args, word)
+    elseif known_value_flags[word] then
+      table.insert(opts.sdlc_args, word)
+      if words[i + 1] then
+        table.insert(opts.sdlc_args, words[i + 1])
+        i = i + 1
+      end
+    elseif word:match("^%-%-[%w-]+=") then
+      local flag = word:match("^(%-%-[%w-]+)=")
+      if known_value_flags[flag] then
+        table.insert(opts.sdlc_args, word)
+      else
+        table.insert(opts.extra_args, word)
+      end
+    else
+      table.insert(opts.extra_args, word)
+    end
+
+    i = i + 1
+  end
+
+  if #opts.sdlc_args == 0 then
+    opts.sdlc_args = nil
+  end
+  if #opts.extra_args == 0 then
+    opts.extra_args = nil
+  end
+
+  return opts
+end
+
 local function command_args(action, opts)
   opts = opts or {}
   local args = { M.options.bin, action, "--dir", opts.root or project_root(), "--no-color" }
@@ -69,10 +190,17 @@ local function command_args(action, opts)
     table.insert(args, module)
   end
 
-  if opts.extra_args then
-    for _, arg in ipairs(opts.extra_args) do
-      table.insert(args, arg)
+  if opts.sdlc_args then
+    for _, arg in ipairs(opts.sdlc_args) do
+      if arg ~= "--no-color" then
+        table.insert(args, arg)
+      end
     end
+  end
+
+  if opts.extra_args then
+    table.insert(args, "--extra-args")
+    table.insert(args, table.concat(opts.extra_args, " "))
   end
 
   return args
@@ -133,15 +261,13 @@ local function run_float(action, opts)
   end)
 end
 
-local function open_terminal(args)
-  local direction = M.options.terminal_direction
-  local size = M.options.terminal_size
+local function open_terminal(args, opts)
+  opts = opts or {}
+  local direction = opts.terminal_direction or M.options.terminal_direction
+  local size = opts.terminal_size or M.options.terminal_size
 
   if direction == "vertical" then
     vim.cmd("botright " .. size .. "vsplit")
-  elseif direction == "float" then
-    show_float("sdlc terminal", { shell_join(args) })
-    return
   else
     vim.cmd("botright " .. size .. "split")
   end
@@ -152,7 +278,17 @@ end
 
 local function run_terminal(action, opts)
   opts = opts or {}
-  open_terminal(command_args(action, opts))
+  open_terminal(command_args(action, opts), opts)
+end
+
+local function run_with_output(action, opts)
+  opts = opts or {}
+  local output = opts.output or M.options.output
+  if output == "terminal" then
+    run_terminal(action, opts)
+  else
+    run_float(action, opts)
+  end
 end
 
 local function parse_modules(output)
@@ -174,9 +310,18 @@ local function parse_modules(output)
   return modules
 end
 
-local function list_modules(callback)
-  local root = project_root()
+local function list_modules(callback, opts)
+  opts = opts or {}
+  local root = opts.root or project_root()
   local args = { M.options.bin, "list", "--dir", root, "--no-color" }
+
+  if opts.sdlc_args then
+    for _, arg in ipairs(opts.sdlc_args) do
+      if arg ~= "--no-color" then
+        table.insert(args, arg)
+      end
+    end
+  end
 
   vim.system(args, { text = true }, function(result)
     local output = (result.stdout or "") .. (result.stderr or "")
@@ -193,7 +338,7 @@ local function list_modules(callback)
 end
 
 function M.run(opts)
-  run_float("run", opts)
+  run_with_output("run", opts)
 end
 
 function M.run_watch(opts)
@@ -201,10 +346,11 @@ function M.run_watch(opts)
 end
 
 function M.test(opts)
-  run_float("test", opts)
+  run_with_output("test", opts)
 end
 
-function M.test_file()
+function M.test_file(opts)
+  opts = opts or {}
   local root = project_root()
   local file = current_path()
   local module_dir = vim.fs.dirname(file)
@@ -214,32 +360,32 @@ function M.test_file()
     rel = vim.fn.fnamemodify(module_dir:sub(#root + 2), ":.")
   end
 
-  run_float("test", { root = root, module = rel })
+  run_with_output("test", vim.tbl_extend("force", opts, { root = root, module = rel }))
 end
 
 function M.build(opts)
-  run_float("build", opts)
+  run_with_output("build", opts)
 end
 
 function M.install(opts)
-  run_float("install", opts)
+  run_with_output("install", opts)
 end
 
 function M.clean(opts)
-  run_float("clean", opts)
+  run_with_output("clean", opts)
 end
 
-function M.dry_run(action)
-  run_float(action or "run", { dry_run = true })
+function M.dry_run(action, opts)
+  run_with_output(action or "run", vim.tbl_extend("force", opts or {}, { dry_run = true }))
 end
 
-function M.list()
+function M.list(opts)
   list_modules(function(_, output)
     show_float("sdlc list", vim.split(vim.trim(output), "\n", { plain = true }))
-  end)
+  end, opts)
 end
 
-function M.pick_module()
+function M.pick_module(opts)
   list_modules(function(modules)
     if #modules == 0 then
       notify("No modules detected", vim.log.levels.WARN)
@@ -252,7 +398,7 @@ function M.pick_module()
         notify("Selected module: " .. choice)
       end
     end)
-  end)
+  end, opts)
 end
 
 function M.clear_module()
@@ -260,44 +406,116 @@ function M.clear_module()
   notify("Cleared selected module")
 end
 
+function M.command(action, raw_args, opts)
+  opts = vim.tbl_extend("force", parse_user_args(raw_args or ""), opts or {})
+  if action == "run-watch" then
+    M.run_watch(opts)
+  elseif action == "test-file" then
+    M.test_file(opts)
+  elseif action == "dry-run" then
+    local dry_action = opts.extra_args and table.remove(opts.extra_args, 1) or "run"
+    M.dry_run(dry_action, opts)
+  elseif action == "list" then
+    M.list(opts)
+  elseif action == "pick-module" then
+    M.pick_module(opts)
+  else
+    run_with_output(action, opts)
+  end
+end
+
+function M.command_line(raw_args)
+  local words = shell_words(raw_args or "")
+  local action = table.remove(words, 1)
+  if not action or action == "" then
+    notify("Usage: :Sdlc <action> [sdlc flags] [-- app args]", vim.log.levels.WARN)
+    return
+  end
+
+  M.command(action, words)
+end
+
+function M.prompt_command()
+  vim.ui.input({ prompt = "sdlc " }, function(input)
+    if input and input ~= "" then
+      M.command_line(input)
+    end
+  end)
+end
+
+local function complete_args()
+  return {
+    "run",
+    "test",
+    "build",
+    "install",
+    "clean",
+    "list",
+    "--",
+    "--all",
+    "--module",
+    "--ignore",
+    "--depth",
+    "--parallel",
+    "--watch",
+    "--dry-run",
+    "--verbose",
+    "--debounce",
+    "--config",
+    "--terminal",
+    "--float",
+    "--vertical",
+    "--horizontal",
+  }
+end
+
+local function command_options()
+  return { nargs = "*", complete = complete_args }
+end
+
 function M.setup(opts)
   M.options = vim.tbl_deep_extend("force", vim.deepcopy(defaults), opts or {})
 
-  vim.api.nvim_create_user_command("SdlcRun", function()
-    M.run()
-  end, {})
-  vim.api.nvim_create_user_command("SdlcRunWatch", function()
-    M.run_watch()
-  end, {})
-  vim.api.nvim_create_user_command("SdlcTest", function()
-    M.test()
-  end, {})
-  vim.api.nvim_create_user_command("SdlcTestFile", function()
-    M.test_file()
-  end, {})
-  vim.api.nvim_create_user_command("SdlcBuild", function()
-    M.build()
-  end, {})
-  vim.api.nvim_create_user_command("SdlcInstall", function()
-    M.install()
-  end, {})
-  vim.api.nvim_create_user_command("SdlcClean", function()
-    M.clean()
-  end, {})
-  vim.api.nvim_create_user_command("SdlcList", function()
-    M.list()
-  end, {})
-  vim.api.nvim_create_user_command("SdlcPickModule", function()
-    M.pick_module()
-  end, {})
+  vim.api.nvim_create_user_command("Sdlc", function(command)
+    M.command_line(command.args)
+  end, command_options())
+  vim.api.nvim_create_user_command("SdlcRun", function(command)
+    M.command("run", command.args)
+  end, command_options())
+  vim.api.nvim_create_user_command("SdlcRunWatch", function(command)
+    M.command("run-watch", command.args)
+  end, command_options())
+  vim.api.nvim_create_user_command("SdlcTest", function(command)
+    M.command("test", command.args)
+  end, command_options())
+  vim.api.nvim_create_user_command("SdlcTestFile", function(command)
+    M.command("test-file", command.args)
+  end, command_options())
+  vim.api.nvim_create_user_command("SdlcBuild", function(command)
+    M.command("build", command.args)
+  end, command_options())
+  vim.api.nvim_create_user_command("SdlcInstall", function(command)
+    M.command("install", command.args)
+  end, command_options())
+  vim.api.nvim_create_user_command("SdlcClean", function(command)
+    M.command("clean", command.args)
+  end, command_options())
+  vim.api.nvim_create_user_command("SdlcList", function(command)
+    M.command("list", command.args)
+  end, command_options())
+  vim.api.nvim_create_user_command("SdlcPickModule", function(command)
+    M.command("pick-module", command.args)
+  end, command_options())
   vim.api.nvim_create_user_command("SdlcClearModule", function()
     M.clear_module()
   end, {})
   vim.api.nvim_create_user_command("SdlcDryRun", function(command)
-    M.dry_run(command.args ~= "" and command.args or "run")
-  end, { nargs = "?", complete = function()
-    return { "run", "test", "build", "install", "clean" }
-  end })
+    M.command("dry-run", command.args)
+  end, command_options())
 end
+
+M._parse_user_args = parse_user_args
+M._command_args = command_args
+M._parse_modules = parse_modules
 
 return M

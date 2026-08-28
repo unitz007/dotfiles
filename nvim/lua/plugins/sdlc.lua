@@ -4,6 +4,7 @@ return {
     dir = vim.fn.stdpath("config"),
     name = "sdlc.nvim",
     cmd = {
+      "Sdlc",
       "SdlcRun",
       "SdlcRunWatch",
       "SdlcTest",
@@ -28,6 +29,13 @@ return {
       { "<leader>sm", "<cmd>SdlcPickModule<cr>", desc = "SDLC Pick Module" },
       { "<leader>sM", "<cmd>SdlcClearModule<cr>", desc = "SDLC Clear Module" },
       { "<leader>sd", "<cmd>SdlcDryRun<cr>", desc = "SDLC Dry Run" },
+      {
+        "<leader>sx",
+        function()
+          require("sdlc").prompt_command()
+        end,
+        desc = "SDLC Command",
+      },
     },
     opts = {
       bin = "sdlc",
