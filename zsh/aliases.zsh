@@ -1,6 +1,7 @@
 # Aliases
-alias ls="ls"
-alias la="ls -la"
+# Modern ls replacement with git integration and icons (Brewfile: eza)
+alias ls="eza"
+alias la="eza -la"
 alias run="sdlc run"
 alias tst="sdlc test"
 alias build="sdlc build"
@@ -31,7 +32,7 @@ alias rm='rm -i'
 alias gs='git status'
 alias ga='git add'
 alias gm='git commit -m'
-alias gp='git push'
+# gp moved to functions.zsh: git push with --force flag requires confirmation
 alias gb="git branch"
 alias glog="git log --oneline --graph --decorate --all"
 
@@ -52,10 +53,8 @@ alias dc="docker compose"
 alias dkx="docker exec -it"
 
 # New useful aliases for productivity
-alias ll='ls -alF'
-# la intentionally not redefined here: it was silently overriding the
-# nu-aware "la" set above (line 4), so the nu -c 'ls -la' version never ran
-alias l='ls -CF'
+alias ll='eza -alF'  # Long format with file type indicators
+alias l='eza -CF'    # Compact multi-column with file type indicators
 alias hh='history'
 alias j='jobs'
 alias grep='grep --color=auto'
@@ -68,14 +67,13 @@ alias weather='curl wttr.in'
 alias matrix='echo -e "\e[32m"; while :; do for i in {1..16}; do r="$(($RANDOM % 2))"; if [[ $(($RANDOM % 5)) == 1 ]]; then if [[ $(($RANDOM % 4)) == 1 ]]; then v+="\e[1m $r   "; else v+="\e[2m $r   "; fi; else v+="     "; fi; done; echo -e "$v"; v=""; done'
 
 # Additional Git aliases
-alias gl='git log --oneline'
+# gl removed: redundant with glog which includes graph visualization
 
 # Additional Docker aliases
 alias dps='docker ps'
 alias dpa='docker ps -a'
 alias di='docker images'
-alias drm='docker rm'
-alias drmi='docker rmi'
+# drm and drmi moved to functions.zsh: docker rm/rmi are destructive and now confirm
 
 # Additional Kubernetes aliases
 alias kgn='kubectl get nodes'
