@@ -134,3 +134,67 @@ kd() {
   fi
   kubectl delete --wait "$@"
 }
+
+# git push with safety check for force flags
+gp() {
+  # Check if any argument contains --force or -f
+  for arg in "$@"; do
+    if [[ "$arg" == "--force" || "$arg" == "-f" || "$arg" == "--force-with-lease" ]]; then
+      echo "⚠️  About to run: git push $*"
+      read -q "REPLY?Force push is destructive. Proceed? [y/N] "
+      echo
+      if [[ "$REPLY" != [Yy] ]]; then
+        echo "Aborted."
+        return 1
+      fi
+      break
+    fi
+  done
+  git push "$@"
+}
+
+# docker rm with confirmation for multiple containers or -f flag
+drm() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: drm <container-id> [flags...]"
+    return 1
+  fi
+  # Check if forcing or removing multiple containers
+  local needs_confirm=0
+  if [[ $# -gt 1 ]]; then
+    needs_confirm=1
+  fi
+  for arg in "$@"; do
+    if [[ "$arg" == "-f" || "$arg" == "--force" ]]; then
+      needs_confirm=1
+      break
+    fi
+  done
+  
+  if [[ $needs_confirm -eq 1 ]]; then
+    echo "About to run: docker rm $*"
+    read -q "REPLY?Proceed? [y/N] "
+    echo
+    if [[ "$REPLY" != [Yy] ]]; then
+      echo "Aborted."
+      return 1
+    fi
+  fi
+  docker rm "$@"
+}
+
+# docker rmi with confirmation
+drmi() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: drmi <image-id> [flags...]"
+    return 1
+  fi
+  echo "About to run: docker rmi $*"
+  read -q "REPLY?Remove image(s)? [y/N] "
+  echo
+  if [[ "$REPLY" != [Yy] ]]; then
+    echo "Aborted."
+    return 1
+  fi
+  docker rmi "$@"
+}
