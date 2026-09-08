@@ -1,5 +1,6 @@
 # App Shortcuts
 alt - g : open -a 'Goland'
+alt - j : open -a 'IntelliJ IDEA'
 alt - v : open -a 'Fleet'
 alt - z : open -a 'Zed'
 alt - b : open -a 'Safari'
