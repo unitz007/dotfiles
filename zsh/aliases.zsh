@@ -1,5 +1,7 @@
 # Aliases
-alias ls="ls"
+# ls intentionally has no alias here: it used to branch on `nu` availability
+# (nu -c ls vs plain ls), but became a no-op alias to itself once nu support
+# was removed, so it's deleted rather than left as confusing dead code.
 alias la="ls -la"
 alias run="sdlc run"
 alias tst="sdlc test"
@@ -45,6 +47,11 @@ alias ports='lsof -iTCP -sTCP:LISTEN -nP'
 
 # Personal workspace
 gwp() { cd $GOWORKSPACE 2>/dev/null || echo "⚠️ Golang workspace not found at $GOWORKSPACE"; }
+# SCREENSHOT_DIR is exported in exports.zsh the same way GOWORKSPACE and
+# CLOUD_INIT_PATH are, but unlike those two (gwp above, and ustart() in
+# functions.zsh) it had no shortcut anywhere in this config — added for
+# consistency with that pattern.
+scr() { cd $SCREENSHOT_DIR 2>/dev/null || echo "⚠️ Screenshot directory not found at $SCREENSHOT_DIR"; }
 
 # Docker
 alias d="docker"
@@ -54,7 +61,7 @@ alias dkx="docker exec -it"
 # New useful aliases for productivity
 alias ll='ls -alF'
 # la intentionally not redefined here: it was silently overriding the
-# nu-aware "la" set above (line 4), so the nu -c 'ls -la' version never ran
+# "la" alias set above, which would make it non-obvious which definition wins
 alias l='ls -CF'
 alias hh='history'
 alias j='jobs'
@@ -76,6 +83,7 @@ alias dpa='docker ps -a'
 alias di='docker images'
 alias drm='docker rm'
 alias drmi='docker rmi'
+alias dl='docker logs' # missing despite ps/images/exec shortcuts existing — same gap `kl` just fixed for kubectl logs, and just as commonly needed here
 
 # Additional Kubernetes aliases
 alias kgn='kubectl get nodes'
