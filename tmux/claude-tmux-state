@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# claude-tmux-state <working|waiting|done|error|clear>
+# Called from Claude Code hooks: records Claude's state on the tmux window it runs in,
+# and the status bar draws a spinner, ●, ✓ or ✗ from it.
+[[ -n ${TMUX_PANE:-} ]] || exit 0
+
+if [[ $1 == clear ]]; then
+  tmux set -wu -t "$TMUX_PANE" @claude_state
+else
+  tmux set -w -t "$TMUX_PANE" @claude_state "$1"
+fi

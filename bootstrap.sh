@@ -29,6 +29,8 @@ MAPPINGS=(
   ".gitconfig|.gitconfig"
   "nvim|.config/nvim"
   "tmux/tmux.conf|.tmux.conf"
+  "tmux|.tmux"
+  "tmux/tm|.local/bin/tm"
   "yazi.toml|.config/yazi/yazi.toml"
   "zed/settings.json|.config/zed/settings.json"
   "ghostty/config|.config/ghostty/config"

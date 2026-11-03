@@ -102,7 +102,7 @@ You should see `Good signature from ...` in the output. On GitHub, signed commit
 |------|-------------|-------------|
 | **GPG** | GnuPG configuration for git commit signing (algorithm preferences, keyserver, agent) | `gpg/gpg.conf`, `gpg/gpg-agent.conf` |
 | **Neovim** | AstroNvim v4+ distribution with LSP, Treesitter, and Mason plugin management | `nvim/` |
-| **Tmux** | Terminal multiplexer with TPM, catppuccin theme, and `Ctrl+Space` prefix | `tmux/tmux.conf` |
+| **Tmux** | Terminal multiplexer with TPM, a Catppuccin status bar, `Ctrl+Space` prefix, Claude Code status indicators, a session launcher and jump-to-window by letter. See [`tmux/README.md`](tmux/README.md) | `tmux/` |
 | **AeroSpace** | Tiling window manager with vim-like navigation and per-app workspace assignment | `.aerospace.toml` |
 | **skhd** | Global hotkey daemon for launching apps via `ctrl+key` shortcuts | `.skhdrc` |
 | **Oh-My-Posh** | Custom shell prompt theme showing git status, kubectl context, and language versions | `.oh-my-posh-theme.json` |

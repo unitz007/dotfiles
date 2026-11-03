@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# tm — create the tmux sessions listed in your sessions file if they don't exist, then attach.
+#   tm           attach to the first session in the file
+#   tm <name>    attach to the session whose name starts with <name> (case-insensitive)
+#   tm -l        list the sessions in the file
+#
+# Sessions file: $TM_CONFIG, or ~/.config/tm/sessions (see tm-sessions.example):
+#   [Session]
+#   window-name   directory   [command]
+# The command "claude" resumes the last Claude Code conversation in that directory (or starts one).
+# The shell stays open after the command exits.
+set -euo pipefail
+
+config=${TM_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/tm/sessions}
+if [[ ! -f $config ]]; then
+  echo "tm: no sessions file at $config (copy tm-sessions.example there)" >&2
+  exit 1
+fi
+
+lower() { tr '[:upper:]' '[:lower:]' <<<"$1"; }
+
+sessions=()
+while IFS= read -r line; do
+  [[ $line =~ ^[[:space:]]*\[(.+)\][[:space:]]*$ ]] && sessions+=("${BASH_REMATCH[1]}")
+done <"$config"
+if (( ${#sessions[@]} == 0 )); then
+  echo "tm: no [Session] headers in $config" >&2
+  exit 1
+fi
+
+if [[ ${1:-} == -l ]]; then
+  printf '%s\n' "${sessions[@]}"
+  exit 0
+fi
+
+target=${sessions[0]}
+if [[ -n ${1:-} ]]; then
+  target=
+  for s in "${sessions[@]}"; do
+    if [[ $(lower "$s") == "$(lower "$1")"* ]]; then target=$s; break; fi
+  done
+  if [[ -z $target ]]; then
+    echo "tm: no session matching '$1'. Sessions: ${sessions[*]}" >&2
+    exit 1
+  fi
+fi
+
+# add_window <session> <name> <dir> <command or "">
+add_window() {
+  local session=$1 name=$2 dir=${3/#\~/$HOME} cmd=$4
+  local -a run=()
+  [[ $cmd == claude ]] && cmd='claude --continue || claude'
+  [[ -n $cmd ]] && run=("$SHELL" -ic "$cmd; exec \$SHELL")
+
+  if tmux has-session -t "=$session" 2>/dev/null; then
+    tmux new-window -d -t "=$session:" -n "$name" -c "$dir" ${run[@]+"${run[@]}"}
+  else
+    tmux new-session -d -s "$session" -n "$name" -c "$dir" ${run[@]+"${run[@]}"}
+  fi
+}
+
+session= skip=0 created=()
+while IFS= read -r line; do
+  read -r name dir cmd <<<"$line"
+  [[ -z $name || $name == \#* ]] && continue
+  if [[ $line =~ ^[[:space:]]*\[(.+)\][[:space:]]*$ ]]; then
+    session=${BASH_REMATCH[1]}
+    # sessions that already exist are left as they are
+    skip=0
+    tmux has-session -t "=$session" 2>/dev/null && skip=1 || created+=("$session")
+    continue
+  fi
+  if (( skip )) || [[ -z $session ]]; then continue; fi
+  add_window "$session" "$name" "$dir" "$cmd"
+done <"$config"
+
+for s in ${created[@]+"${created[@]}"}; do
+  tmux select-window -t "=$s:^"
+done
+
+if [[ -n ${TMUX:-} ]]; then
+  tmux switch-client -t "=$target"
+else
+  tmux attach -t "=$target"
+fi

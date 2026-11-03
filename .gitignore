@@ -30,3 +30,7 @@ ssh/sockets/
 *.key
 *.pem
 *.secret
+
+# tmux plugins are installed by TPM (tpm itself is tracked)
+tmux/plugins/*
+!tmux/plugins/tpm
