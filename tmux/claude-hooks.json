@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "~/.tmux/claude-tmux-state working", "async": true }] }],
+    "PostToolUse": [{ "hooks": [{ "type": "command", "command": "~/.tmux/claude-tmux-state working", "async": true }] }],
+    "Notification": [{ "matcher": "permission_prompt|elicitation_dialog", "hooks": [{ "type": "command", "command": "~/.tmux/claude-tmux-state waiting", "async": true }] }],
+    "Stop": [{ "hooks": [{ "type": "command", "command": "~/.tmux/claude-tmux-state done", "async": true }] }],
+    "StopFailure": [{ "hooks": [{ "type": "command", "command": "~/.tmux/claude-tmux-state error", "async": true }] }],
+    "SessionEnd": [{ "hooks": [{ "type": "command", "command": "~/.tmux/claude-tmux-state clear", "async": true }] }]
+  }
+}

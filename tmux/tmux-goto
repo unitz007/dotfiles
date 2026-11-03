@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# tmux-goto <letter> <session_id> <window_index>
+# Jump to the next window in the session whose name starts with <letter> (case-insensitive),
+# wrapping around, so repeating the letter cycles through windows that share it.
+#
+# tmux-goto --bind   binds a-z in the "goto" key table (run from tmux.conf)
+if [[ $1 == --bind ]]; then
+  for l in {a..z}; do
+    tmux bind -T goto "$l" run-shell "$0 $l '#{session_id}' '#{window_index}'"
+  done
+  exit 0
+fi
+
+letter=$(tr '[:upper:]' '[:lower:]' <<<"$1")
+session=$2
+current=$3
+
+matches=$(tmux list-windows -t "$session" -F '#{window_index} #{window_name}' |
+  awk -v l="$letter" 'tolower(substr($2, 1, 1)) == l { print $1 }')
+
+if [[ -z $matches ]]; then
+  tmux display-message -t "$session" "No window starting with '$1'"
+  exit 0
+fi
+
+next=$(awk -v c="$current" '$1 > c { print; exit }' <<<"$matches")
+tmux select-window -t "$session:${next:-$(head -1 <<<"$matches")}"

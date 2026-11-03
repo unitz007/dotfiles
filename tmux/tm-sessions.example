@@ -1,0 +1,18 @@
+# Sessions for `tm`. Copy to ~/.config/tm/sessions (or point $TM_CONFIG at your file).
+#
+# [Session name]
+# window-name   directory   [command]
+#
+# - The first session is the one `tm` attaches to with no arguments; `tm <prefix>` picks another.
+# - Directories can start with ~. They can't contain spaces.
+# - The command runs in your interactive shell, and the shell stays open after it exits.
+#   "claude" resumes the last Claude Code conversation in that directory, or starts a new one.
+
+[Work]
+api        ~/code/api        claude
+web        ~/code/web        claude
+infra      ~/code/infra
+logs       ~/code/api        tail -f log/development.log
+
+[Personal]
+home       ~
